@@ -1,3 +1,7 @@
+# 0.1.8
+* redeploy minor UI fixes
+
+* release
 # 0.1.7
 * minor UI fixes (release)
 # 0.1.6

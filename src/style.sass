@@ -1,0 +1,120 @@
+// font family
+@font-face
+    font-family: "InterRegular"
+    src: url(./assets/fonts/Inter-Regular.ttf)
+@font-face
+    font-family: "PoppinsRegular"
+    src: url(./assets/fonts/Poppins-Regular.ttf)
+
+// layouts start
+@mixin flexCenter()
+    display: flex
+    justify-content: center
+    align-items: center
+
+@mixin flexWide()
+    @include flexCenter()
+    justify-content: space-between
+
+@mixin flexEnd()
+    @include flexCenter()
+    justify-content: flex-end
+
+@mixin flexStart()
+    @include flexCenter()
+    justify-content: flex-start
+
+@mixin flexAround()
+    @include flexCenter()
+    justify-content: space-around
+
+@mixin flexEvenly()
+    @include flexCenter()
+    justify-content: space-evenly
+
+.sarufi-flex
+    display: flex
+
+.sarufi-flex-center
+    @include flexCenter()
+
+.sarufi-flex-wide
+    @include flexWide()
+
+.sarufi-flex-end
+    @include flexEnd()
+
+.sarufi-flex-start
+    @include flexStart()
+
+.sarufi-flex-around
+    @include flexAround()
+
+.sarufi-flex-even
+    @include flexEvenly()
+
+.sarufi-flex-column
+    flex-direction: column
+
+.sarufi-flex-row
+    flex-direction: row
+
+.sarufi-align-start
+    align-items: flex-start
+
+.sarufi-align-end
+    align-items: flex-end
+
+.sarufi-align-center
+    align-items: center
+
+.sarufi-flex-wrap
+    flex-wrap: wrap
+// layout end
+
+// custom styles
+.sarufi-scroll-bar
+    &::-webkit-scrollbar
+        width: .4rem
+        height: .4rem
+    &::-webkit-scrollbar-track
+        // background: var(--sarufi-border-color)
+    &::-webkit-scrollbar-thumb
+        background: var(--sarufi-border-color)
+        border-radius: 0.7em
+
+.sarufi-shadow-xl
+    box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)
+
+.sarufi-message-body
+    position: relative
+    border-top-left-radius: 0 !important
+    box-sizing: border-box
+    font-size: inherit
+    color: var(--sarufi-received-box-color)
+    a
+        color: var(--sarufi-received-box-link-color)
+        text-decoration: none
+    &::before
+        content: ""
+        position: absolute
+        left: -11px
+        top: 0
+        width: 0
+        height: 0
+        border-style: solid
+        border-width: 0 11px 9px 0
+        border-color: transparent var(--sarufi-received-box-bg) transparent transparent
+    &.sent
+        border-top-left-radius: .3rem !important
+        border-top-right-radius: 0 !important
+        color: var(--sarufi-sent-box-color)
+        a
+            color: var(--sarufi-sent-box-link-color)
+        &::before
+            left: 100%
+            width: 0
+            height: 0
+            border-style: solid
+            border-width: 9px 11px 0 0
+            border-color: var(--sarufi-sent-box-bg) transparent transparent transparent

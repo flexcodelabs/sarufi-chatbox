@@ -10,8 +10,8 @@
   },
   "scripts": {
     "clean": "rimraf lib/",
-    "copy-esm-files": "copyfiles -u 1 src/**/*.css lib/esm",
-    "copy-cjs-files": "copyfiles -u 1 src/**/*.css lib/cjs",
+    "copy-esm-files": "copyfiles -u 1 src/**/*.css src/*.css lib/esm",
+    "copy-cjs-files": "copyfiles -u 1 src/**/*.css src/*.css  lib/cjs",
     "build": "npm run clean && npm run copy-esm-files && npm run copy-cjs-files && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs"

@@ -149,7 +149,6 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
       )}
       {open && (
         <div
-          className={`${styles["sarufi-chat"]}`}
           style={{
             height: "100%",
             borderRadius: ".5rem",

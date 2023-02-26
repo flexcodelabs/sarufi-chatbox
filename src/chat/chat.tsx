@@ -95,7 +95,7 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
             : theme?.fontFamily === "PoppinsRegular"
             ? "'Poppins', sans-serif"
             : // @ts-ignore
-            window.style.fontFamily === "inherit" ||
+            window.style?.fontFamily === "inherit" ||
               theme?.fontFamily === "inherit"
             ? "inherit"
             : "'Inter', sans-serif",

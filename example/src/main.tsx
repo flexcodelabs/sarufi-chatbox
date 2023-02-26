@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SarufiChatbox from "react-sarufi-chatbox";
+import SarufiChatbox from "../../src/";
 
 ReactDOM.createRoot(
   document.getElementById("sarufi-chatbox") as HTMLElement

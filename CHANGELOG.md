@@ -1,3 +1,5 @@
+# 0.1.6
+* handle undefined window variables values (release)
 # 0.1.5
 * fix css issue
 

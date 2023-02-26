@@ -6,10 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Website example created using package template" />
   <title>React package template usage example</title>
-  <script type="module" crossorigin
-    src="https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/blob/master/example/dist/assets/sarufi-chatbox.js"></script>
-  <link rel="stylesheet" crossorigin
-    href="https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/blob/master/example/dist/assets/sarufi-chatbox.css">
+  <script>
+    // add window objects
+    window.botId = 16
+    window.style = {
+      primaryColor: "red",
+      borderColor: "lightgray",
+      fontSize: "14",
+      fontFamily: "PoppinsRegular",
+      sentBoxBg: "blue",
+      receivedBoxBg: "white",
+      sentBoxColor: "white",
+      receivedBoxColor: "black",
+      chatboxBg: "#EDECE1",
+      receivedBoxLinkColor: "blue",
+      sentBoxLinkColor: "white"
+    }
+    // create and attach css
+    const script = document.createElement("script")
+    script.crossOrigin = true
+    script.type = "module"
+    script.src = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/dist/assets/sarufi-chatbox.js"
+    document.head.appendChild(script)
+    // create and attach js
+    const style = document.createElement("link")
+    style.crossOrigin = true
+    style.rel = "stylesheet"
+    style.href = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/dist/assets/sarufi-chatbox.css"
+    document.head.appendChild(style)
+  </script>
 </head>
 
 <body>

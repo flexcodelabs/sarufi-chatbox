@@ -1,3 +1,3 @@
 import SarufiChatbox, { SarufiChatboxType } from "./chat/chat";
-export { SarufiChatboxType };
+export type { SarufiChatboxType };
 export default SarufiChatbox;

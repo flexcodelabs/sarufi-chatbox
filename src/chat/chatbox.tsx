@@ -96,8 +96,8 @@ const Chatbox = ({
   }, [chats]);
 
   useEffect(() => {
-    // setChats([]);
-    // setValue("");
+    setChats([]);
+    setValue("");
   }, [open]);
 
   return (
@@ -347,47 +347,26 @@ const Chat = ({
             className={` ${styles.choices}`}
             style={{
               position: "fixed",
-              height: "calc( 500px - 92px - .5rem )",
-              maxHeight: "calc( 100% - 92px - .5rem )",
-              width: "400px",
-              maxWidth: "100%",
-              right: "1rem",
-              bottom: "calc( 50px + .2.2rem )",
               zIndex: 100004,
               transition: "0.35s linear",
             }}
           >
             <div
-              className=""
+              className={styles["sarufi-backdrop"]}
               style={{
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
-                height: "calc( 500px - 104px - .5rem )",
-                maxHeight: "calc( 100% - 104px - .5rem )",
-                width: "400px",
-                maxWidth: "100%",
-                right: "1rem",
-                bottom: "calc( 78px + .5rem )",
                 zIndex: 100004,
                 transition: "0.35s linear",
               }}
               onClick={() => setOpenChoices(false)}
             />
             <div
-              className="sarufi-scroll-bar"
+              className={`${styles["sarufi-options"]} sarufi-scroll-bar`}
               style={{
                 zIndex: 100005,
-                right: "2rem",
                 background: "var(--sarufi-received-box-bg)",
                 color: "var(--sarufi-received-box-color)",
-                height: "calc( 500px - 125px - .5rem )",
-                maxHeight: "calc( 100% - 104px - .5rem )",
-                width: "368px",
-                maxWidth: "100%",
-                overflowY: "auto",
-                position: "fixed",
-                bottom: "calc( 90px + .5rem )",
-                marginTop: "1rem",
                 borderRadius: ".3rem",
               }}
             >

@@ -1,8 +1,8 @@
-# @flexcodelabs/sarufi-chatbox
+# sarufi-chatbox
 
-[![npm](https://img.shields.io/npm/v/@flexcodelabs/sarufi-chatbox)](https://www.npmjs.com/package/@flexcodelabs/sarufi-chatbox) [![NPM](https://img.shields.io/npm/l/@flexcodelabs/sarufi-chatboxe)](https://www.npmjs.com/package/@flexcodelabs/sarufi-chatbox)
+[![npm](https://img.shields.io/npm/v/@flexcodelabs/sarufi-chatbox)](https://www.npmjs.com/package/sarufi-chatbox) [![NPM](https://img.shields.io/npm/l/sarufi-chatboxe)](https://www.npmjs.com/package/sarufi-chatbox)
 
-[Package Name](#@flexcodelabs/sarufi-chatbox)
+[Package Name](#sarufi-chatbox)
 
 - [Features](#features)
 - [Installation](#installation)
@@ -16,17 +16,17 @@
 
 ## Installation
 
-`npm install @flexcodelabs/sarufi-chatbox`
+`npm install sarufi-chatbox`
 
 or
 
-`yarn add @flexcodelabs/sarufi-chatbox`
+`yarn add sarufi-chatbox`
 
 ## Usage
 
 ```js
 ...
-import SarufiChatbox from '@flexcodelabs/sarufi-chatbox';
+import SarufiChatbox from 'sarufi-chatbox';
 
 <SarufiChatbox
   botId={16}
@@ -53,6 +53,8 @@ import SarufiChatbox from '@flexcodelabs/sarufi-chatbox';
 
 ## Props
 
-| Name | Type   | Default | Required | Description  |
-| ---- | ------ | ------- | -------- | ------------ |
-| Prop | `type` | ``      | false    | Descriptions |
+| Name    | Type               | Default | Required | Description                 |
+| ------- | ------------------ | ------- | -------- | --------------------------- |
+| botId   | `string or number` | `-`     | true     | id of integrated sarufi bot |
+| API_URL | `string`           | `-`     | false    | sarufi api url              |
+| theme   | `object`           | `-`     | false    | customize bot apearance     |

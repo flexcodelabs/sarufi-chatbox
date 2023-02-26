@@ -1,5 +1,5 @@
 {
-  "name": "@flexcodelabs/sarufi-chatbox",
+  "name": "sarufi-chatbox",
   "version": "0.1.0",
   "description": "",
   "main": "./lib/cjs/index.js",

@@ -174,7 +174,7 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
                     window.style?.fontSize * 1.2
                   : theme?.fontSize
                   ? Number(theme?.fontSize) * 1.2
-                  : 1.2,
+                  : "1.2em",
               }}
             >
               Chat

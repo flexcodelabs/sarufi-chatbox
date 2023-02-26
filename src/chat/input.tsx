@@ -63,10 +63,9 @@ const Input: FC<Props> = ({
             autoComplete={autoComplete}
             value={value}
             style={{
-              padding: "0.7rem",
-              paddingTop: "1rem",
-              height: "50px",
-              minHeight: "50px",
+              padding: ".7rem .7rem",
+              paddingRight: 45,
+              height: 60,
               borderRadius: "0.3rem",
             }}
             required={required}

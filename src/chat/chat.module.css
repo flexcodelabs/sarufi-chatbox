@@ -45,14 +45,16 @@
   height: 60px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  background: white;
 }
 
 .sarufi-chat-container form button {
   position: absolute;
-  height: 30px;
-  width: 30px;
-  max-width: 30px !important;
-  bottom: 21.5px;
+  height: 50px;
+  width: 50px;
+  max-width: 50px !important;
+  bottom: 5px;
+  right: 5px;
   padding: 1rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -60,32 +62,32 @@
 }
 
 .sarufi-chat-container .choices {
-  height: calc( 500px - 92px - .5rem);
+  height: calc( 500px - 82px - .5rem);
   max-height: calc( 100% - 92px - .5rem);
   width: 400px;
   max-width: 100%;
   right: 1rem;
-  bottom: calc( 50px + .2.2rem);
+  bottom: calc( 40px + .2.2rem);
 }
 
 .sarufi-chat-container .sarufi-backdrop {
-  height: calc( 500px - 104px - .5rem);
-  max-height: calc( 100% - 104px - .5rem);
+  height: calc( 500px - 95px - .5rem);
+  max-height: calc( 100% - 105px - .5rem);
   width: 400px;
   max-width: 100%;
   right: 1rem;
-  bottom: calc( 78px + .5rem);
+  bottom: calc( 69px + .5rem);
 }
 
 .sarufi-chat-container .sarufi-options {
   right: 2rem;
-  height: calc( 500px - 125px - .5rem);
-  max-height: calc( 100% - 104px - .5rem);
+  height: calc( 500px - 115px - .5rem);
+  max-height: calc( 100% - 94px - .5rem);
   width: 368px;
   max-width: 100%;
   overflow-y: auto;
   position: fixed;
-  bottom: calc( 90px + .5rem);
+  bottom: calc( 80px + .5rem);
   margin-top: 1rem;
 }
 
@@ -93,6 +95,7 @@
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  height: 100%;
 }
 
 .sarufi-field-group .input-group {
@@ -106,7 +109,8 @@
   resize: none;
   background-color: transparent;
   width: 100%;
-  border: 1px solid var(--sarufi-border-color);
+  height: 100%;
+  border: 1px solid transparent;
   -webkit-transition: .25s;
   transition: .25s;
   font-family: inherit;
@@ -117,6 +121,7 @@
 
 .sarufi-field-group .input-group textarea:focus, .sarufi-field-group .input-group textarea:hover {
   border-color: var(--sarufi-primary-color);
+  border-width: 1px;
   outline: transparent !important;
 }
 
@@ -222,22 +227,22 @@
     right: 0;
   }
   .sarufi-chat-container .sarufi-backdrop {
-    height: calc( 500px - 104px - .5rem);
-    max-height: calc( 100% - 104px - .5rem);
+    height: calc( 500px - 94px - .5rem);
+    max-height: calc( 100% - 94px - .5rem);
     width: 400px;
     max-width: 100%;
     right: 0;
-    bottom: calc( 62px + .5rem);
+    bottom: calc( 52px + .5rem);
   }
   .sarufi-chat-container .sarufi-options {
     right: 1rem;
-    height: calc( 500px - 135px - .5rem);
-    max-height: calc( 100% - 120px - .5rem);
+    height: calc( 500px - 125px - .5rem);
+    max-height: calc( 100% - 110px - .5rem);
     width: 368px;
     max-width: 100%;
     overflow-y: auto;
     position: fixed;
-    bottom: calc( 70px + .5rem);
+    bottom: calc( 60px + .5rem);
     margin-top: 1rem;
   }
 }

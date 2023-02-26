@@ -3,7 +3,7 @@ import { CSSProperties, useState } from "react";
 import { Close, TextComponent } from "../assets/icons";
 import styles from "./chat.module.css";
 import Chatbox from "./chatbox";
-import "./style.css";
+// import "../style.css";
 
 export type SarufiChatboxType = {
   botId: string | number;
@@ -12,7 +12,7 @@ export type SarufiChatboxType = {
     buttonSize?: "sm" | "md" | "lg";
     primaryColor?: string;
     fontSize?: string | number;
-    fontFamily?: "PoppinsRegular" | "InterRegular";
+    fontFamily?: "PoppinsRegular" | "InterRegular" | "inherit";
     borderColor?: string;
     sentBoxBg?: string;
     receivedBoxBg?: string;
@@ -84,10 +84,34 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
       ${open ? "sarufi-shadow-xl" : "sarufi-flex-center"}`}
       style={{
         position: "fixed",
+        fontFamily:
+          // @ts-ignore
+          window.style?.fontFamily === "PoppinsRegular"
+            ? "'Poppins', sans-serif"
+            : // @ts-ignore
+            window.style?.fontFamily === "InterRegular"
+            ? "'Inter', sans-serif"
+            : theme?.fontFamily === "InterRegular"
+            ? "'Inter', sans-serif"
+            : theme?.fontFamily === "PoppinsRegular"
+            ? "'Poppins', sans-serif"
+            : // @ts-ignore
+            window.style.fontFamily === "inherit" ||
+              theme?.fontFamily === "inherit"
+            ? "inherit"
+            : "'Inter', sans-serif",
         ...(!open
           ? {
-              height: theme?.buttonSize === "lg" ? "70px" : "50px",
-              width: theme?.buttonSize === "lg" ? "70px" : "50px",
+              height:
+                // @ts-ignore
+                window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+                  ? "70px"
+                  : "50px",
+              width:
+                // @ts-ignore
+                window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+                  ? "70px"
+                  : "50px",
             }
           : {}),
         ...style,

@@ -107,7 +107,7 @@ const Chatbox = ({
         id="sarufi-chat-container"
         style={{
           background: "var(--sarufi-chatbox-bg)",
-          height: "calc( 100% - 142px )",
+          height: "calc( 100% - 132px )",
           overflowY: "auto",
           position: "relative",
           padding: "1rem",
@@ -151,8 +151,6 @@ const Chatbox = ({
       <form
         style={{
           position: "absolute",
-          paddingRight: "1rem",
-          paddingLeft: "1rem",
         }}
         onSubmit={(e) => {
           e.preventDefault();
@@ -171,7 +169,7 @@ const Chatbox = ({
         <Button
           label={
             <span className="sarufi-flex-center">
-              <SendIcon />
+              <SendIcon size={30} />
             </span>
           }
         />

@@ -107,46 +107,52 @@ const Chatbox = ({
         id="sarufi-chat-container"
         style={{
           background: "var(--sarufi-chatbox-bg)",
-          height: "calc( 100% - 132px )",
+          height: "calc( 100% - 100px )",
           overflowY: "auto",
           position: "relative",
-          padding: "1rem",
         }}
         className="sarufi-scroll-bar"
       >
         <div
-          className="sarufi-message-body"
           style={{
-            maxWidth: 280,
-            background: "var(--sarufi-received-box-bg)",
-            padding: "1rem",
-            marginTop: ".7rem",
             position: "relative",
-            borderRadius: ".3rem",
+            padding: "1rem",
           }}
         >
-          <p>Send a message to initiate conversation i.e "Hello"</p>
+          <div
+            className="sarufi-message-body"
+            style={{
+              maxWidth: 280,
+              background: "var(--sarufi-received-box-bg)",
+              padding: "1rem",
+              marginTop: ".7rem",
+              position: "relative",
+              borderRadius: ".3rem",
+            }}
+          >
+            <p>Send a message to initiate conversation i.e "Hello"</p>
+          </div>
+          <ul>
+            {chats?.map((chat, index) => (
+              <Chat chat={chat} key={index} onSubmit={onSubmit} />
+            ))}
+            {loading && (
+              <div
+                className={`sarufi-message-body`}
+                style={{
+                  background: "var(--sarufi-received-box-bg)",
+                  padding: "1rem",
+                  marginTop: ".7rem",
+                  position: "relative",
+                  borderRadius: ".3rem",
+                  maxWidth: 100,
+                }}
+              >
+                <ChatLoader />
+              </div>
+            )}
+          </ul>
         </div>
-        <ul>
-          {chats?.map((chat, index) => (
-            <Chat chat={chat} key={index} onSubmit={onSubmit} />
-          ))}
-          {loading && (
-            <div
-              className={`sarufi-message-body`}
-              style={{
-                background: "var(--sarufi-received-box-bg)",
-                padding: "1rem",
-                marginTop: ".7rem",
-                position: "relative",
-                borderRadius: ".3rem",
-                maxWidth: 100,
-              }}
-            >
-              <ChatLoader />
-            </div>
-          )}
-        </ul>
       </div>
       <form
         style={{

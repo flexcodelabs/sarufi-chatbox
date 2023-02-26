@@ -1,3 +1,11 @@
+# 0.1.4
+* update example
+
+* fix font family issues
+
+* release
+
+* release
 # 0.1.3
 * change package version (release)
 # 0.1.1

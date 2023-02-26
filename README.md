@@ -4,15 +4,9 @@
 
 [Package Name](#sarufi-chatbox)
 
-- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Examples](#examples)
 - [Props](#props)
-
-## Features
-
-- List of features
 
 ## Installation
 
@@ -45,11 +39,6 @@ import SarufiChatbox from 'sarufi-chatbox';
     sentBoxLinkColor: "white",
   }}  />
 ```
-
-## Examples
-
-[Source code](${repo})  
-[Demo](${demo_link})
 
 ## Props
 

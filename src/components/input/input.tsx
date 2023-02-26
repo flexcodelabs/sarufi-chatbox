@@ -64,9 +64,9 @@ const Input: FC<Props> = ({
             value={value}
             style={{
               padding: "0.7rem",
-              paddingTop: ".9rem",
+              paddingTop: "1rem",
               height: "50px",
-              minHeight: "40px",
+              minHeight: "50px",
               borderRadius: "0.3rem",
             }}
             required={required}

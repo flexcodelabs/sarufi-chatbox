@@ -25,7 +25,7 @@ const Button: FC<Props> = ({ label, onClick, disabled }) => {
         overflow: "hidden",
         transition: ".3s linear",
         zIndex: 100001,
-        right: "1.5rem",
+        right: "5px",
         border: "none",
       }}
     >

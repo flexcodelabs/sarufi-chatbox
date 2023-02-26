@@ -1,13 +1,4 @@
-@font-face {
-  font-family: "InterRegular";
-  src: url(./assets/fonts/Inter-Regular.ttf);
-}
-
-@font-face {
-  font-family: "PoppinsRegular";
-  src: url(./assets/fonts/Poppins-Regular.ttf);
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap");
 .sarufi-flex {
   display: -webkit-box;
   display: -ms-flexbox;

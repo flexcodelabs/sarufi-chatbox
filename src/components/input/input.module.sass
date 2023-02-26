@@ -1,0 +1,22 @@
+.sarufi-field-group
+    width: 100%
+    box-sizing: border-box
+    .input-group
+        position: relative
+        width: 100%
+        box-sizing: border-box
+        textarea
+            resize: none
+            background-color: transparent
+            width: 100%
+            border: 1px solid var(--sarufi-border-color)
+            transition: .25s
+            font-family: inherit
+            box-sizing: border-box
+            font-size: inherit
+            &:focus, &:hover
+                border-color: var(--sarufi-primary-color)
+                outline: transparent !important
+            &:disabled
+                border-color: #4a535b
+                color: #4a535b

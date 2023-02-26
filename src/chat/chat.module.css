@@ -1,0 +1,59 @@
+.sarufi-chat-container {
+  height: 50px;
+  width: 50px;
+  z-index: 7;
+  -webkit-transition: height .25s;
+  transition: height .25s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: var(--sarufi-font-family);
+  font-size: var(--sarufi-font-size);
+}
+
+.sarufi-chat-container.open {
+  height: 500px;
+  width: 400px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  bottom: 0;
+  right: 0;
+  background: var(--clr-neutral-0);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.sarufi-chat-container p {
+  margin: 0;
+}
+
+.sarufi-chat-container ul {
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
+  -webkit-margin-after: 0;
+          margin-block-end: 0;
+  list-style: none;
+  -webkit-padding-start: 0;
+          padding-inline-start: 0;
+}
+
+.sarufi-chat-container form {
+  width: 100%;
+  bottom: 0;
+  height: 60px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.sarufi-chat-container form button {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  max-width: 30px !important;
+  bottom: 21.5px;
+  padding: 1rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: var(--sarufi-primary-color);
+}
+/*# sourceMappingURL=chat.module.css.map */

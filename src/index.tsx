@@ -1,11 +1,3 @@
-import React, { FC, ReactNode } from "react";
-
-interface PackageNameProps {
-  children: ReactNode;
-}
-
-const PackageName: FC<PackageNameProps> = ({ children }) => {
-  return <div>{children}</div>;
-};
-
-export default PackageName;
+import SarufiChatbox, { SarufiChatboxType } from "./chat/chat";
+export { SarufiChatboxType };
+export default SarufiChatbox;

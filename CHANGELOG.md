@@ -1,3 +1,5 @@
+# 0.1.7
+* minor UI fixes (release)
 # 0.1.6
 * handle undefined window variables values (release)
 # 0.1.5

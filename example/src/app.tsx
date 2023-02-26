@@ -1,5 +1,5 @@
-import SarufiChatbox from "../../src/index";
-// import SarufiChatbox from "react-sarufi-chatbox";
+// import SarufiChatbox from "../../src/index";
+import SarufiChatbox from "react-sarufi-chatbox";
 
 const App = () => {
   return (

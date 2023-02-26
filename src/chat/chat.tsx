@@ -3,8 +3,7 @@ import { CSSProperties, useState } from "react";
 import { Close, TextComponent } from "../assets/icons";
 import styles from "./chat.module.css";
 import Chatbox from "./chatbox";
-import "../style.css";
-// import useWindowSize from "../hooks/useWindowSize";
+import "./style.css";
 
 export type SarufiChatboxType = {
   botId: string | number;

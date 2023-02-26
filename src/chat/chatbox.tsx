@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { CSSProperties, useEffect, useRef, useState } from "react";
-import Button from "../components/button/button";
-import Input from "../components/input/input";
-import ChatLoader from "../components/spinner/chat-loader";
+import Button from "./button";
+import Input from "./input";
+import ChatLoader from "./chat-loader";
 import { Close, SendIcon } from "../assets/icons";
 import styles from "./chat.module.css";
 

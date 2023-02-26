@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./spinner.module.css";
+import styles from "./chat.module.css";
 
 const ChatLoader = () => {
   return (

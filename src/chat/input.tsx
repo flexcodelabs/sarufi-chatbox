@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from "react";
-import styles from "./input.module.css";
+import styles from "./chat.module.css";
 
 interface Props {
   disabled?: boolean;

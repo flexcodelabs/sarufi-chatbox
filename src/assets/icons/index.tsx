@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from "react";
+import React, { CSSProperties, FC } from "react";
 
 interface IconProps {
   size?: number | string;

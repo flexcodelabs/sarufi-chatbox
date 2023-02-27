@@ -1,3 +1,11 @@
+# 0.2.0
+* minor fixes (release)
+
+* add dark mode and allow passing custom title as props
+
+* release
+
+* release
 # 0.1.9
 * minor fixes (release)
 # 0.1.8

@@ -9,7 +9,38 @@
   font-family: var(--sarufi-font-family);
   font-size: var(--sarufi-font-size);
   bottom: 1rem;
+}
+
+.sarufi-chat-container.sarufi-left-align {
+  left: 1rem;
+}
+
+.sarufi-chat-container.sarufi-left-align .choices {
+  left: 1rem;
+}
+
+.sarufi-chat-container.sarufi-left-align .sarufi-backdrop {
+  left: 1rem;
+}
+
+.sarufi-chat-container.sarufi-left-align .sarufi-options {
+  left: 2rem;
+}
+
+.sarufi-chat-container.sarufi-right-align {
   right: 1rem;
+}
+
+.sarufi-chat-container.sarufi-right-align .choices {
+  right: 1rem;
+}
+
+.sarufi-chat-container.sarufi-right-align .sarufi-backdrop {
+  right: 1rem;
+}
+
+.sarufi-chat-container.sarufi-right-align .sarufi-options {
+  right: 2rem;
 }
 
 .sarufi-chat-container.open {
@@ -25,8 +56,18 @@
   border-top-right-radius: 10px;
 }
 
+.sarufi-chat-container button:focus {
+  outline-color: transparent;
+}
+
+.sarufi-chat-container a:hover {
+  text-decoration: underline;
+}
+
 .sarufi-chat-container p {
   margin: 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .sarufi-chat-container ul {
@@ -45,7 +86,6 @@
   height: 60px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  background: white;
 }
 
 .sarufi-chat-container form button {
@@ -66,7 +106,6 @@
   max-height: calc( 100% - 92px - .5rem);
   width: 400px;
   max-width: 100%;
-  right: 1rem;
   bottom: calc( 40px + .2.2rem);
 }
 
@@ -75,12 +114,10 @@
   max-height: calc( 100% - 105px - .5rem);
   width: 400px;
   max-width: 100%;
-  right: 1rem;
   bottom: calc( 69px + .5rem);
 }
 
 .sarufi-chat-container .sarufi-options {
-  right: 2rem;
   height: calc( 500px - 115px - .5rem);
   max-height: calc( 100% - 94px - .5rem);
   width: 368px;

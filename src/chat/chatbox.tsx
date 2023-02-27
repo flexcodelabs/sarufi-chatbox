@@ -12,11 +12,15 @@ const Chatbox = ({
   open,
   botId,
   API_URL,
+  mode,
+  primaryColor,
 }: {
   id: number | string;
   botId: string | number;
   API_URL: string;
   open: boolean;
+  mode: "light" | "dark";
+  primaryColor: string;
 }) => {
   const [chats, setChats] = useState<any[]>([]);
   const [value, setValue] = useState("");
@@ -163,6 +167,8 @@ const Chatbox = ({
       <form
         style={{
           position: "absolute",
+          background:
+            mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
         onSubmit={(e) => {
           e.preventDefault();
@@ -171,6 +177,8 @@ const Chatbox = ({
       >
         <Input
           value={value}
+          mode={mode}
+          primaryColor={primaryColor}
           autoFocus
           placeholder="Compose a message"
           save={() => onSubmit(value)}
@@ -179,6 +187,7 @@ const Chatbox = ({
           }}
         />
         <Button
+          mode={mode}
           label={
             <span className="sarufi-flex-center">
               <SendIcon size={30} />
@@ -218,6 +227,18 @@ const Chat = ({
       container.style.overflowY = "auto";
     }
   }, [openChoices]);
+
+  // listen to escape keyboard event
+  const keydown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") return setOpenChoices(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", keydown, false);
+    return () => {
+      document.removeEventListener("keydown", keydown, false);
+    };
+  }, []);
 
   return (
     <li

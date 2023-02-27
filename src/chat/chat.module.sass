@@ -25,8 +25,8 @@
             right: 2rem
 
     &.open
-        height: 500px
-        width: 400px
+        height: var(--sarufi-chatbox-height)
+        width: var(--sarufi-chatbox-width)
         max-width: 100%
         max-height: 100%
         border-radius: 0
@@ -65,22 +65,22 @@
             color: var(--sarufi-primary-color)
 
     .choices
-        height: calc( 500px - 82px - .5rem )
+        height: calc( var(--sarufi-chatbox-height) - 82px - .5rem )
         max-height: calc( 100% - 92px - .5rem )
-        width: 400px
+        width: var(--sarufi-chatbox-width)
         max-width: 100%
         bottom: calc( 40px + .2.2rem )
 
     .sarufi-backdrop
-        height: calc( 500px - 95px - .5rem )
+        height: calc( var(--sarufi-chatbox-height) - 95px - .5rem )
         max-height: calc( 100% - 105px - .5rem )
-        width: 400px
+        width: var(--sarufi-chatbox-width)
         max-width: 100%
         bottom: calc( 69px + .5rem )
     .sarufi-options
-        height: calc( 500px - 115px - .5rem )
+        height: calc( var(--sarufi-chatbox-height) - 115px - .5rem )
         max-height: calc( 100% - 94px - .5rem )
-        width: 368px
+        width: calc( var(--sarufi-chatbox-width) - 32px )
         max-width: 100%
         overflow-y: auto
         position: fixed
@@ -150,50 +150,89 @@
         transform: scale(0.0)
         -webkit-transform: scale(0.0)
 
-@media screen and ( max-width: 432px )
+@media screen and ( max-width: 500px  )
     .sarufi-chat-container
+        &.sarufi-left-align
+            .sarufi-backdrop
+                left: 0 !important
+            .sarufi-options
+                left: 0 !important
+        &.sarufi-right-align
+            .sarufi-backdrop
+                right: 0 !important
+            .sarufi-options
+                right: 0 !important
         &.open
             width: 100%
             bottom: 0
             right: 0
+            &.sarufi-left-align
+                left: 0rem
         .sarufi-backdrop
-            height: calc( 500px - 104px - .5rem )
-            max-height: calc( 100% - 104px - .5rem )
             width: 100%
-            max-width: 100%
-            right: 0
-            bottom: calc( 62px + .5rem )
+            bottom: calc( 53.5px + .5rem )
         .sarufi-options
-            right: 0rem !important
-            height: calc( 500px - 135px - .5rem )
-            max-height: calc( 100% - 120px - .5rem )
             width: 100%
             max-width: 100%
-            overflow-y: auto
-            position: fixed
-            bottom: calc( 70px + .5rem )
-            margin-top: 1rem
+            bottom: calc( 65px + .5rem )
 
-@media screen and ( max-height: 532px )
+@media screen and ( max-height: 600px  )
     .sarufi-chat-container
+        &.sarufi-left-align
+            .sarufi-backdrop
+                left: 1rem !important
+            .sarufi-options
+                left: 2rem !important
+        &.sarufi-right-align
+            .sarufi-backdrop
+                right: 1rem !important
+            .sarufi-options
+                right: 2rem
         &.open
-            height: 100%
             bottom: 0
             right: 0
+            height: calc( 100% - 50px )
+            max-height: 100%
+            &.sarufi-right-align
+                right: 1rem
+            &.sarufi-left-align
+                left: 1rem
         .sarufi-backdrop
-            height: calc( 500px - 94px - .5rem )
-            max-height: calc( 100% - 94px - .5rem )
-            width: 400px
+            height: calc( 100%px - 144px - .5rem )
+            max-height: calc( 100% - 144px - .5rem )
+            width: var(--sarufi-chatbox-width)
             max-width: 100%
-            right: 0
             bottom: calc( 52px + .5rem )
         .sarufi-options
-            right: 1rem
-            height: calc( 500px - 125px - .5rem )
-            max-height: calc( 100% - 110px - .5rem )
-            width: 368px
+            height: calc( 100% - 155px - .5rem )
+            max-height: calc( 100% - 140px - .5rem )
+            width: calc( var(--sarufi-chatbox-width) - 32px )
             max-width: 100%
-            overflow-y: auto
-            position: fixed
+            bottom: calc( 60px + .5rem )
+
+@media (max-width: 500px) and (max-height: 600px)
+    .sarufi-chat-container
+        &.sarufi-left-align
+            .sarufi-backdrop
+                left: 0rem !important
+            .sarufi-options
+                left: 0rem !important
+        &.sarufi-right-align
+            .sarufi-backdrop
+                right: 0rem !important
+            .sarufi-options
+                right: 0rem !important
+        &.open
+            height: calc( 100% - 50px )
+        .sarufi-backdrop
+            height: calc( 100%px - 144px - .5rem )
+            max-height: calc( 100% - 144px - .5rem )
+            width: var(--sarufi-chatbox-width)
+            max-width: 100%
+        .sarufi-options
+            height: calc( 100% - 155px - .5rem )
+            max-height: calc( 100% - 140px - .5rem )
+            width: calc( var(--sarufi-chatbox-width) - 32px )
+            max-width: 100%
             bottom: calc( 60px + .5rem )
             margin-top: 1rem

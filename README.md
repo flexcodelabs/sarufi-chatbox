@@ -26,19 +26,19 @@ import SarufiChatbox from 'react-sarufi-chatbox';
   botId={16}
   theme={{
     buttonSize: "md",
-        primaryColor: "blue",
-        borderColor: "lightgray",
-        fontSize: "14",
-        fontFamily: "PoppinsRegular",
-        sentBoxBg: "blue",
-        receivedBoxBg: "white",
-        sentBoxColor: "white",
-        receivedBoxColor: "black",
-        chatboxBg: "#EDECE1",
-        receivedBoxLinkColor: "blue",
-        sentBoxLinkColor: "white",
-        mode: "dark",
-        placement: "right",
+    primaryColor: "blue",
+    borderColor: "lightgray",
+    fontSize: "14",
+    fontFamily: "PoppinsRegular",
+    sentBoxBg: "blue",
+    receivedBoxBg: "white",
+    sentBoxColor: "white",
+    receivedBoxColor: "black",
+    chatboxBg: "#EDECE1",
+    receivedBoxLinkColor: "blue",
+    sentBoxLinkColor: "white",
+    mode: "dark",
+    placement: "right",
   }}
   title="Chat"
 />

@@ -1,5 +1,4 @@
-import React from "react";
-import { CSSProperties, useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { Close, TextComponent } from "../assets/icons";
 import styles from "./chat.module.css";
 import Chatbox from "./chatbox";
@@ -8,6 +7,7 @@ export type SarufiChatboxType = {
   botId: string | number;
   API_URL?: string;
   title?: string;
+  token?: string;
   theme?: {
     buttonSize?: "sm" | "md" | "lg";
     primaryColor?: string;
@@ -23,10 +23,18 @@ export type SarufiChatboxType = {
     sentBoxLinkColor?: string;
     mode?: "light" | "dark";
     placement?: "left" | "right";
+    height?: string | number;
+    width?: string | number;
   };
 };
 
-const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
+const Chat = ({
+  botId,
+  API_URL,
+  theme,
+  title = "Chat",
+  token,
+}: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
 
@@ -34,93 +42,118 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
   const style = {
     "--sarufi-primary-color":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#202C33"
         : // @ts-ignore
-          window.style?.primaryColor ?? theme?.primaryColor ?? "#2776EA",
+          window?.sarufi_theme?.primaryColor ??
+          theme?.primaryColor ??
+          "#2776EA",
 
     "--sarufi-font-size":
       // @ts-ignore
-      `${window.style?.fontSize ?? theme?.fontSize ?? 14}px`,
+      `${window?.sarufi_theme?.fontSize ?? theme?.fontSize ?? 14}px`,
 
     "--sarufi-font-family":
       // @ts-ignore
-      window.style?.fontFamily === "PoppinsRegular"
+      window?.sarufi_theme?.fontFamily === "PoppinsRegular"
         ? "'Poppins', sans-serif"
         : // @ts-ignore
-        window.style?.fontFamily === "InterRegular"
+        window?.sarufi_theme?.fontFamily === "InterRegular"
         ? "'Inter', sans-serif"
         : theme?.fontFamily === "InterRegular"
         ? "'Inter', sans-serif"
         : theme?.fontFamily === "PoppinsRegular"
         ? "'Poppins', sans-serif"
         : // @ts-ignore
-        window.style?.fontFamily === "inherit" ||
+        window?.sarufi_theme?.fontFamily === "inherit" ||
           theme?.fontFamily === "inherit"
         ? "inherit"
         : "'Inter', sans-serif",
 
     "--sarufi-border-color":
       // @ts-ignore
-      window.style?.borderColor ?? theme?.borderColor ?? "lightgray",
+      window?.sarufi_theme?.borderColor ?? theme?.borderColor ?? "lightgray",
 
     "--sarufi-sent-box-bg":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#005C4B"
         : // @ts-ignore
-          window.style?.sentBoxBg ?? theme?.sentBoxBg ?? "#D8F9D4",
+          window?.sarufi_theme?.sentBoxBg ?? theme?.sentBoxBg ?? "#D8F9D4",
 
     "--sarufi-received-box-bg":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#202C33"
         : // @ts-ignore
-          window.style?.receivedBoxBg ?? theme?.receivedBoxBg ?? "white",
+          window?.sarufi_theme?.receivedBoxBg ??
+          theme?.receivedBoxBg ??
+          "white",
 
     "--sarufi-sent-box-color":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "white"
         : // @ts-ignore
-          window.style?.sentBoxColor ?? theme?.sentBoxColor ?? "black",
+          window?.sarufi_theme?.sentBoxColor ?? theme?.sentBoxColor ?? "black",
 
     "--sarufi-received-box-color":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "white"
         : // @ts-ignore
-          window.style?.receivedBoxColor ?? theme?.receivedBoxColor ?? "black",
+          window?.sarufi_theme?.receivedBoxColor ??
+          theme?.receivedBoxColor ??
+          "black",
 
     "--sarufi-sent-box-link-color":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#53BDEB"
         : // @ts-ignore
-          window.style?.sentBoxLinkColor ?? theme?.sentBoxLinkColor ?? "black",
+          window?.sarufi_theme?.sentBoxLinkColor ??
+          theme?.sentBoxLinkColor ??
+          "black",
 
     "--sarufi-received-box-link-color":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#53BDEB"
         : // @ts-ignore
-          window.style?.receivedBoxLinkColor ??
+          window?.sarufi_theme?.receivedBoxLinkColor ??
           theme?.receivedBoxLinkColor ??
           "black",
 
     "--sarufi-chatbox-bg":
       // @ts-ignore
-      window?.style?.mode === "dark" || theme?.mode === "dark"
+      window?.sarufi_theme?.mode === "dark" || theme?.mode === "dark"
         ? "#0B141A"
         : // @ts-ignore
-          window.style?.chatboxBg ?? theme?.chatboxBg ?? "#EDECE1",
+          window?.sarufi_theme?.chatboxBg ?? theme?.chatboxBg ?? "#EDECE1",
+    "--sarufi-chatbox-height":
+      // @ts-ignore
+      window?.sarufi_theme?.height
+        ? // @ts-ignore
+          window?.sarufi_theme?.height + "px"
+        : theme?.height
+        ? theme?.height + "px"
+        : "500px",
+    "--sarufi-chatbox-width":
+      // @ts-ignore
+      window?.sarufi_theme?.width
+        ? // @ts-ignore
+          window?.sarufi_theme?.width + "px"
+        : theme?.width
+        ? theme?.width + "px"
+        : "400px",
   } as CSSProperties;
 
   return (
     <div
       className={`${styles["sarufi-chat-container"]} ${
         // @ts-ignore
-        window?.style?.placement === "left" || theme?.placement === "left"
+        window?.sarufi_theme?.placement === "left" ||
+        theme?.placement === "left"
           ? styles["sarufi-left-align"]
           : styles["sarufi-right-align"]
       } ${open ? styles.open : ""}
@@ -129,17 +162,17 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
         position: "fixed",
         fontFamily:
           // @ts-ignore
-          window.style?.fontFamily === "PoppinsRegular"
+          window?.sarufi_theme?.fontFamily === "PoppinsRegular"
             ? "'Poppins', sans-serif"
             : // @ts-ignore
-            window.style?.fontFamily === "InterRegular"
+            window?.sarufi_theme?.fontFamily === "InterRegular"
             ? "'Inter', sans-serif"
             : theme?.fontFamily === "InterRegular"
             ? "'Inter', sans-serif"
             : theme?.fontFamily === "PoppinsRegular"
             ? "'Poppins', sans-serif"
             : // @ts-ignore
-            window.style?.fontFamily === "inherit" ||
+            window?.sarufi_theme?.fontFamily === "inherit" ||
               theme?.fontFamily === "inherit"
             ? "inherit"
             : "'Inter', sans-serif",
@@ -147,12 +180,14 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
           ? {
               height:
                 // @ts-ignore
-                window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+                window?.sarufi_theme?.buttonSize === "lg" ||
+                theme?.buttonSize === "lg"
                   ? "70px"
                   : "50px",
               width:
                 // @ts-ignore
-                window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+                window?.sarufi_theme?.buttonSize === "lg" ||
+                theme?.buttonSize === "lg"
                   ? "70px"
                   : "50px",
             }
@@ -172,23 +207,29 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
             borderRadius: "50%",
             height:
               // @ts-ignore
-              window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+              window?.sarufi_theme?.buttonSize === "lg" ||
+              theme?.buttonSize === "lg"
                 ? "70px"
                 : // @ts-ignore
-                window.style?.buttonSize === "sm" || theme?.buttonSize === "sm"
+                window?.sarufi_theme?.buttonSize === "sm" ||
+                  theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
             width:
               // @ts-ignore
-              window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
+              window?.sarufi_theme?.buttonSize === "lg" ||
+              theme?.buttonSize === "lg"
                 ? "70px"
                 : // @ts-ignore
-                window.style?.buttonSize === "sm" || theme?.buttonSize === "sm"
+                window?.sarufi_theme?.buttonSize === "sm" ||
+                  theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
             background:
               // @ts-ignore
-              window?.style?.primaryColor ?? theme?.primaryColor ?? "#2776EA",
+              window?.sarufi_theme?.primaryColor ??
+              theme?.primaryColor ??
+              "#2776EA",
             color: "white",
             border: "none",
           }}
@@ -197,7 +238,8 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
           <TextComponent
             size={
               // @ts-ignore
-              window.style?.buttonSize === "sm" || theme?.buttonSize === "sm"
+              window?.sarufi_theme?.buttonSize === "sm" ||
+              theme?.buttonSize === "sm"
                 ? 20
                 : 30
             }
@@ -228,9 +270,9 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
                 fontWeight: 600,
                 fontFamily: "var(--sarufi-font-family)",
                 // @ts-ignore
-                fontSize: window.style?.fontSize
+                fontSize: window?.sarufi_theme?.fontSize
                   ? // @ts-ignore
-                    window.style?.fontSize * 1.1
+                    window?.sarufi_theme?.fontSize * 1.1
                   : theme?.fontSize
                   ? Number(theme?.fontSize) * 1.1
                   : "1.1em",
@@ -260,14 +302,17 @@ const Chat = ({ botId, API_URL, theme, title = "Chat" }: SarufiChatboxType) => {
             open={open}
             id={id}
             // @ts-ignore
-            mode={window?.style?.mode ?? theme?.mode ?? "light"}
+            mode={window?.sarufi_theme?.mode ?? theme?.mode ?? "light"}
             primaryColor={
               // @ts-ignore
-              window?.style?.primaryColor ?? theme?.primaryColor ?? "#2776EA"
+              window?.sarufi_theme?.primaryColor ??
+              theme?.primaryColor ??
+              "#2776EA"
             }
             // @ts-ignore
-            botId={window.botId ?? botId}
+            botId={window?.botId ?? botId}
             API_URL={API_URL ?? "https://api.sarufi.io"}
+            token={token}
           />
         </div>
       )}

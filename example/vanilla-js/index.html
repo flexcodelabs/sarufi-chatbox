@@ -13,10 +13,11 @@
     <h1>
         My beautiful website
     </h1>
+    <!-- chatbox starts here -->
     <script defer async>
         // add window objects
         window.botId = 16
-        window.style = {
+        window.sarufi_theme = {
             primaryColor: "blue",
             borderColor: "lightgray",
             fontSize: "14",
@@ -28,7 +29,11 @@
             chatboxBg: "#EDECE1",
             receivedBoxLinkColor: "blue",
             sentBoxLinkColor: "white",
-            buttonSize: "lg"
+            buttonSize: "lg",
+            mode: "light",
+            placement: "left",
+            height: 550,
+            width: 450,
         }
         // create div with id = sarufi-chatbox
         const div = document.createElement("div")

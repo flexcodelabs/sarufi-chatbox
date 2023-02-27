@@ -1,7 +1,7 @@
 .sarufi-chat-container {
   height: 50px;
   width: 50px;
-  z-index: 7;
+  z-index: 100000;
   -webkit-transition: height .25s;
   transition: height .25s;
   -webkit-box-sizing: border-box;

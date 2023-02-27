@@ -12,11 +12,15 @@ const Chatbox = ({
   open,
   botId,
   API_URL,
+  mode,
+  primaryColor,
 }: {
   id: number | string;
   botId: string | number;
   API_URL: string;
   open: boolean;
+  mode: "light" | "dark";
+  primaryColor: string;
 }) => {
   const [chats, setChats] = useState<any[]>([]);
   const [value, setValue] = useState("");
@@ -130,7 +134,13 @@ const Chatbox = ({
               borderRadius: ".3rem",
             }}
           >
-            <p>Send a message to initiate conversation i.e "Hello"</p>
+            <p
+              style={{
+                fontFamily: "var(--sarufi-font-family)",
+              }}
+            >
+              Send a message to initiate conversation i.e "Hello"
+            </p>
           </div>
           <ul>
             {chats?.map((chat, index) => (
@@ -157,6 +167,8 @@ const Chatbox = ({
       <form
         style={{
           position: "absolute",
+          background:
+            mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
         onSubmit={(e) => {
           e.preventDefault();
@@ -165,6 +177,8 @@ const Chatbox = ({
       >
         <Input
           value={value}
+          mode={mode}
+          primaryColor={primaryColor}
           autoFocus
           placeholder="Compose a message"
           save={() => onSubmit(value)}
@@ -173,6 +187,7 @@ const Chatbox = ({
           }}
         />
         <Button
+          mode={mode}
           label={
             <span className="sarufi-flex-center">
               <SendIcon size={30} />
@@ -212,6 +227,18 @@ const Chat = ({
       container.style.overflowY = "auto";
     }
   }, [openChoices]);
+
+  // listen to escape keyboard event
+  const keydown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") return setOpenChoices(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", keydown, false);
+    return () => {
+      document.removeEventListener("keydown", keydown, false);
+    };
+  }, []);
 
   return (
     <li
@@ -305,6 +332,7 @@ const Chat = ({
                     cursor: "pointer",
                     fontSize: "inherit",
                     padding: "1rem",
+                    fontFamily: "var(--sarufi-font-family)",
                   }}
                   className="sarufi-flex-center sarufi-flex-wrap"
                 >
@@ -337,6 +365,7 @@ const Chat = ({
               cursor: "pointer",
               fontSize: "inherit",
               padding: "1rem",
+              fontFamily: "var(--sarufi-font-family)",
             }}
           >
             {menu["send_button"]?.button ?? menu["send_button"]?.action?.button}
@@ -400,6 +429,7 @@ const Chat = ({
                       marginLeft: "1rem",
                       paddingRight: "2rem",
                       textAlign: "center",
+                      fontFamily: "var(--sarufi-font-family)",
                     }}
                   >
                     {menu["send_button"]?.action?.sections[0]?.title}
@@ -431,11 +461,19 @@ const Chat = ({
                         }}
                       >
                         <div>
-                          <p className="text-small-200">{row?.title}</p>
+                          <p
+                            className="text-small-200"
+                            style={{
+                              fontFamily: "var(--sarufi-font-family)",
+                            }}
+                          >
+                            {row?.title}
+                          </p>
                           <p
                             style={{
                               opacity: ".7",
                               fontSize: ".9em",
+                              fontFamily: "var(--sarufi-font-family)",
                             }}
                           >
                             {row?.description}
@@ -477,7 +515,10 @@ const Message = ({
     <>
       {typeof message === "string" && (
         <p
-          style={style}
+          style={{
+            fontFamily: "var(--sarufi-font-family)",
+            ...style,
+          }}
           className={className ?? ""}
           dangerouslySetInnerHTML={{ __html: wrapUrl(wrap(message)) }}
         />

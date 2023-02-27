@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, ChangeEvent, useState } from "react";
 import styles from "./chat.module.css";
 
 interface Props {
@@ -14,6 +14,8 @@ interface Props {
   maxLength?: number;
   autoFocus?: boolean;
   save?: (e?: any) => void;
+  mode: "dark" | "light";
+  primaryColor: string;
 }
 
 const Input: FC<Props> = ({
@@ -27,6 +29,8 @@ const Input: FC<Props> = ({
   placeholder,
   maxLength = 1024,
   save,
+  mode,
+  primaryColor,
 }) => {
   const onEnterPress = (e: any) => {
     if (e.keyCode == 13 && e.shiftKey == false) {
@@ -34,6 +38,7 @@ const Input: FC<Props> = ({
       save && save(e);
     }
   };
+  const [isFocused, setFocused] = useState(true);
 
   return (
     <div
@@ -62,11 +67,24 @@ const Input: FC<Props> = ({
             onChange={onChange}
             autoComplete={autoComplete}
             value={value}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
             style={{
               padding: ".7rem .7rem",
               paddingRight: 45,
               height: 60,
               borderRadius: "0.3rem",
+              fontFamily: "var(--sarufi-font-family)",
+              ...(mode === "dark"
+                ? {
+                    color: "white",
+                  }
+                : {}),
+              ...(mode === "dark" && isFocused
+                ? {
+                    borderColor: primaryColor,
+                  }
+                : {}),
             }}
             required={required}
           />

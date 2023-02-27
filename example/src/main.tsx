@@ -21,7 +21,10 @@ ReactDOM.createRoot(
         chatboxBg: "#EDECE1",
         receivedBoxLinkColor: "blue",
         sentBoxLinkColor: "white",
+        mode: "dark",
+        placement: "right",
       }}
+      title="Chat"
     />
   </React.StrictMode>
 );

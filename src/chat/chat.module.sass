@@ -7,7 +7,23 @@
     font-family: var(--sarufi-font-family)
     font-size: var(--sarufi-font-size)
     bottom: 1rem
-    right: 1rem
+    &.sarufi-left-align
+        left: 1rem
+        .choices
+            left: 1rem
+        .sarufi-backdrop
+            left: 1rem
+        .sarufi-options
+            left: 2rem
+    &.sarufi-right-align
+        right: 1rem
+        .choices
+            right: 1rem
+        .sarufi-backdrop
+            right: 1rem
+        .sarufi-options
+            right: 2rem
+
     &.open
         height: 500px
         width: 400px
@@ -19,8 +35,14 @@
         background: var(--clr-neutral-0)
         border-top-left-radius: 10px
         border-top-right-radius: 10px
+    button:focus
+        outline-color: transparent
+    a:hover
+        text-decoration: underline
     p
         margin: 0
+        overflow-wrap: break-word
+        white-space: pre-wrap
     ul
         margin-block-start: 0
         margin-block-end: 0
@@ -31,7 +53,6 @@
         bottom: 0
         height: 60px
         box-sizing: border-box
-        background: white
         button
             position: absolute
             height: 50px
@@ -48,7 +69,6 @@
         max-height: calc( 100% - 92px - .5rem )
         width: 400px
         max-width: 100%
-        right: 1rem
         bottom: calc( 40px + .2.2rem )
 
     .sarufi-backdrop
@@ -56,10 +76,8 @@
         max-height: calc( 100% - 105px - .5rem )
         width: 400px
         max-width: 100%
-        right: 1rem
         bottom: calc( 69px + .5rem )
     .sarufi-options
-        right: 2rem
         height: calc( 500px - 115px - .5rem )
         max-height: calc( 100% - 94px - .5rem )
         width: 368px

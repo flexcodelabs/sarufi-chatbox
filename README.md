@@ -24,8 +24,8 @@ import SarufiChatbox from 'react-sarufi-chatbox';
 
 <SarufiChatbox
   botId={16}
-  API_URL={"https://api.sarufi.io"}
   theme={{
+    buttonSize: "md",
     primaryColor: "blue",
     borderColor: "lightgray",
     fontSize: "14",
@@ -37,7 +37,11 @@ import SarufiChatbox from 'react-sarufi-chatbox';
     chatboxBg: "#EDECE1",
     receivedBoxLinkColor: "blue",
     sentBoxLinkColor: "white",
-  }}  />
+    mode: "dark",
+    placement: "right",
+  }}
+  title="Chat"
+/>
 ```
 
 ## Props
@@ -47,3 +51,4 @@ import SarufiChatbox from 'react-sarufi-chatbox';
 | botId   | `string or number` | `-`     | true     | id of integrated sarufi bot |
 | API_URL | `string`           | `-`     | false    | sarufi api url              |
 | theme   | `object`           | `-`     | false    | customize bot apearance     |
+| title   | `string`           | `-`     | false    | chatbox title               |

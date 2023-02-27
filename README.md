@@ -1,6 +1,6 @@
 # react-sarufi-chatbox
 
-[![npm](https://img.shields.io/npm/v/@flexcodelabs/react-sarufi-chatbox)](https://www.npmjs.com/package/react-sarufi-chatbox) [![NPM](https://img.shields.io/npm/l/react-sarufi-chatboxe)](https://www.npmjs.com/package/react-sarufi-chatbox)
+[![npm](https://img.shields.io/npm/v/@flexcodelabs/react-sarufi-chatbox)](https://www.npmjs.com/package/react-sarufi-chatbox) [![NPM](https://img.shields.io/npm/l/react-sarufi-chatbox)](https://www.npmjs.com/package/react-sarufi-chatbox)
 
 [Package Name](#react-sarufi-chatbox)
 

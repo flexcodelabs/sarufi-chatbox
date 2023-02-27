@@ -348,7 +348,7 @@ const Chat = ({
       )}
       {(!message || typeof message !== "string") && chat?.actions && menu && (
         <div
-          className="bg-neutral-0 p-1 mt-300 br-300 sarufi-flex-center"
+          className="bg-neutral-0 sarufi-flex-center"
           style={{
             maxWidth: 280,
             marginTop: ".3rem",

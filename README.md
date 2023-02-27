@@ -24,7 +24,6 @@ import SarufiChatbox from 'react-sarufi-chatbox';
 
 <SarufiChatbox
   botId={16}
-  API_URL={"https://api.sarufi.io"}
   theme={{
     primaryColor: "blue",
     borderColor: "lightgray",
@@ -37,7 +36,8 @@ import SarufiChatbox from 'react-sarufi-chatbox';
     chatboxBg: "#EDECE1",
     receivedBoxLinkColor: "blue",
     sentBoxLinkColor: "white",
-  }}  />
+  }}
+/>
 ```
 
 ## Props

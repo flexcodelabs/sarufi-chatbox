@@ -130,7 +130,13 @@ const Chatbox = ({
               borderRadius: ".3rem",
             }}
           >
-            <p>Send a message to initiate conversation i.e "Hello"</p>
+            <p
+              style={{
+                fontFamily: "var(--sarufi-font-family)",
+              }}
+            >
+              Send a message to initiate conversation i.e "Hello"
+            </p>
           </div>
           <ul>
             {chats?.map((chat, index) => (
@@ -305,6 +311,7 @@ const Chat = ({
                     cursor: "pointer",
                     fontSize: "inherit",
                     padding: "1rem",
+                    fontFamily: "var(--sarufi-font-family)",
                   }}
                   className="sarufi-flex-center sarufi-flex-wrap"
                 >
@@ -337,6 +344,7 @@ const Chat = ({
               cursor: "pointer",
               fontSize: "inherit",
               padding: "1rem",
+              fontFamily: "var(--sarufi-font-family)",
             }}
           >
             {menu["send_button"]?.button ?? menu["send_button"]?.action?.button}
@@ -400,6 +408,7 @@ const Chat = ({
                       marginLeft: "1rem",
                       paddingRight: "2rem",
                       textAlign: "center",
+                      fontFamily: "var(--sarufi-font-family)",
                     }}
                   >
                     {menu["send_button"]?.action?.sections[0]?.title}
@@ -431,11 +440,19 @@ const Chat = ({
                         }}
                       >
                         <div>
-                          <p className="text-small-200">{row?.title}</p>
+                          <p
+                            className="text-small-200"
+                            style={{
+                              fontFamily: "var(--sarufi-font-family)",
+                            }}
+                          >
+                            {row?.title}
+                          </p>
                           <p
                             style={{
                               opacity: ".7",
                               fontSize: ".9em",
+                              fontFamily: "var(--sarufi-font-family)",
                             }}
                           >
                             {row?.description}
@@ -477,7 +494,10 @@ const Message = ({
     <>
       {typeof message === "string" && (
         <p
-          style={style}
+          style={{
+            fontFamily: "var(--sarufi-font-family)",
+            ...style,
+          }}
           className={className ?? ""}
           dangerouslySetInnerHTML={{ __html: wrapUrl(wrap(message)) }}
         />

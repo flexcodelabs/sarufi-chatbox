@@ -67,6 +67,7 @@ const Input: FC<Props> = ({
               paddingRight: 45,
               height: 60,
               borderRadius: "0.3rem",
+              fontFamily: "var(--sarufi-font-family)",
             }}
             required={required}
           />

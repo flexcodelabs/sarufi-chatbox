@@ -127,15 +127,19 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
             cursor: "pointer",
             borderRadius: "50%",
             height:
-              theme?.buttonSize === "lg"
+              // @ts-ignore
+              window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
                 ? "70px"
-                : theme?.buttonSize === "sm"
+                : // @ts-ignore
+                window.style?.buttonSize === "sm" || theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
             width:
-              theme?.buttonSize === "lg"
+              // @ts-ignore
+              window.style?.buttonSize === "lg" || theme?.buttonSize === "lg"
                 ? "70px"
-                : theme?.buttonSize === "sm"
+                : // @ts-ignore
+                window.style?.buttonSize === "sm" || theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
             background: "var(--sarufi-primary-color)",
@@ -168,6 +172,7 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
             <p
               style={{
                 fontWeight: 600,
+                fontFamily: "var(--sarufi-font-family)",
                 // @ts-ignore
                 fontSize: window.style?.fontSize
                   ? // @ts-ignore
@@ -180,6 +185,7 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
               Chat
             </p>
             <button
+              className="flex-center"
               onClick={() => {
                 setOpen(false);
                 setId(new Date().valueOf());
@@ -188,6 +194,7 @@ const Chat = ({ botId, API_URL, theme }: SarufiChatboxType) => {
                 border: "none",
                 background: "none",
                 color: "white",
+                cursor: "pointer",
               }}
             >
               <Close size={18} className="text-neutral-0" />

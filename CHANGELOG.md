@@ -1,3 +1,7 @@
+# 0.2.2
+* allow chatbox size customization
+
+* release
 # 0.2.1
 * minor fixes (release)
 # 0.2.0

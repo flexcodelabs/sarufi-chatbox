@@ -1,3 +1,5 @@
+# 0.2.7
+* minor fixes (release)
 # 0.2.6
 * add custom theme for sarufi dashboard preview functionality (release)
 # 0.2.5

@@ -70,7 +70,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
 
   useEffect(() => {
     fetchTheme();
-  }, []);
+  }, [defaultTheme]);
 
   // set up styles
   const style = {

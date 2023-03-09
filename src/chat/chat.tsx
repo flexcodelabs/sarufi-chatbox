@@ -27,6 +27,7 @@ interface ThemeType {
 export type SarufiChatboxType = {
   botId: string | number;
   token?: string
+  theme?: ThemeType
 };
 
 const Chat = ({ botId, token }: SarufiChatboxType) => {
@@ -56,6 +57,9 @@ const Chat = ({ botId, token }: SarufiChatboxType) => {
 
   // get theme
   const fetchTheme = async () => {
+    if(theme) {
+      return setThemeConfig(theme)
+    }
     try {
       const { data } = await axios.get(
         `${api_url}/plugin/${botId}/unauthenticated`

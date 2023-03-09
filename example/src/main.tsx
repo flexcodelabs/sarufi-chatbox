@@ -3,10 +3,9 @@ import ReactDOM from "react-dom/client";
 import SarufiChatbox from "../../src/";
 
 ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("sarufi-chatbox") as HTMLElement
 ).render(
   <React.StrictMode>
-    {/* <SarufiChatbox botId={16} title="Chat" /> */}
-    <h1>Hello Website</h1>
+    <SarufiChatbox botId={16} />
   </React.StrictMode>
 );

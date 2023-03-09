@@ -1,3 +1,7 @@
+# 0.2.4
+* NEW: add conversations apis and fetching theme from server
+
+* minor fixes (release)
 # 0.2.3
 * minor UI fixes
 

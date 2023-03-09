@@ -1,3 +1,5 @@
+# 0.2.6
+* add custom theme for sarufi dashboard preview functionality (release)
 # 0.2.5
 * allow usage of token on conversation (release)
 # 0.2.4

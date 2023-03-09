@@ -1,3 +1,5 @@
+# 0.2.5
+* allow usage of token on conversation (release)
 # 0.2.4
 * NEW: add conversations apis and fetching theme from server
 

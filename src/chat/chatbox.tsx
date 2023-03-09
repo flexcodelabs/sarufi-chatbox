@@ -14,7 +14,6 @@ const Chatbox = ({
   API_URL,
   mode,
   primaryColor,
-  token,
 }: {
   id: number | string;
   botId: string | number;
@@ -22,7 +21,6 @@ const Chatbox = ({
   open: boolean;
   mode: "light" | "dark";
   primaryColor: string;
-  token?: string;
 }) => {
   const [chats, setChats] = useState<any[]>([]);
   const [value, setValue] = useState("");
@@ -39,7 +37,7 @@ const Chatbox = ({
     setLoading(true);
     axios
       .post(
-        `${API_URL}/conversation/whatsapp`,
+        `${API_URL}/plugin/conversation/${botId}`,
         {
           message: itemId ?? message,
           chat_id: id,
@@ -49,7 +47,6 @@ const Chatbox = ({
         {
           headers: {
             "Content-Type": "application/json",
-            ...(token ? { Authorization: "Bearer " + token } : {}),
           },
         }
       )
@@ -88,6 +85,8 @@ const Chatbox = ({
                   ? error?.response?.data?.detail
                   : typeof error?.response?.data?.detail === "object"
                   ? error?.response?.data?.detail[0]?.msg
+                  : typeof error?.response?.data?.message === "string"
+                  ? error?.response?.data?.message
                   : error?.message,
             },
           ];

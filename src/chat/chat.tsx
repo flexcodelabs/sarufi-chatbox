@@ -1,42 +1,73 @@
-import React, { CSSProperties, useState } from "react";
+import axios from "axios";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { Close, TextComponent } from "../assets/icons";
 import styles from "./chat.module.css";
 import Chatbox from "./chatbox";
+
+interface ThemeType {
+  buttonSize?: "sm" | "md" | "lg";
+  primaryColor?: string;
+  fontSize?: string | number;
+  fontFamily?: "PoppinsRegular" | "InterRegular" | "inherit";
+  borderColor?: string;
+  sentBoxBg?: string;
+  receivedBoxBg?: string;
+  sentBoxColor?: string;
+  receivedBoxColor?: string;
+  chatboxBg?: string;
+  receivedBoxLinkColor?: string;
+  sentBoxLinkColor?: string;
+  mode?: "light" | "dark";
+  title?: string
+  placement?: "left" | "right";
+  height?: string | number;
+  width?: string | number;
+}
 
 export type SarufiChatboxType = {
   botId: string | number;
   API_URL?: string;
   title?: string;
-  token?: string;
-  theme?: {
-    buttonSize?: "sm" | "md" | "lg";
-    primaryColor?: string;
-    fontSize?: string | number;
-    fontFamily?: "PoppinsRegular" | "InterRegular" | "inherit";
-    borderColor?: string;
-    sentBoxBg?: string;
-    receivedBoxBg?: string;
-    sentBoxColor?: string;
-    receivedBoxColor?: string;
-    chatboxBg?: string;
-    receivedBoxLinkColor?: string;
-    sentBoxLinkColor?: string;
-    mode?: "light" | "dark";
-    placement?: "left" | "right";
-    height?: string | number;
-    width?: string | number;
-  };
 };
 
-const Chat = ({
-  botId,
-  API_URL,
-  theme,
-  title = "Chat",
-  token,
-}: SarufiChatboxType) => {
+const Chat = ({ botId, API_URL, title = "Chat" }: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
+  const [theme, setThemeConfig] = useState<ThemeType>({
+    primaryColor: "#2776EA",
+    borderColor: "lightgray",
+    fontSize: "14",
+    fontFamily: "InterRegular",
+    sentBoxBg: "#D8F9D4",
+    receivedBoxBg: "white",
+    sentBoxColor: "black",
+    receivedBoxColor: "black",
+    chatboxBg: "#EDECE1",
+    receivedBoxLinkColor: "blue",
+    sentBoxLinkColor: "white",
+    buttonSize: "md",
+    mode: "light",
+    title: "Chat",
+    placement: "right",
+    height: 500,
+    width: 400,
+  });
+
+  const api_url = API_URL ?? "https://api.sarufi.io";
+
+  // get theme
+  const fetchTheme = async () => {
+    try {
+      const { data } = await axios.get(
+        `${api_url}/plugin/${botId}/unauthenticated`
+      );
+      setThemeConfig(data?.theme_config);
+    } catch (error: any) {}
+  };
+
+  useEffect(() => {
+    fetchTheme();
+  }, []);
 
   // set up styles
   const style = {
@@ -311,8 +342,7 @@ const Chat = ({
             }
             // @ts-ignore
             botId={window?.botId ?? botId}
-            API_URL={API_URL ?? "https://api.sarufi.io"}
-            token={token}
+            API_URL={api_url}
           />
         </div>
       )}

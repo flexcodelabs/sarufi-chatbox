@@ -17,24 +17,6 @@
     <script defer async>
         // add window objects
         window.botId = 16
-        window.sarufi_theme = {
-            primaryColor: "blue",
-            borderColor: "lightgray",
-            fontSize: "14",
-            fontFamily: "InterRegular",
-            sentBoxBg: "blue",
-            receivedBoxBg: "white",
-            sentBoxColor: "white",
-            receivedBoxColor: "black",
-            chatboxBg: "#EDECE1",
-            receivedBoxLinkColor: "blue",
-            sentBoxLinkColor: "white",
-            buttonSize: "lg",
-            mode: "light",
-            placement: "left",
-            height: 550,
-            width: 450,
-        }
         // create div with id = sarufi-chatbox
         const div = document.createElement("div")
         div.id = "sarufi-chatbox"
@@ -43,14 +25,14 @@
         const script = document.createElement("script")
         script.crossOrigin = true
         script.type = "module"
-        // script.src = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/dist/assets/sarufi-chatbox.js"
+        // script.src = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/script.js"
         script.src = "./script.js"
         document.head.appendChild(script)
         // create and attach css
         const style = document.createElement("link")
         style.crossOrigin = true
         style.rel = "stylesheet"
-        // style.href = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/dist/assets/sarufi-chatbox.css"
+        // style.href = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/style.cs"
         style.href = "./style.css"
         document.head.appendChild(style)
     </script>

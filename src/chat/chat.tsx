@@ -26,9 +26,10 @@ interface ThemeType {
 
 export type SarufiChatboxType = {
   botId: string | number;
+  token?: string
 };
 
-const Chat = ({ botId }: SarufiChatboxType) => {
+const Chat = ({ botId, token }: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
   const [theme, setThemeConfig] = useState<ThemeType>({
@@ -212,6 +213,7 @@ const Chat = ({ botId }: SarufiChatboxType) => {
             primaryColor={theme?.primaryColor ?? "#2776EA"}
             // @ts-ignore
             botId={window?.botId ?? botId}
+            token={token}
             API_URL={api_url}
           />
         </div>

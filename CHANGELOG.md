@@ -1,3 +1,5 @@
+# 0.2.8
+* minor fixes (release)
 # 0.2.7
 * minor fixes (release)
 # 0.2.6

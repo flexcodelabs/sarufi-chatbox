@@ -26,11 +26,11 @@ interface ThemeType {
 
 export type SarufiChatboxType = {
   botId: string | number;
-  token?: string
-  theme?: ThemeType
+  token?: string;
+  theme?: ThemeType;
 };
 
-const Chat = ({ botId, token }: SarufiChatboxType) => {
+const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
   const [theme, setThemeConfig] = useState<ThemeType>({
@@ -57,8 +57,8 @@ const Chat = ({ botId, token }: SarufiChatboxType) => {
 
   // get theme
   const fetchTheme = async () => {
-    if(theme) {
-      return setThemeConfig(theme)
+    if (defaultTheme) {
+      return setThemeConfig(defaultTheme);
     }
     try {
       const { data } = await axios.get(

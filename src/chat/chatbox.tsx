@@ -4,6 +4,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react";
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
+import Media from "./media";
 import { Close, SendIcon } from "../assets/icons";
 import styles from "./chat.module.css";
 
@@ -14,7 +15,9 @@ const Chatbox = ({
   API_URL,
   mode,
   primaryColor,
-  token
+  token,
+  fontFamily,
+  fontSize,
 }: {
   id: number | string;
   botId: string | number;
@@ -22,7 +25,9 @@ const Chatbox = ({
   open: boolean;
   mode: "light" | "dark";
   primaryColor: string;
-  token?: string
+  token?: string;
+  fontFamily: string;
+  fontSize: string | number;
 }) => {
   const [chats, setChats] = useState<any[]>([]);
   const [value, setValue] = useState("");
@@ -39,7 +44,9 @@ const Chatbox = ({
     setLoading(true);
     axios
       .post(
-        `${API_URL}${token ? "/conversation/whatsapp" : "/plugin/conversation/" + botId}`,
+        `${API_URL}${
+          token ? "/conversation/whatsapp" : "/plugin/conversation/" + botId
+        }`,
         {
           message: itemId ?? message,
           chat_id: id,
@@ -60,15 +67,20 @@ const Chatbox = ({
             {
               message:
                 typeof data?.data?.actions === "object" &&
-                data?.data?.actions[0]?.send_message
-                  ? data?.data?.actions[0]?.send_message
+                data?.data?.actions?.find((action: any) => action?.send_message)
+                  ?.send_message
+                  ? data?.data?.actions?.find(
+                      (action: any) => action?.send_message
+                    )?.send_message
                   : typeof data?.data?.message === "string"
                   ? data?.data?.message
                   : data?.data?.message?.join("\n"),
               received: true,
               chat: data?.data,
               type: data?.data?.actions
-                ? data?.data?.actions[0]?.send_reply_button?.type
+                ? data?.data?.actions?.find(
+                    (action: any) => action?.send_reply_button
+                  )?.send_reply_button?.type
                 : "",
               actions: data?.data?.actions,
               next_state: data?.data?.next_state,
@@ -149,7 +161,15 @@ const Chatbox = ({
           </div>
           <ul>
             {chats?.map((chat, index) => (
-              <Chat chat={chat} key={index} onSubmit={onSubmit} />
+              <Chat
+                chat={chat}
+                key={index}
+                onSubmit={onSubmit}
+                mode={mode}
+                fontFamily={fontFamily}
+                fontSize={fontSize}
+                index={index}
+              />
             ))}
             {loading && (
               <div
@@ -209,13 +229,22 @@ export default Chatbox;
 const Chat = ({
   chat,
   onSubmit,
+  mode,
+  fontFamily,
+  fontSize,
+  index,
 }: {
   chat: any;
   onSubmit: (value: string, type?: string, id?: string) => void;
+  mode: "dark" | "light";
+  fontFamily: string;
+  fontSize: string | number;
+  index: number;
 }) => {
   let message =
     chat?.type === "button"
-      ? chat?.actions[0]?.send_reply_button?.body?.text
+      ? chat?.actions?.find((action: any) => action?.send_reply_button)
+          ?.send_reply_button?.body?.text
       : chat?.message;
 
   let menu = chat?.actions?.find(
@@ -265,6 +294,14 @@ const Chat = ({
           borderRadius: ".3rem",
         }}
       >
+        {/* show poreview message media */}
+        <Media
+          chat={chat}
+          mode={mode}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          messageIndex={index}
+        />
         {(!message || typeof message !== "string") && chat?.actions && menu && (
           <>
             {menu["send_button"]?.header && (
@@ -303,15 +340,18 @@ const Chat = ({
             maxWidth: 280,
           }}
         >
-          {chat?.actions[0]?.send_reply_button?.action?.buttons?.map(
-            (el: any, i: number) => (
+          {chat?.actions
+            ?.find((action: any) => action?.send_reply_button)
+            ?.send_reply_button?.action?.buttons?.map((el: any, i: number) => (
               <li
                 style={{
                   width:
-                    chat?.actions[0]?.send_reply_button?.action?.buttons
-                      ?.length === 3 ||
-                    chat?.actions[0]?.send_reply_button?.action?.buttons
-                      ?.length === 1
+                    chat?.actions?.find(
+                      (action: any) => action?.send_reply_button
+                    )?.send_reply_button?.action?.buttons?.length === 3 ||
+                    chat?.actions?.find(
+                      (action: any) => action?.send_reply_button
+                    )?.send_reply_button?.action?.buttons?.length === 1
                       ? "100%"
                       : "calc( 50% - 0.15rem )",
                   marginTop: ".3rem",
@@ -344,8 +384,7 @@ const Chat = ({
                   {el?.reply?.title}
                 </button>
               </li>
-            )
-          )}
+            ))}
         </ul>
       )}
       {(!message || typeof message !== "string") && chat?.actions && menu && (

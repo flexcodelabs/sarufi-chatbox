@@ -74,3 +74,89 @@ export const SendIcon: FC<IconProps> = ({ size, className, style }) => {
     </svg>
   );
 };
+
+export const Pause: FC<IconProps> = ({ className, size }) => {
+  return (
+    <svg
+      className={className}
+      width={size ?? "7"}
+      height={size ?? "14"}
+      viewBox="0 0 7 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M1 14L1 -4.02383e-07" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M6.24615 14V1.26655e-06"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
+export const Play: FC<IconProps> = ({ className, size }) => {
+  return (
+    <svg
+      width={size ?? "12"}
+      height={size ?? "16"}
+      className={className}
+      viewBox="0 0 12 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.7391 6.92845C11.3389 7.31537 11.3519 8.18793 10.7639 8.59253L1.56691 14.9217C0.903442 15.3783 -5.96046e-08 14.9033 -5.96046e-08 14.0979L-5.96046e-08 1.83521C-5.96046e-08 1.04331 0.876694 0.565606 1.54212 0.994914L10.7391 6.92845Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const FullSCreen: FC<IconProps> = ({ className, size }) => {
+  return (
+    <svg
+      width={size ?? "23"}
+      height={size ?? "23"}
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M2 7V2h5m15 5V2h-5M7 22H2v-5m15 5h5v-5"
+      ></path>
+    </svg>
+  );
+};
+
+export const DownloadIcon: FC<IconProps> = ({ className, size }) => {
+  return (
+    <svg
+      viewBox="0 0 34 34"
+      height={size ?? "34"}
+      width={size ?? "34"}
+      className={className}
+      preserveAspectRatio="xMidYMid meet"
+      version="1.1"
+      x="0px"
+      y="0px"
+      enableBackground="new 0 0 34 34"
+      xmlSpace="preserve"
+    >
+      <path
+        fill="currentColor"
+        d="M17,2c8.3,0,15,6.7,15,15s-6.7,15-15,15S2,25.3,2,17S8.7,2,17,2 M17,1C8.2,1,1,8.2,1,17 s7.2,16,16,16s16-7.2,16-16S25.8,1,17,1L17,1z"
+      ></path>
+      <path
+        fill="currentColor"
+        d="M22.4,17.5h-3.2v-6.8c0-0.4-0.3-0.7-0.7-0.7h-3.2c-0.4,0-0.7,0.3-0.7,0.7v6.8h-3.2 c-0.6,0-0.8,0.4-0.4,0.8l5,5.3c0.5,0.7,1,0.5,1.5,0l5-5.3C23.2,17.8,23,17.5,22.4,17.5z"
+      ></path>
+    </svg>
+  );
+};

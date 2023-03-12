@@ -27,6 +27,9 @@
     @include flexCenter()
     justify-content: space-evenly
 
+body.sarufi-no-scrolling
+    overflow-y: hidden
+
 .sarufi-flex
     display: flex
 
@@ -122,3 +125,54 @@
             border-style: solid
             border-width: 9px 11px 0 0
             border-color: var(--sarufi-sent-box-bg) transparent transparent transparent
+
+.sarufi-media-preview
+    p, span, li, figcaption, button
+        font-family: var(--sarufi-font-family)
+
+.sarufi-modal
+    position: fixed
+    top: 0
+    left: 0
+    width: 100vw
+    max-width: 100vw
+    max-height: 100vh
+    height: 100vh
+    align-items: center
+    opacity: 0
+    pointer-events: none
+    &.open
+        pointer-events: all
+        opacity: 1
+    .sarufi-container
+        padding: 0
+        position: relative
+        z-index: 901
+        width: 100vw
+        max-width: 100vw
+        overflow: hidden
+        max-height: 100vh
+        height: 100vh
+        margin: 0
+        p, span, li, figcaption, button
+            font-family: var(--sarufi-font-family) !important
+    .sarufi-modal-backdrop
+        position: fixed
+        background: rgba(0, 0, 0, .8)
+        height: 100vh
+        width: 100vw
+        top: 0
+        left: 0
+        z-index: 8
+        opacity: 0
+        pointer-events: none
+        transition: .35s linear
+        &.open
+            opacity: 1
+            pointer-events: all
+
+@media screen and (max-width: 767px)
+    .sarufi-modal
+        .sarufi-container
+            padding: 2rem 1rem
+            margin: 2rem 0

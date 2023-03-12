@@ -55,6 +55,11 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
 
   const api_url = "https://api.sarufi.io";
 
+  const modal = document.createElement("div");
+  modal.id = "sarufi-modal";
+  if (!document.getElementById("sarufi-modal"))
+    document.body.appendChild(modal);
+
   // get theme
   const fetchTheme = async () => {
     if (defaultTheme) {
@@ -215,6 +220,8 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
             id={id}
             mode={theme?.mode ?? "light"}
             primaryColor={theme?.primaryColor ?? "#2776EA"}
+            fontFamily={theme.fontFamily ?? "inherit"}
+            fontSize={theme.fontSize ?? 16}
             // @ts-ignore
             botId={window?.botId ?? botId}
             token={token}

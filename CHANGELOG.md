@@ -1,3 +1,5 @@
+# 0.2.9
+* add media support (release)
 # 0.2.8
 * minor fixes (release)
 # 0.2.7

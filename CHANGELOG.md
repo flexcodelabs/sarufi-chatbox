@@ -1,3 +1,9 @@
+# 0.3.1
+* fix plugin cdn scripts to accept botId from window object to fetch plugin coonfigurations (release)
+
+* fix plugin cdn scripts to accept botId from window object to fetch plugin coonfigurations (release)
+
+* resolve merge conflicts (release)
 # 0.3.0
 * remove unused variables (release)
 # 0.2.9

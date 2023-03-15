@@ -41,6 +41,19 @@ const VideoPreview = ({
     if (!isFullScreen && video) {
       openFullScreen();
       video.play();
+      const video_elements = document.getElementsByTagName("video")
+        for(let i=0; i < video_elements.length; i++) {
+          let video_element = video_elements[i];
+          if (video_element.id !== `sarufi-video-player-${messageIndex}-${index}`) {
+            video_element.pause();
+          }
+        }
+
+        const audio_elements = document.getElementsByTagName("audio")
+        for(let i=0; i < audio_elements.length; i++) {
+          let audio_element = audio_elements[i];
+          audio_element.pause()
+        }
       return;
     }
     if (video && mediaDuration) {
@@ -48,6 +61,7 @@ const VideoPreview = ({
       if (video?.paused) {
         video?.play();
         setPlaying(true);
+        
       } else {
         video?.pause();
         setPlaying(false);
@@ -212,12 +226,14 @@ const VideoPreview = ({
                   onClick={(e) => e.stopPropagation()}
                   className={`${styles["sarufi-more-controls-container"]}`}
                 >
-                  <div className="sarufi-flex-wide">
+                  <div className="sarufi-flex-wide" style={{
+                    padding: "0 .5rem",
+                  }}>
                     <div
                       className={`${styles["sarufi-video-time-controls"]}`}
                       style={{
                         fontSize: Number(fontSize) * 0.9,
-                        padding: "0 .5rem",
+                        
                       }}
                     >
                       <span>

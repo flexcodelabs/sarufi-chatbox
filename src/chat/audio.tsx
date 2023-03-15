@@ -7,6 +7,7 @@ const AudioPreview = ({
   index,
   messageIndex,
   fontSize,
+  caption,
 }: {
   url: string;
   caption: string;
@@ -24,7 +25,7 @@ const AudioPreview = ({
   const [mediaDuration, setmediaDuration] = useState<any>(0);
   const [isBuffering, setBuffering] = useState<any>(false);
   const [seekBeforeWidth, setSeekBeforeWidth] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const audio = document.querySelector(
     `audio#sarufi-audio-player-${messageIndex}-${index}`
@@ -36,6 +37,21 @@ const AudioPreview = ({
       if (audio.paused) {
         audio.play();
         setPlaying(true);
+        const audio_elements = document.getElementsByTagName("audio");
+        for (let i = 0; i < audio_elements.length; i++) {
+          let audio_element = audio_elements[i];
+          if (
+            audio_element.id !== `sarufi-audio-player-${messageIndex}-${index}`
+          ) {
+            audio_element.pause();
+          }
+        }
+
+        const video_elements = document.getElementsByTagName("video");
+        for (let i = 0; i < video_elements.length; i++) {
+          let video_element = video_elements[i];
+          video_element.pause();
+        }
       } else {
         audio.pause();
         setPlaying(false);
@@ -121,121 +137,121 @@ const AudioPreview = ({
         }}
         className={`${styles["sarufi-audio-player"]}`}
       >
-        {loading && mediaDuration === 0 && (
-          <div className="sarufi-flex-start">
-            <p>Loading audio...</p>
-          </div>
-        )}
-        {!loading && mediaDuration === 0 && (
-          <span>Previe not available for this audio</span>
-        )}
-        {mediaDuration > 0 && (
+        <div
+          style={{
+            margin: ".5rem 0 .5rem",
+            width: "100%",
+          }}
+          className={`sarufi-flex-start`}
+        >
+          <button
+            className="sarufi-flex-start"
+            onClick={togglePlay}
+            style={{
+              background: "none",
+              border: "none",
+              height: "40px",
+              width: "40px",
+              color: "var(--sarufi-sent-boxt-color)",
+              cursor: "pointer",
+            }}
+            accessKey="Space"
+            type="button"
+          >
+            {isBuffering ? (
+              <span className={`sarufi-flex`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            ) : (
+              <span title={isPlaying ? "Pause" : "Play"}>
+                {!isPlaying ? <Play /> : <Pause />}
+              </span>
+            )}
+          </button>
           <div
             style={{
-              margin: ".5rem 0 .5rem",
-              width: "100%",
+              width: "calc( 100% - 50px )",
             }}
-            className={`sarufi-flex-start`}
           >
-            <button
-              className="sarufi-flex-start"
-              onClick={togglePlay}
-              style={{
-                background: "none",
-                border: "none",
-                height: "40px",
-                width: "40px",
-                color: "var(--sarufi-sent-boxt-color)",
-                cursor: "pointer",
-              }}
-              accessKey="Space"
-              type="button"
-            >
-              {isBuffering ? (
-                <span className={`sarufi-flex`}>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              ) : (
-                <span title={isPlaying ? "Pause" : "Play"}>
-                  {!isPlaying ? <Play /> : <Pause />}
-                </span>
-              )}
-            </button>
             <div
-              style={{
-                width: "calc( 100% - 50px )",
-              }}
+              className={`${styles["sarufi-bar"]} ${styles["sarufi-duration__bar"]}`}
             >
-              <div
-                className={`${styles["sarufi-bar"]} ${styles["sarufi-duration__bar"]}`}
-              >
-                <input
-                  type="range"
-                  id="progress"
-                  disabled={!mediaDuration}
-                  step={0.0001}
-                  value={currentTime && currentTime * 1000}
-                  max={mediaDuration && mediaDuration * 1000}
-                  onChange={changeProgressBar}
-                />
-              </div>
-
-              {mediaDuration > 0 && (
-                <div
-                  className={``}
-                  style={{
-                    fontSize: Number(fontSize) * 0.8,
-                  }}
-                >
-                  <div
-                    className={`sarufi-flex-wide ${styles["sarufi-duration"]}`}
-                  >
-                    {isPlaying && (
-                      <div>
-                        <span>
-                          {currentTimeInMin < 10
-                            ? `0${Math.floor(currentTimeInMin)}`
-                            : Math.floor(currentTimeInMin)}
-                        </span>
-                        &nbsp;:&nbsp;
-                        <span>
-                          {currentTimeInSec < 10
-                            ? `0${Math.floor(currentTimeInSec)}`
-                            : `${Math.floor(currentTimeInSec)}`}
-                        </span>
-                      </div>
-                    )}
-                    {!isPlaying && (
-                      <div>
-                        <span>
-                          {mediaDurationInMin < 10
-                            ? `0${Math.floor(mediaDurationInMin)}`
-                            : Math.floor(mediaDurationInMin)}
-                        </span>
-                        &nbsp;:&nbsp;
-                        <span>
-                          {mediaDurationInSec < 10
-                            ? `0${Math.floor(mediaDurationInSec)}`
-                            : `${Math.floor(mediaDurationInSec)}`}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+              <input
+                type="range"
+                id="progress"
+                disabled={!mediaDuration}
+                step={0.0001}
+                value={currentTime && currentTime * 1000}
+                max={mediaDuration && mediaDuration * 1000}
+                onChange={changeProgressBar}
+              />
             </div>
+
+            {mediaDuration > 0 && (
+              <div
+                className={``}
+                style={{
+                  fontSize: Number(fontSize) * 0.8,
+                }}
+              >
+                <div
+                  className={`sarufi-flex-wide ${styles["sarufi-duration"]}`}
+                >
+                  {isPlaying && (
+                    <div>
+                      <span>
+                        {currentTimeInMin < 10
+                          ? `0${Math.floor(currentTimeInMin)}`
+                          : Math.floor(currentTimeInMin)}
+                      </span>
+                      &nbsp;:&nbsp;
+                      <span>
+                        {currentTimeInSec < 10
+                          ? `0${Math.floor(currentTimeInSec)}`
+                          : `${Math.floor(currentTimeInSec)}`}
+                      </span>
+                    </div>
+                  )}
+                  {!isPlaying && (
+                    <div>
+                      <span>
+                        {mediaDurationInMin < 10
+                          ? `0${Math.floor(mediaDurationInMin)}`
+                          : Math.floor(mediaDurationInMin)}
+                      </span>
+                      &nbsp;:&nbsp;
+                      <span>
+                        {mediaDurationInSec < 10
+                          ? `0${Math.floor(mediaDurationInSec)}`
+                          : `${Math.floor(mediaDurationInSec)}`}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
+      {caption && (
+        <p
+          style={{
+            marginTop: ".2rem",
+          }}
+        >
+          {caption}
+        </p>
+      )}
       <audio
+        key={url}
         id={`sarufi-audio-player-${messageIndex}-${index}`}
         src={url ?? ""}
         style={{
           display: "none",
         }}
-        onLoad={() => setLoading(false)}
+        // onLoad={() => setLoading(false)}
       />
     </>
   );

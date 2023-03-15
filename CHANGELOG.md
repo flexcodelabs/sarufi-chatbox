@@ -1,3 +1,5 @@
+# 0.3.0
+* remove unused variables (release)
 # 0.2.9
 * add media support (release)
 # 0.2.8

@@ -267,5 +267,8 @@ body.sarufi-no-scrolling {
     padding: 2rem 1rem;
     margin: 2rem 0;
   }
+  .sarufi-modal .sarufi-close-modal {
+    top: 1rem;
+  }
 }
 /*# sourceMappingURL=style.css.map */

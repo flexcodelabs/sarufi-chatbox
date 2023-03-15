@@ -67,7 +67,8 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
     }
     try {
       const { data } = await axios.get(
-        `${api_url}/plugin/${botId}/unauthenticated`
+        // @ts-ignore
+        `${api_url}/plugin/${window?.botId ?? botId}/unauthenticated`
       );
       setThemeConfig(data?.theme_config);
     } catch (error: any) {}

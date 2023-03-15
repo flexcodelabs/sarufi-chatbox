@@ -50,10 +50,9 @@ const Modal: FC<Props> = ({
         }}
       >
         <div
-          className={`sarufi-flex-end`}
+          className={`sarufi-flex-end sarufi-close-modal`}
           style={{
             position: "absolute",
-            top: 0,
             left: 0,
             width: "calc( 100% - 3rem )",
             height: "50px",

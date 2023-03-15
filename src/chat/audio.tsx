@@ -25,7 +25,7 @@ const AudioPreview = ({
   const [mediaDuration, setmediaDuration] = useState<any>(0);
   const [isBuffering, setBuffering] = useState<any>(false);
   const [seekBeforeWidth, setSeekBeforeWidth] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const audio = document.querySelector(
     `audio#sarufi-audio-player-${messageIndex}-${index}`
@@ -37,18 +37,20 @@ const AudioPreview = ({
       if (audio.paused) {
         audio.play();
         setPlaying(true);
-        const audio_elements = document.getElementsByTagName("audio")
-        for(let i=0; i < audio_elements.length; i++) {
+        const audio_elements = document.getElementsByTagName("audio");
+        for (let i = 0; i < audio_elements.length; i++) {
           let audio_element = audio_elements[i];
-          if (audio_element.id !== `sarufi-audio-player-${messageIndex}-${index}`) {
+          if (
+            audio_element.id !== `sarufi-audio-player-${messageIndex}-${index}`
+          ) {
             audio_element.pause();
           }
         }
 
-        const video_elements = document.getElementsByTagName("video")
-        for(let i=0; i < video_elements.length; i++) {
+        const video_elements = document.getElementsByTagName("video");
+        for (let i = 0; i < video_elements.length; i++) {
           let video_element = video_elements[i];
-          video_element.pause()
+          video_element.pause();
         }
       } else {
         audio.pause();
@@ -232,17 +234,16 @@ const AudioPreview = ({
             )}
           </div>
         </div>
-        
       </div>
       {caption && (
-          <p
-            style={{
-              marginTop: ".2rem",
-            }}
-          >
-            {caption}
-          </p>
-        )}
+        <p
+          style={{
+            marginTop: ".2rem",
+          }}
+        >
+          {caption}
+        </p>
+      )}
       <audio
         key={url}
         id={`sarufi-audio-player-${messageIndex}-${index}`}
@@ -250,7 +251,7 @@ const AudioPreview = ({
         style={{
           display: "none",
         }}
-        onLoad={() => setLoading(false)}
+        // onLoad={() => setLoading(false)}
       />
     </>
   );

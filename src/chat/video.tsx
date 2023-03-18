@@ -1,25 +1,23 @@
 import React, { CSSProperties, useEffect, useState } from "react";
 import { FullSCreen, Pause, Play } from "../assets/icons";
+import ChatLoader from "./chat-loader";
 import styles from "./media.module.css";
+import Modal from "./modal";
 
 const VideoPreview = ({
   url,
   caption,
-  isFullScreen,
-  openFullScreen,
   fontFamily,
   fontSize,
-  index,
-  messageIndex,
+  mediaId,
+  mode,
 }: {
   url: string;
   caption: string;
-  openFullScreen: () => void;
-  isFullScreen: boolean;
   fontFamily: string;
   fontSize: string | number;
-  index: number;
-  messageIndex: number;
+  mediaId: string;
+  mode?: "dark" | "light";
 }) => {
   const [isPlaying, setPlaying] = useState(false);
   const [currentTimeInSec, setCurrentTimeInSec] = useState(0);
@@ -28,32 +26,32 @@ const VideoPreview = ({
   const [mediaDurationInMin, setMediaDurationInMin] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [mediaDuration, setMediaDuration] = useState(0);
-  const [fullScreen, setFullScreen] = useState(false);
+  const [isFullScreen, setFullScreen] = useState(false);
   const [seekBeforeWidth, setSeekBeforeWidth] = useState<number>(0);
   const [bufferedRange, setBufferRange] = useState<any>(0);
   const [loading, setLoading] = useState(true);
 
   const video = document.querySelector(
-    `video#sarufi-video-player-${messageIndex}-${index}`
+    `video#${mediaId}-preview`
   ) as HTMLVideoElement;
 
   const togglePlay = () => {
     if (!isFullScreen && video) {
-      openFullScreen();
+      setFullScreen(true);
       video.play();
-      const video_elements = document.getElementsByTagName("video")
-        for(let i=0; i < video_elements.length; i++) {
-          let video_element = video_elements[i];
-          if (video_element.id !== `sarufi-video-player-${messageIndex}-${index}`) {
-            video_element.pause();
-          }
+      const video_elements = document.getElementsByTagName("video");
+      for (let i = 0; i < video_elements.length; i++) {
+        let video_element = video_elements[i];
+        if (video_element.id !== mediaId) {
+          video_element.pause();
         }
+      }
 
-        const audio_elements = document.getElementsByTagName("audio")
-        for(let i=0; i < audio_elements.length; i++) {
-          let audio_element = audio_elements[i];
-          audio_element.pause()
-        }
+      const audio_elements = document.getElementsByTagName("audio");
+      for (let i = 0; i < audio_elements.length; i++) {
+        let audio_element = audio_elements[i];
+        audio_element.pause();
+      }
       return;
     }
     if (video && mediaDuration) {
@@ -61,7 +59,6 @@ const VideoPreview = ({
       if (video?.paused) {
         video?.play();
         setPlaying(true);
-        
       } else {
         video?.pause();
         setPlaying(false);
@@ -79,7 +76,7 @@ const VideoPreview = ({
 
   const fullScreenToggle = () => {
     if (video) {
-      setFullScreen(!fullScreen);
+      setFullScreen(!isFullScreen);
       video?.requestFullscreen();
     }
   };
@@ -90,6 +87,9 @@ const VideoPreview = ({
 
   useEffect(() => {
     if (video) {
+      video.onerror = () => {
+        setLoading(false);
+      };
       video.onloadeddata = () => {
         setCurrentTimeInSec(video?.currentTime % 60);
         setCurrentTimeInMin((video?.currentTime / 60) % 60);
@@ -104,13 +104,12 @@ const VideoPreview = ({
           setCurrentTimeInSec(video?.currentTime % 60);
           setCurrentTimeInMin((video?.currentTime / 60) % 60);
           setCurrentTime(video?.currentTime);
-          setSeekBeforeWidth((currentTime / mediaDuration) * 100);
+          setSeekBeforeWidth((video.currentTime / video.duration) * 100);
         }
         if (video && video?.duration) {
           setMediaDurationInSec(video?.duration % 60);
           setMediaDurationInMin((video?.duration / 60) % 60);
           setMediaDuration(video?.duration);
-          // setBufferRange(video?.buffered?.end(video?.buffered?.length - 1));
         }
       };
       video.onended = () => {
@@ -140,6 +139,8 @@ const VideoPreview = ({
       setPlaying(false);
       video.pause();
       return;
+    } else if (isFullScreen && video) {
+      video.play();
     }
   }, [isFullScreen]);
 
@@ -158,84 +159,89 @@ const VideoPreview = ({
     "--sarufi-font-size": fontSize,
   } as CSSProperties;
 
-  return (
-    <>
-      <div
-        className={`${styles["sarufi-video-player"]}`}
-        style={{
-          ...style,
-        }}
-      >
-        <video
-          key={url}
-          id={`sarufi-video-player-${messageIndex}-${index}`}
-          disablePictureInPicture
-          controlsList="nodownload"
-          onLoad={() => {
-            setLoading(false);
-          }}
-          onContextMenu={(e) => {
-            e.preventDefault();
-          }}
-          style={{
-            maxWidth: isFullScreen ? "calc( 100vw - 150px )" : "100%",
-            maxHeight: isFullScreen ? "calc( 100vh - 200px )" : "auto",
-            width: "100%",
-            objectFit: "cover",
-            borderRadius: isFullScreen ? 0 : ".3rem",
-          }}
-        >
-          <source src={url} type={"video/mp4"} />
-          <span>Your Browser does not support this video format</span>
-        </video>
-        {
+  const Controllers = ({
+    showBottomControllers,
+  }: {
+    showBottomControllers?: boolean;
+  }) => {
+    return (
+      <>
+        {video?.duration && !video?.error?.code && !loading ? (
           <div
             className={`${styles["sarufi-video-controls"]}`}
-            onClick={togglePlay}
-          >
-            <div
-              className={`${styles["sarufi-center-controls"]} ${
-                !isPlaying ? styles["sarufi-video-not-playing"] : ""
-              }`}
-            >
-              <>
-                <button
-                  title={isPlaying ? "Pause" : "Play"}
-                  style={{
-                    background: "rgba(11,20,26,.35)",
-                    border: "none",
-                    color: "white",
-                    borderRadius: "50%",
-                    height: "50px",
-                    width: "50px",
+            onClick={() => {
+              if (!isFullScreen) {
+                togglePlay();
+              }
+            }}
+            style={{
+              height: isFullScreen ? "50px" : "100%",
+              position: isFullScreen ? "relative" : "absolute",
+              ...(!isFullScreen
+                ? {
+                    top: 0,
+                    left: 0,
                     cursor: "pointer",
-                  }}
-                  className="sarufi-flex-center"
-                >
-                  {!isPlaying ? <Play size={20} /> : <Pause size={20} />}
-                </button>
-              </>
-            </div>
-            {isFullScreen && video?.duration > 0 && (
+                  }
+                : {
+                    backgroundColor: "rgba(0, 0, 0, .6)",
+                  }),
+            }}
+          >
+            {!showBottomControllers && (
               <div
-                className={`${styles["sarufi-video-more-controls"]} ${
+                className={`${styles["sarufi-center-controls"]} ${
                   !isPlaying ? styles["sarufi-video-not-playing"] : ""
                 }`}
               >
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className={`${styles["sarufi-more-controls-container"]}`}
-                >
-                  <div className="sarufi-flex-wide" style={{
-                    padding: "0 .5rem",
-                  }}>
+                <>
+                  <button
+                    title={isPlaying ? "Pause" : "Play"}
+                    style={{
+                      background: "rgba(11,20,26,.35)",
+                      border: "none",
+                      color: "white",
+                      borderRadius: "50%",
+                      height: "30px",
+                      width: "30px",
+                      cursor: "pointer",
+                    }}
+                    onClick={togglePlay}
+                    className="sarufi-flex-center"
+                  >
+                    {!isPlaying ? <Play size={20} /> : <Pause size={20} />}
+                  </button>
+                </>
+              </div>
+            )}
+            {showBottomControllers && (
+              <div className={`${styles["sarufi-video-more-controls"]}`}>
+                <div className={`${styles["sarufi-more-controls-container"]}`}>
+                  <div
+                    className="sarufi-flex-wide"
+                    style={{
+                      padding: "0 .5rem",
+                    }}
+                  >
                     <div
-                      className={`${styles["sarufi-video-time-controls"]}`}
-                      style={{
-                        fontSize: Number(fontSize) * 0.9,
-                        
-                      }}
+                      className={`${styles["sarufi-video-time-controls"]} sarufi-flex-start`}
                     >
+                      <button
+                        title={isPlaying ? "Pause" : "Play"}
+                        style={{
+                          background: "rgba(11,20,26,.35)",
+                          border: "none",
+                          color: "white",
+                          borderRadius: "50%",
+                          height: "30px",
+                          width: "30px",
+                          cursor: "pointer",
+                        }}
+                        onClick={togglePlay}
+                        className="sarufi-flex-center"
+                      >
+                        {!isPlaying ? <Play size={14} /> : <Pause size={14} />}
+                      </button>
                       <span>
                         {currentTimeInMin < 10
                           ? `0${Math.floor(currentTimeInMin)}`
@@ -266,12 +272,16 @@ const VideoPreview = ({
                       onClick={fullScreenToggle}
                       style={{
                         cursor: "pointer",
+                        background: "none",
+                        border: "none",
+                        color: "currentcolor",
                       }}
                     >
                       <FullSCreen size={16} />
                     </button>
                   </div>
                   <div
+                    style={{ ...style }}
                     className={`${styles["sarufi-bar"]} ${styles["sarufi-duration__bar"]}`}
                   >
                     <input
@@ -288,39 +298,153 @@ const VideoPreview = ({
               </div>
             )}
           </div>
-        }
-      </div>
-      {isFullScreen && (
-        <div className="sarufi-flex-center">
-          <div
-            style={{
-              textAlign: "center",
-              fontFamily:
-                fontFamily === "InterRegular"
-                  ? "'Inter', sans-serif"
-                  : fontFamily === "PoppinsRegular"
-                  ? "'Poppins', sans-serif"
-                  : fontFamily === "inherit"
-                  ? "inherit"
-                  : "'Inter', sans-serif",
-              fontSize: fontSize,
-              color: "white",
-            }}
-          >
-            {caption}
-          </div>
-        </div>
-      )}
+        ) : null}
+      </>
+    );
+  };
 
-      {!video?.duration && !loading && (
+  return (
+    <>
+      {loading ? (
         <div
           style={{
-            marginTop: "2rem",
-            color: "red",
-            fontSize: "1.2rem",
+            background:
+              mode === "dark" ? "rgba(255, 255, 255, .1)" : "rgba(0,0,0,.1)",
+            borderRadius: ".3rem",
+            padding: ".5rem",
+            fontSize: 14,
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          Failed to load video resources
+          <ChatLoader />
+        </div>
+      ) : null}
+      <div
+        className={`${styles["sarufi-video-player"]}`}
+        style={{
+          ...style,
+        }}
+      >
+        {
+          <video
+            key={url}
+            id={mediaId}
+            disablePictureInPicture
+            controlsList="nodownload"
+            src={url}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            style={{
+              maxWidth: "100%",
+              height:
+                loading || !video?.duration || video?.error?.code || !video
+                  ? "0"
+                  : "auto",
+              display:
+                loading || !video?.duration || video?.error?.code || !video
+                  ? "none"
+                  : "block",
+              width: "100%",
+              objectFit: "cover",
+              borderRadius: ".3rem",
+            }}
+          >
+            <source src={url} type={"video/mp4"} />
+            <span>Your Browser does not support this video format</span>
+          </video>
+        }
+        {video?.duration ? <Controllers showBottomControllers={false} /> : null}
+        <Modal
+          mode={mode ?? "light"}
+          open={isFullScreen}
+          close={() => setFullScreen(false)}
+          closeWithBackdrop
+        >
+          <div
+            className={`${styles["sarufi-video-player"]}`}
+            style={{
+              maxWidth: "calc( 100vw - 150px )",
+              maxHeight: "calc( 100vh - 200px )",
+              width: "100%",
+              height:
+                loading || !video?.duration || video?.error?.code || !video
+                  ? "0"
+                  : "auto",
+              ...style,
+            }}
+          >
+            <video
+              key={url}
+              id={mediaId + "-preview"}
+              disablePictureInPicture
+              controlsList="nodownload"
+              src={url}
+              onContextMenu={(e) => {
+                e.preventDefault();
+              }}
+              onClick={togglePlay}
+              style={{
+                maxWidth: "calc( 100vw - 150px )",
+                maxHeight: "calc( 100vh - 200px )",
+                width: "100%",
+                height:
+                  loading || !video?.duration || video?.error?.code || !video
+                    ? "0"
+                    : "auto",
+                objectFit: "cover",
+                display: "block",
+              }}
+            >
+              <source src={url} type={"video/mp4"} />
+              <span>Your Browser does not support this video format</span>
+            </video>
+            <Controllers showBottomControllers />
+            <div className="sarufi-flex-center">
+              <div
+                style={{
+                  textAlign: "center",
+                  fontFamily:
+                    fontFamily === "InterRegular"
+                      ? "'Inter', sans-serif"
+                      : fontFamily === "PoppinsRegular"
+                      ? "'Poppins', sans-serif"
+                      : fontFamily === "inherit"
+                      ? "inherit"
+                      : "'Inter', sans-serif",
+                  fontSize: fontSize,
+                  color: "white",
+                  marginTop: ".3rem",
+                }}
+              >
+                {caption}
+              </div>
+            </div>
+          </div>
+        </Modal>
+      </div>
+
+      {video?.error && !video?.duration && !loading && (
+        <div
+          style={{
+            color: mode === "dark" ? "#e76262" : "red",
+            background:
+              mode === "dark" ? "rgba(255, 255, 255, .1)" : "rgba(0,0,0,.1)",
+            borderRadius: ".3rem",
+            padding: ".5rem",
+            fontSize: 14,
+          }}
+        >
+          {video?.error?.code === 1
+            ? "Loading video resorces was aborted"
+            : video?.error?.code === 2
+            ? "Failed to play video due to network error"
+            : video?.error?.code === 3
+            ? "Failed to decode video resorces"
+            : video?.error?.code === 4
+            ? "Video resources not supported"
+            : "Failed to load video resources"}
         </div>
       )}
     </>

@@ -39,7 +39,6 @@ const Chatbox = ({
     setChats((prev: any[]) => {
       return [...prev, { message, sent: true }];
     });
-
     setValue("");
     setLoading(true);
     axios
@@ -117,8 +116,8 @@ const Chatbox = ({
   }, [chats]);
 
   useEffect(() => {
-    setChats([]);
-    setValue("");
+    // setChats([]);
+    // setValue("");
   }, [open]);
 
   return (
@@ -141,11 +140,11 @@ const Chatbox = ({
           }}
         >
           <div
-            className="sarufi-message-body"
+            className="sarufi-message-body sarufi-message-body-w-arrow"
             style={{
               maxWidth: 280,
               background: "var(--sarufi-received-box-bg)",
-              padding: "1rem",
+              padding: "6px 8px 8px 9px",
               marginTop: ".7rem",
               position: "relative",
               borderRadius: ".3rem",
@@ -173,10 +172,10 @@ const Chatbox = ({
             ))}
             {loading && (
               <div
-                className={`sarufi-message-body`}
+                className={`sarufi-message-body sarufi-message-body-w-arrow`}
                 style={{
                   background: "var(--sarufi-received-box-bg)",
-                  padding: "1rem",
+                  padding: "6px 8px 8px 9px",
                   marginTop: ".7rem",
                   position: "relative",
                   borderRadius: ".3rem",
@@ -252,27 +251,51 @@ const Chat = ({
   );
   const [openChoices, setOpenChoices] = useState<boolean>(false);
 
-  useEffect(() => {
-    let container = document.getElementById("sarufi-chat-container");
-    if (openChoices && container) {
-      container.style.overflowY = "hidden";
-    }
-    if (!openChoices && container) {
-      container.style.overflowY = "auto";
-    }
-  }, [openChoices]);
+  // useEffect(() => {
+  //   let container = document.getElementById("sarufi-chat-container");
+  //   if (openChoices && container) {
+  //     container.style.overflowY = "hidden";
+  //   }
+  //   if (!openChoices && container) {
+  //     container.style.overflowY = "auto";
+  //   }
+  // }, [openChoices]);
 
-  // listen to escape keyboard event
-  const keydown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") return setOpenChoices(false);
-  };
+  // // listen to escape keyboard event
+  // const keydown = (e: KeyboardEvent) => {
+  //   if (e.key === "Escape") return setOpenChoices(false);
+  // };
 
-  useEffect(() => {
-    document.addEventListener("keydown", keydown, false);
-    return () => {
-      document.removeEventListener("keydown", keydown, false);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("keydown", keydown, false);
+  //   return () => {
+  //     document.removeEventListener("keydown", keydown, false);
+  //   };
+  // }, []);
+
+  let hasMedia = false; // checks if media are present
+  if (
+    chat?.actions?.find(
+      (action: {
+        send_videos?: [];
+        send_audios?: [];
+        send_images?: [];
+        send_stickes?: [];
+        send_documents?: [];
+        send_locations?: [];
+      }) => {
+        return (
+          (action.send_audios && action.send_audios.length > 0) ||
+          (action.send_images && action.send_images.length > 0) ||
+          (action.send_videos && action.send_videos.length > 0) ||
+          (action.send_documents && action.send_documents.length > 0) ||
+          (action.send_stickes && action.send_stickes.length > 0) ||
+          (action.send_locations && action.send_locations.length > 0)
+        );
+      }
+    )
+  )
+    hasMedia = true;
 
   return (
     <li
@@ -281,27 +304,46 @@ const Chat = ({
         position: "relative",
       }}
     >
+      {!chat?.sent && (
+        <div
+          style={{
+            maxWidth: 280,
+            width: "80%",
+          }}
+        >
+          <Media
+            chat={chat}
+            mode={mode}
+            fontFamily={fontFamily}
+            fontSize={fontSize}
+            messageIndex={index}
+          />
+        </div>
+      )}
       <div
-        className={`sarufi-message-body ${chat?.sent ? "sent" : ""}`}
+        className={`sarufi-message-body ${
+          hasMedia ? "" : "sarufi-message-body-w-arrow"
+        } ${chat?.sent ? "sent" : ""}`}
         style={{
           background: chat?.sent
             ? "var(--sarufi-sent-box-bg)"
             : "var(--sarufi-received-box-bg)",
           maxWidth: 280,
-          padding: "1rem",
-          marginTop: ".7rem",
+          width: hasMedia ? "100%" : "auto",
+          minWidth: "50px",
+          padding: "6px 8px 8px 9px",
+          marginTop: hasMedia ? "0" : "12px",
           position: "relative",
-          borderRadius: ".3rem",
+          borderRadius:
+            chat?.actions?.find((action: any) => action?.send_reply_button)
+              ?.send_reply_button?.action?.buttons?.length > 0 ||
+            ((!message || typeof message !== "string") && chat?.actions && menu)
+              ? "0rem"
+              : ".3rem",
         }}
       >
         {/* show poreview message media */}
-        <Media
-          chat={chat}
-          mode={mode}
-          fontFamily={fontFamily}
-          fontSize={fontSize}
-          messageIndex={index}
-        />
+
         {(!message || typeof message !== "string") && chat?.actions && menu && (
           <>
             {menu["send_button"]?.header && (
@@ -329,7 +371,9 @@ const Chat = ({
         )}
         {(chat?.type || message) && !menu && (
           <Message
-            message={typeof message === "string" ? message : message.join("\n")}
+            message={
+              typeof message === "string" ? message : message?.join("\n")
+            }
           />
         )}
       </div>
@@ -345,18 +389,25 @@ const Chat = ({
             ?.send_reply_button?.action?.buttons?.map((el: any, i: number) => (
               <li
                 style={{
-                  width:
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length === 3 ||
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length === 1
-                      ? "100%"
-                      : "calc( 50% - 0.15rem )",
-                  marginTop: ".3rem",
+                  width: "100%",
+                  marginTop: "2px",
                   background: "var(--sarufi-received-box-bg)",
-                  borderRadius: ".3rem",
+                  borderBottomLeftRadius:
+                    i ===
+                    chat?.actions?.find(
+                      (action: any) => action?.send_reply_button
+                    )?.send_reply_button?.action?.buttons?.length -
+                      1
+                      ? ".3rem"
+                      : "0",
+                  borderBottomRightRadius:
+                    i ===
+                    chat?.actions?.find(
+                      (action: any) => action?.send_reply_button
+                    )?.send_reply_button?.action?.buttons?.length -
+                      1
+                      ? ".3rem"
+                      : "0",
                 }}
                 key={i}
               >
@@ -376,7 +427,7 @@ const Chat = ({
                     color: "var(--sarufi-received-box-link-color)",
                     cursor: "pointer",
                     fontSize: "inherit",
-                    padding: "1rem",
+                    padding: "10px",
                     fontFamily: "var(--sarufi-font-family)",
                   }}
                   className="sarufi-flex-center sarufi-flex-wrap"
@@ -392,9 +443,10 @@ const Chat = ({
           className="bg-neutral-0 sarufi-flex-center"
           style={{
             maxWidth: 280,
-            marginTop: ".3rem",
+            marginTop: "2px",
             background: "var(--sarufi-received-box-bg)",
-            borderRadius: ".3rem",
+            borderBottomLeftRadius: ".3rem",
+            borderBottomRightRadius: ".3rem",
           }}
         >
           <button
@@ -408,7 +460,7 @@ const Chat = ({
               color: "var(--sarufi-received-box-link-color)",
               cursor: "pointer",
               fontSize: "inherit",
-              padding: "1rem",
+              padding: "10px",
               fontFamily: "var(--sarufi-font-family)",
             }}
           >
@@ -561,6 +613,7 @@ const Message = ({
         <p
           style={{
             fontFamily: "var(--sarufi-font-family)",
+            width: "100%",
             ...style,
           }}
           className={className ?? ""}
@@ -572,14 +625,18 @@ const Message = ({
 };
 
 export const wrapUrl = (str: string) => {
-  let url_pattern =
-    /(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}\-\x{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?/gi;
+  const url_pattern =
+    /(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}\-\x{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?/;
+  // return str.replace(url_pattern, function (url) {
+  //   // const protocol_pattern = /^(?:(?:https?|ftp):\/\/)/i;
+  //   // const href =
+  //   //   url?.startsWith("http") || url?.startsWith("ftp") ? url : "http://" + url;
+  //   // return '<a href="' + href + '" target="' + "_blank" + '">' + url + "</a>";
+  //   return "hello";
+  // });
+  // console.log(url_pattern.test(str), "test matching");
 
-  return str.replace(url_pattern, function (url) {
-    var protocol_pattern = /^(?:(?:https?|ftp):\/\/)/i;
-    var href = protocol_pattern.test(url) ? url : "http://" + url;
-    return '<a href="' + href + '" target="' + "_blank" + '">' + url + "</a>";
-  });
+  return str;
 };
 
 export const wrap = (str: string) => {

@@ -102,29 +102,32 @@ body.sarufi-no-scrolling
     a
         color: var(--sarufi-received-box-link-color)
         text-decoration: none
-    &::before
-        content: ""
-        position: absolute
-        left: -11px
-        top: 0
-        width: 0
-        height: 0
-        border-style: solid
-        border-width: 0 11px 9px 0
-        border-color: transparent var(--sarufi-received-box-bg) transparent transparent
+    &.sarufi-message-body-w-arrow
+        &::before
+            content: ""
+            position: absolute
+            left: -11px
+            top: 0
+            width: 0
+            height: 0
+            border-style: solid
+            // color: #e76262
+            border-width: 0 11px 9px 0
+            border-color: transparent var(--sarufi-received-box-bg) transparent transparent
     &.sent
         border-top-left-radius: .3rem !important
         border-top-right-radius: 0 !important
         color: var(--sarufi-sent-box-color)
         a
             color: var(--sarufi-sent-box-link-color)
-        &::before
-            left: 100%
-            width: 0
-            height: 0
-            border-style: solid
-            border-width: 9px 11px 0 0
-            border-color: var(--sarufi-sent-box-bg) transparent transparent transparent
+        &.sarufi-message-body-w-arrow
+            &::before
+                left: 100%
+                width: 0
+                height: 0
+                border-style: solid
+                border-width: 9px 11px 0 0
+                border-color: var(--sarufi-sent-box-bg) transparent transparent transparent
 
 .sarufi-media-preview
     p, span, li, figcaption, button

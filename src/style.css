@@ -172,7 +172,7 @@ body.sarufi-no-scrolling {
   text-decoration: none;
 }
 
-.sarufi-message-body::before {
+.sarufi-message-body.sarufi-message-body-w-arrow::before {
   content: "";
   position: absolute;
   left: -11px;
@@ -194,7 +194,7 @@ body.sarufi-no-scrolling {
   color: var(--sarufi-sent-box-link-color);
 }
 
-.sarufi-message-body.sent::before {
+.sarufi-message-body.sent.sarufi-message-body-w-arrow::before {
   left: 100%;
   width: 0;
   height: 0;

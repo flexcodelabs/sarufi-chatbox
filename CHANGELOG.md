@@ -1,3 +1,5 @@
+# 0.3.3
+* minor UI fixes (release)
 # 0.3.2
 * resolve various media preview issues
 

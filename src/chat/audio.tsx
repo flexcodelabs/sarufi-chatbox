@@ -134,9 +134,6 @@ const AudioPreview = ({
       {loading ? (
         <div
           style={{
-            background:
-              mode === "dark" ? "rgba(255, 255, 255, .1)" : "rgba(0,0,0,.1)",
-            borderRadius: ".3rem",
             padding: ".5rem",
             fontSize: 14,
             display: "flex",

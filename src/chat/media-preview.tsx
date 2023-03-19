@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import Modal from "./modal";
 import AudioPreview from "./audio";
 import VideoPreview from "./video";
@@ -18,7 +18,7 @@ export type Media =
 const MediaPreview = ({
   type,
   url = "",
-  caption,
+  caption = "",
   mode,
   fontFamily,
   fontSize,
@@ -27,10 +27,11 @@ const MediaPreview = ({
   mediaId,
   location,
   showArrow,
+  style,
 }: {
   type: Media;
   url?: string;
-  caption: string;
+  caption?: string;
   mode: "dark" | "light";
   fontFamily: string;
   fontSize: string | number;
@@ -38,6 +39,7 @@ const MediaPreview = ({
   chat?: any;
   mediaId: string;
   showArrow?: boolean;
+  style?: CSSProperties;
   location?: {
     latitude: string;
     longitude: string;
@@ -107,6 +109,7 @@ const MediaPreview = ({
         position: "relative",
         borderTopLeftRadius: findIndex <= findAboveIndex ? "7.5px" : "0",
         borderTopRightRadius: findIndex <= findAboveIndex ? "7.5px" : "0",
+        ...style,
       }}
     >
       <>

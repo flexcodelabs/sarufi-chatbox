@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Modal from "./modal";
-import "../style.css";
 import AudioPreview from "./audio";
 import VideoPreview from "./video";
 import ImagePreview from "./image";
 import { DownloadIcon } from "../assets/icons";
+import { wrap, wrapUrl } from "./chatbox";
+import "../style.css";
 
 export type Media =
   | "images"
@@ -16,30 +17,96 @@ export type Media =
 
 const MediaPreview = ({
   type,
-  url,
+  url = "",
   caption,
   mode,
   fontFamily,
   fontSize,
   index,
-  messageIndex,
+  chat,
+  mediaId,
+  location,
+  showArrow,
 }: {
   type: Media;
-  url: string;
+  url?: string;
   caption: string;
   mode: "dark" | "light";
   fontFamily: string;
   fontSize: string | number;
-  index: number;
-  messageIndex: number;
+  index?: number;
+  chat?: any;
+  mediaId: string;
+  showArrow?: boolean;
+  location?: {
+    latitude: string;
+    longitude: string;
+    address?: string;
+    name?: string;
+  };
 }) => {
   const [fullScreen, setFullScreen] = useState(false);
+  const order = [
+    "images",
+    "stickers",
+    "videos",
+    "audios",
+    "documents",
+    "locations",
+  ];
+  const findIndex = order.findIndex((item) => item === type);
+  const findAboveIndex = order.findIndex((item) => {
+    if (
+      item === "images" &&
+      chat?.actions?.find((action: any) => action.send_images)?.send_images
+        ?.length > 0
+    ) {
+      return true;
+    } else if (
+      item === "stickers" &&
+      chat?.actions?.find((action: any) => action.send_stickers)?.send_stickers
+        ?.length > 0
+    ) {
+      return true;
+    } else if (
+      item === "audios" &&
+      chat?.actions?.find((action: any) => action.send_audios)?.send_audios
+        ?.length > 0
+    ) {
+      return true;
+    } else if (
+      item === "videos" &&
+      chat?.actions?.find((action: any) => action.send_videos)?.send_videos
+        ?.length > 0
+    ) {
+      return true;
+    } else if (
+      item === "documents" &&
+      chat?.actions?.find((action: any) => action.send_documents)
+        ?.send_documents?.length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   return (
     <div
-      className="sarufi-media-preview"
+      className={`sarufi-media-preview sarufi-message-body ${
+        (findIndex <= findAboveIndex && !index) || showArrow
+          ? "sarufi-message-body-w-arrow"
+          : ""
+      }`}
       style={{
-        marginBottom: ".7rem",
+        background: "var(--sarufi-received-box-bg)",
+        maxWidth: 280,
+        padding: "6px 8px 8px 9px",
+        marginTop: findIndex <= findAboveIndex && !index ? ".7rem" : "0",
+        marginBottom: ".3rem",
+        position: "relative",
+        borderTopLeftRadius: findIndex <= findAboveIndex ? "7.5px" : "0",
+        borderTopRightRadius: findIndex <= findAboveIndex ? "7.5px" : "0",
       }}
     >
       <>
@@ -64,10 +131,9 @@ const MediaPreview = ({
           >
             <AudioPreview
               url={url}
-              caption={caption}
-              index={index}
-              messageIndex={messageIndex}
               fontSize={fontSize}
+              mode={mode}
+              mediaId={mediaId}
             />
           </div>
         )}
@@ -75,12 +141,10 @@ const MediaPreview = ({
           <VideoPreview
             url={url}
             caption={caption}
-            openFullScreen={() => setFullScreen(true)}
-            isFullScreen={false}
             fontFamily={fontFamily}
             fontSize={fontSize}
-            index={index}
-            messageIndex={messageIndex}
+            mediaId={mediaId}
+            mode={mode}
           />
         )}
         {type === "documents" && (
@@ -92,7 +156,100 @@ const MediaPreview = ({
               padding: ".1rem .5rem",
             }}
           >
-            <DocumentPreview url={url} caption={caption} />
+            <DocumentPreview url={url} />
+          </div>
+        )}
+        {type === "locations" && (
+          <div
+            style={{
+              margin: ".5rem",
+            }}
+          >
+            <div
+              style={{
+                marginBottom: ".4rem",
+              }}
+            >
+              Location:
+            </div>
+            <div>
+              {location?.latitude && (
+                <div>
+                  <p
+                    style={
+                      {
+                        // marginTop: ".2rem",
+                      }
+                    }
+                  >
+                    <span
+                      style={{
+                        opacity: 0.7,
+                      }}
+                    >
+                      Latitude:
+                    </span>{" "}
+                    {location?.latitude}
+                  </p>
+                </div>
+              )}
+              {/* caption */}
+              {location?.longitude && (
+                <div>
+                  <p
+                    style={{
+                      marginTop: ".2rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        opacity: 0.7,
+                      }}
+                    >
+                      Longitude:
+                    </span>{" "}
+                    {location?.longitude}
+                  </p>
+                </div>
+              )}
+              {location?.name && (
+                <div>
+                  <p
+                    style={{
+                      marginTop: ".2rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        opacity: 0.7,
+                      }}
+                    >
+                      Name:
+                    </span>{" "}
+                    {location?.name}
+                  </p>
+                </div>
+              )}
+              {/* caption */}
+              {location?.address && (
+                <div>
+                  <p
+                    style={{
+                      marginTop: ".2rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        opacity: 0.7,
+                      }}
+                    >
+                      Address:
+                    </span>{" "}
+                    {location?.address}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </>
@@ -113,33 +270,26 @@ const MediaPreview = ({
               fontSize={fontSize}
             />
           )}
-          {type === "videos" && (
-            <VideoPreview
-              url={url}
-              caption={caption}
-              openFullScreen={() => setFullScreen(true)}
-              isFullScreen={fullScreen}
-              fontFamily={fontFamily}
-              fontSize={fontSize}
-              index={index}
-              messageIndex={messageIndex}
-            />
-          )}
         </>
       </Modal>
+      {caption && (
+        <p
+          style={{
+            margin: ".5rem 0 .7rem",
+            color: "var(--sarufi-received-box-color)",
+            fontFamily: "var(--sarufi-font-family)",
+          }}
+        >
+          {wrap(wrapUrl(caption))}
+        </p>
+      )}
     </div>
   );
 };
 
 export default MediaPreview;
 
-const DocumentPreview = ({
-  url,
-  caption,
-}: {
-  url: string;
-  caption: string;
-}) => {
+const DocumentPreview = ({ url }: { url: string }) => {
   return (
     <div
       style={{
@@ -171,13 +321,6 @@ const DocumentPreview = ({
           >
             {url}
           </span>
-        </span>
-        <span
-          style={{
-            opacity: "0.7",
-          }}
-        >
-          {caption}
         </span>
       </div>
       {/* download */}{" "}

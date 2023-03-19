@@ -30,7 +30,8 @@ const Media = ({
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 index={index}
-                messageIndex={messageIndex}
+                mediaId={`sarufi-images-player-${messageIndex}-${index}`}
+                chat={chat}
               />
             )
           )}
@@ -49,7 +50,8 @@ const Media = ({
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 index={index}
-                messageIndex={messageIndex}
+                mediaId={`sarufi-stickers-player-${messageIndex}-${index}`}
+                chat={chat}
               />
             )
           )}
@@ -67,7 +69,8 @@ const Media = ({
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 index={index}
-                messageIndex={messageIndex}
+                mediaId={`sarufi-videos-player-${messageIndex}-${index}`}
+                chat={chat}
               />
             )
           )}
@@ -85,7 +88,8 @@ const Media = ({
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 index={index}
-                messageIndex={messageIndex}
+                mediaId={`sarufi-audios-player-${messageIndex}-${index}`}
+                chat={chat}
               />
             )
           )}
@@ -103,15 +107,16 @@ const Media = ({
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 index={index}
-                messageIndex={messageIndex}
+                mediaId={`sarufi-documents-player-${messageIndex}-${index}`}
+                chat={chat}
               />
             )
           )}
 
-      {chat?.actions?.find((action: any) => action?.send_location) &&
+      {chat?.actions?.find((action: any) => action?.send_locations) &&
         chat?.actions
-          ?.find((action: any) => action?.send_location)
-          ?.send_location?.map(
+          ?.find((action: any) => action?.send_locations)
+          ?.send_locations?.map(
             (
               location: {
                 latitude: string;
@@ -125,7 +130,6 @@ const Media = ({
                 key={index}
                 style={{
                   fontSize: "calc(var(--sarufi-font-size) * 0.9 )",
-                  marginBottom: ".7rem",
                   background:
                     mode === "dark"
                       ? "rgba(255, 255, 255, .1)"

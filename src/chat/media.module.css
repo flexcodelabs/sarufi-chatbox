@@ -136,9 +136,6 @@ input[type=range]:focus::-ms-fill-upper {
 .sarufi-video-player {
   width: 100%;
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .sarufi-video-player .sarufi-bar.sarufi-duration__bar input::before {
@@ -146,9 +143,6 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .sarufi-video-player .sarufi-video-controls {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -162,40 +156,14 @@ input[type=range]:focus::-ms-fill-upper {
           align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background-color: transparent;
-  -webkit-transition: all .2s ease;
-  transition: all .2s ease;
-  -webkit-transition: all .2s ease-out;
-  -moz-transition: all .2s ease-out;
-  -o-transition: all .2s ease-out;
-  cursor: pointer;
-}
-
-.sarufi-video-player .sarufi-video-controls:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.sarufi-video-player .sarufi-video-controls:hover .sarufi-video-more-controls {
-  opacity: 1;
-}
-
-.sarufi-video-player .sarufi-video-controls:hover .sarufi-center-controls {
-  opacity: 1;
-}
-
-.sarufi-video-player .sarufi-video-controls button {
-  background: transparent;
-  border: none;
-  color: white;
+      -ms-flex-direction: colum;
+          flex-direction: colum;
 }
 
 .sarufi-video-player .sarufi-video-controls .sarufi-video-more-controls {
   cursor: default;
   bottom: 0;
-  opacity: 0;
-  height: 100px;
+  height: 100%;
   width: 100%;
   position: absolute;
   display: -webkit-box;
@@ -207,14 +175,8 @@ input[type=range]:focus::-ms-fill-upper {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 0)), to(rgba(0, 0, 0, 0.9)));
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, rgba(0, 0, 0, 0.9) 100%);
   -webkit-transition: .2s;
   transition: .2s;
-}
-
-.sarufi-video-player .sarufi-video-controls .sarufi-video-more-controls.sarufi-video-not-playing {
-  opacity: 1;
 }
 
 .sarufi-video-player .sarufi-video-controls .sarufi-more-controls-container {
@@ -224,15 +186,5 @@ input[type=range]:focus::-ms-fill-upper {
   left: 0;
   padding: .5rem 0 0;
   color: white;
-}
-
-.sarufi-video-player .sarufi-video-controls .sarufi-center-controls {
-  opacity: 0;
-  -webkit-transition: .2s;
-  transition: .2s;
-}
-
-.sarufi-video-player .sarufi-video-controls .sarufi-center-controls.sarufi-video-not-playing {
-  opacity: 1;
 }
 /*# sourceMappingURL=media.module.css.map */

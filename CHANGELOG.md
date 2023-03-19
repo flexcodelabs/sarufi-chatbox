@@ -1,3 +1,7 @@
+# 0.3.2
+* resolve various media preview issues
+
+* fix replacing url with a tags issue (release)
 # 0.3.1
 * fix plugin cdn scripts to accept botId from window object to fetch plugin coonfigurations (release)
 

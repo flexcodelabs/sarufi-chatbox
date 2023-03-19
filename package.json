@@ -1,6 +1,6 @@
 {
   "name": "react-sarufi-chatbox",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",

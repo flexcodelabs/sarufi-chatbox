@@ -116,8 +116,8 @@ const Chatbox = ({
   }, [chats]);
 
   useEffect(() => {
-    // setChats([]);
-    // setValue("");
+    setChats([]);
+    setValue("");
   }, [open]);
 
   return (

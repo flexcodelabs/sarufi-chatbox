@@ -1,3 +1,8 @@
+# 0.3.4
+* minor UI changes and bug fixes
+Fix image and video layout shift on modal preview
+add loader on video and audio buffering
+fix document download;
 # 0.3.3
 * minor UI fixes (release)
 # 0.3.2

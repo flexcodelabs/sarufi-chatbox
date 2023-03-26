@@ -1,3 +1,5 @@
+# 0.3.5
+* minor bug fixes (release)
 # 0.3.4
 * minor UI changes and bug fixes
 Fix image and video layout shift on modal preview

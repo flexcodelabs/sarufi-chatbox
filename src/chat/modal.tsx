@@ -54,7 +54,7 @@ const Modal: FC<Props> = ({
           style={{
             position: "absolute",
             left: 0,
-            width: "calc( 100% - 3rem )",
+            width: "100%",
             height: "50px",
             padding: "1rem 2rem",
           }}

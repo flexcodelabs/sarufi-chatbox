@@ -1,3 +1,5 @@
+# 0.3.6
+* minor bug fixes (release)
 # 0.3.5
 * minor bug fixes (release)
 # 0.3.4

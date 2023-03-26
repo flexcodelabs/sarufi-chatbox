@@ -30,6 +30,7 @@ const VideoPreview = ({
   const [seekBeforeWidth, setSeekBeforeWidth] = useState<number>(0);
   const [bufferedRange, setBufferRange] = useState<any>(0);
   const [loading, setLoading] = useState(true);
+  const [isBuffering, setBuffering] = useState<any>(true);
 
   const video = document.querySelector(
     `video#${mediaId}-preview`
@@ -90,6 +91,12 @@ const VideoPreview = ({
       video.onerror = () => {
         setLoading(false);
       };
+      video.onwaiting = () => {
+        setBuffering(true);
+      };
+      video.onplaying = () => {
+        setBuffering(false);
+      };
       video.onloadeddata = () => {
         setCurrentTimeInSec(video?.currentTime % 60);
         setCurrentTimeInMin((video?.currentTime / 60) % 60);
@@ -98,6 +105,7 @@ const VideoPreview = ({
         setMediaDuration(video?.duration);
         setCurrentTime(video?.currentTime);
         setLoading(false);
+        setBuffering(false);
       };
       video.ontimeupdate = () => {
         if (video && video?.currentTime) {
@@ -209,7 +217,7 @@ const VideoPreview = ({
                     onClick={togglePlay}
                     className="sarufi-flex-center"
                   >
-                    {!isPlaying ? <Play size={20} /> : <Pause size={20} />}
+                    {<Play size={20} />}
                   </button>
                 </>
               </div>
@@ -236,31 +244,62 @@ const VideoPreview = ({
                           height: "30px",
                           width: "30px",
                           cursor: "pointer",
+                          ...{
+                            "--sarufi-received-box-color": "white",
+                          },
                         }}
                         onClick={togglePlay}
                         className="sarufi-flex-center"
                       >
-                        {!isPlaying ? <Play size={14} /> : <Pause size={14} />}
+                        {isBuffering ? (
+                          <>
+                            <ChatLoader fromPlay />
+                          </>
+                        ) : (
+                          <>
+                            {!isPlaying ? (
+                              <Play size={14} />
+                            ) : (
+                              <Pause size={14} />
+                            )}
+                          </>
+                        )}
                       </button>
-                      <span>
+                      <span
+                        style={{
+                          transform: "scale(0.8)",
+                        }}
+                      >
                         {currentTimeInMin < 10
                           ? `0${Math.floor(currentTimeInMin)}`
                           : Math.floor(currentTimeInMin)}
                       </span>
                       &nbsp;:&nbsp;
-                      <span>
+                      <span
+                        style={{
+                          transform: "scale(0.8)",
+                        }}
+                      >
                         {currentTimeInSec < 10
                           ? `0${Math.floor(currentTimeInSec)}`
                           : `${Math.floor(currentTimeInSec)}`}
                       </span>
                       &nbsp;/&nbsp;
-                      <span>
+                      <span
+                        style={{
+                          transform: "scale(0.8)",
+                        }}
+                      >
                         {mediaDurationInMin < 10
                           ? `0${Math.floor(mediaDurationInMin)}`
                           : Math.floor(mediaDurationInMin)}
                       </span>
                       &nbsp;:&nbsp;
-                      <span>
+                      <span
+                        style={{
+                          transform: "scale(0.8)",
+                        }}
+                      >
                         {mediaDurationInSec < 10
                           ? `0${Math.floor(mediaDurationInSec)}`
                           : `${Math.floor(mediaDurationInSec)}`}
@@ -277,7 +316,7 @@ const VideoPreview = ({
                         color: "currentcolor",
                       }}
                     >
-                      <FullSCreen size={16} />
+                      <FullSCreen size={14} />
                     </button>
                   </div>
                   <div
@@ -365,13 +404,10 @@ const VideoPreview = ({
           <div
             className={`${styles["sarufi-video-player"]}`}
             style={{
-              maxWidth: "calc( 100vw - 150px )",
-              maxHeight: "calc( 100vh - 200px )",
+              maxWidth: "calc( 100vw - 30px )",
+              maxHeight: "calc( 100vh - 180px )",
               width: "100%",
-              height:
-                loading || !video?.duration || video?.error?.code || !video
-                  ? "0"
-                  : "auto",
+              height: "auto",
               ...style,
             }}
           >
@@ -386,13 +422,10 @@ const VideoPreview = ({
               }}
               onClick={togglePlay}
               style={{
-                maxWidth: "calc( 100vw - 150px )",
-                maxHeight: "calc( 100vh - 200px )",
+                maxWidth: "calc( 100vw - 30px )",
+                maxHeight: "calc( 100vh - 180px )",
                 width: "100%",
-                height:
-                  loading || !video?.duration || video?.error?.code || !video
-                    ? "0"
-                    : "auto",
+                height: "auto",
                 objectFit: "cover",
                 display: "block",
               }}

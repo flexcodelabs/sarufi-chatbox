@@ -37,7 +37,7 @@ const ImagePreview = ({
         }}
       >
         <picture
-          className="sarufi-flex-start"
+          className="sarufi-flex-center"
           onClick={openFullScreen}
           tabIndex={0}
         >
@@ -53,8 +53,8 @@ const ImagePreview = ({
                     objectFit: "cover",
                   }
                 : {
-                    maxHeight: "calc( 100vh - 200px )",
-                    maxWidth: "calc( 100vw - 150px )",
+                    maxHeight: "calc( 100vh - 180px )",
+                    maxWidth: "calc( 100vw - 30px )",
                     objectFit: "contain",
                   }),
             }}

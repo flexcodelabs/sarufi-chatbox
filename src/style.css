@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap");
+
 body.sarufi-no-scrolling {
   overflow-y: hidden;
 }
@@ -14,11 +15,11 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .sarufi-flex-wide {
@@ -26,14 +27,14 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .sarufi-flex-end {
@@ -41,14 +42,14 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 .sarufi-flex-start {
@@ -56,14 +57,14 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 .sarufi-flex-around {
@@ -71,13 +72,13 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 }
 
 .sarufi-flex-even {
@@ -85,51 +86,51 @@ body.sarufi-no-scrolling {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
 }
 
 .sarufi-flex-column {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .sarufi-flex-row {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 .sarufi-align-start {
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
 }
 
 .sarufi-align-end {
   -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
 }
 
 .sarufi-align-center {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .sarufi-flex-wrap {
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .sarufi-scroll-bar::-webkit-scrollbar {
@@ -144,7 +145,7 @@ body.sarufi-no-scrolling {
 
 .sarufi-shadow-xl {
   -webkit-box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04);
-          box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .sarufi-ellipsed-text {
@@ -160,7 +161,7 @@ body.sarufi-no-scrolling {
   position: relative;
   border-top-left-radius: 0 !important;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   font-size: inherit;
   color: var(--sarufi-received-box-color);
   -webkit-transition: .45s all;
@@ -203,7 +204,11 @@ body.sarufi-no-scrolling {
   border-color: var(--sarufi-sent-box-bg) transparent transparent transparent;
 }
 
-.sarufi-media-preview p, .sarufi-media-preview span, .sarufi-media-preview li, .sarufi-media-preview figcaption, .sarufi-media-preview button {
+.sarufi-media-preview p,
+.sarufi-media-preview span,
+.sarufi-media-preview li,
+.sarufi-media-preview figcaption,
+.sarufi-media-preview button {
   font-family: var(--sarufi-font-family);
 }
 
@@ -216,8 +221,8 @@ body.sarufi-no-scrolling {
   max-height: 100vh;
   height: 100vh;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   opacity: 0;
   pointer-events: none;
 }
@@ -239,13 +244,17 @@ body.sarufi-no-scrolling {
   margin: 0;
 }
 
-.sarufi-modal .sarufi-container p, .sarufi-modal .sarufi-container span, .sarufi-modal .sarufi-container li, .sarufi-modal .sarufi-container figcaption, .sarufi-modal .sarufi-container button {
+.sarufi-modal .sarufi-container p,
+.sarufi-modal .sarufi-container span,
+.sarufi-modal .sarufi-container li,
+.sarufi-modal .sarufi-container figcaption,
+.sarufi-modal .sarufi-container button {
   font-family: var(--sarufi-font-family) !important;
 }
 
 .sarufi-modal .sarufi-modal-backdrop {
   position: fixed;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.95);
   height: 100vh;
   width: 100vw;
   top: 0;
@@ -267,8 +276,10 @@ body.sarufi-no-scrolling {
     padding: 2rem 1rem;
     margin: 2rem 0;
   }
+
   .sarufi-modal .sarufi-close-modal {
     top: 1rem;
   }
 }
+
 /*# sourceMappingURL=style.css.map */

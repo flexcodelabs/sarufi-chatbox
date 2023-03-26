@@ -89,6 +89,9 @@ const Modal: FC<Props> = ({
               e.stopPropagation();
               e.nativeEvent.stopImmediatePropagation();
             }}
+            style={{
+              width: "max-content",
+            }}
           >
             {children}
           </div>

@@ -4,7 +4,8 @@ import AudioPreview from "./audio";
 import VideoPreview from "./video";
 import ImagePreview from "./image";
 import { DownloadIcon } from "../assets/icons";
-import { wrap, wrapUrl } from "./chatbox";
+import { wrap } from "./chatbox";
+// import { wrapUrl } from "./chatbox";
 import "../style.css";
 
 export type Media =
@@ -283,7 +284,8 @@ const MediaPreview = ({
             fontFamily: "var(--sarufi-font-family)",
           }}
         >
-          {wrap(wrapUrl(caption))}
+          {/* {wrap(wrapUrl(caption))} */}
+          {wrap(caption)}
         </p>
       )}
     </div>
@@ -312,21 +314,13 @@ const DocumentPreview = ({ url }: { url: string }) => {
             width: "100%",
             overflow: "hidden",
             display: "-webkit-box",
-            WebkitLineClamp: 1,
+            WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical",
           }}
         >
-          <span
-            style={{
-              display: "-webkit-box",
-              width: "100%",
-            }}
-          >
-            {url}
-          </span>
+          <span>{url}</span>
         </span>
       </div>
-      {/* download */}{" "}
       <button
         style={{
           background: "none",
@@ -343,22 +337,11 @@ const DocumentPreview = ({ url }: { url: string }) => {
 };
 
 export function downloadFile(url: string) {
-  fetch(url)
-    .then((res) => res.blob())
-    .then((file) => {
-      let tempUrl = URL.createObjectURL(file);
-
-      const aTag = document.createElement("a");
-      aTag.href = tempUrl;
-      aTag.target = "_blank";
-      aTag.download = "sarufi_document";
-      aTag.download = url.replace(/^.*[\\\/]/, "");
-      document.body.appendChild(aTag);
-      aTag.click();
-      URL.revokeObjectURL(tempUrl);
-      aTag.remove();
-    })
-    .catch(() => {
-      alert("Failed to download file!");
-    });
+  const aTag = document.createElement("a");
+  aTag.href = url;
+  aTag.download = "sarufi_document";
+  aTag.download = url.replace(/^.*[\\\/]/, "");
+  document.body.appendChild(aTag);
+  aTag.click();
+  aTag.remove();
 }

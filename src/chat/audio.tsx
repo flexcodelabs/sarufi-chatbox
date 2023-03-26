@@ -86,6 +86,7 @@ const AudioPreview = ({
         setmediaDuration(audio.duration);
         setCurrentTime(audio.currentTime);
         setLoading(false);
+        setBuffering(false);
       };
       audio.ontimeupdate = () => {
         if (audio && audio.currentTime) {
@@ -171,17 +172,15 @@ const AudioPreview = ({
               accessKey="Space"
               type="button"
             >
-              {isBuffering ? (
-                <span className={`sarufi-flex`}>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              ) : (
-                <span title={isPlaying ? "Pause" : "Play"}>
-                  {!isPlaying ? <Play /> : <Pause />}
-                </span>
-              )}
+              <span title={isPlaying ? "Pause" : "Play"}>
+                {isBuffering ? (
+                  <>
+                    <ChatLoader fromPlay />
+                  </>
+                ) : (
+                  <>{!isPlaying ? <Play /> : <Pause />}</>
+                )}
+              </span>
             </button>
             <div
               style={{

@@ -251,27 +251,27 @@ const Chat = ({
   );
   const [openChoices, setOpenChoices] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   let container = document.getElementById("sarufi-chat-container");
-  //   if (openChoices && container) {
-  //     container.style.overflowY = "hidden";
-  //   }
-  //   if (!openChoices && container) {
-  //     container.style.overflowY = "auto";
-  //   }
-  // }, [openChoices]);
+  useEffect(() => {
+    let container = document.getElementById("sarufi-chat-container");
+    if (openChoices && container) {
+      container.style.overflowY = "hidden";
+    }
+    if (!openChoices && container) {
+      container.style.overflowY = "auto";
+    }
+  }, [openChoices]);
 
-  // // listen to escape keyboard event
-  // const keydown = (e: KeyboardEvent) => {
-  //   if (e.key === "Escape") return setOpenChoices(false);
-  // };
+  // listen to escape keyboard event
+  const keydown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") return setOpenChoices(false);
+  };
 
-  // useEffect(() => {
-  //   document.addEventListener("keydown", keydown, false);
-  //   return () => {
-  //     document.removeEventListener("keydown", keydown, false);
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener("keydown", keydown, false);
+    return () => {
+      document.removeEventListener("keydown", keydown, false);
+    };
+  }, []);
 
   let hasMedia = false; // checks if media are present
   if (
@@ -280,7 +280,7 @@ const Chat = ({
         send_videos?: [];
         send_audios?: [];
         send_images?: [];
-        send_stickes?: [];
+        send_stickers?: [];
         send_documents?: [];
         send_locations?: [];
       }) => {
@@ -289,7 +289,7 @@ const Chat = ({
           (action.send_images && action.send_images.length > 0) ||
           (action.send_videos && action.send_videos.length > 0) ||
           (action.send_documents && action.send_documents.length > 0) ||
-          (action.send_stickes && action.send_stickes.length > 0) ||
+          (action.send_stickers && action.send_stickers.length > 0) ||
           (action.send_locations && action.send_locations.length > 0)
         );
       }
@@ -340,10 +340,11 @@ const Chat = ({
             ((!message || typeof message !== "string") && chat?.actions && menu)
               ? "0rem"
               : ".3rem",
+          ...(!hasMedia && !chat?.sent
+            ? { borderTopRightRadius: ".3rem" }
+            : {}),
         }}
       >
-        {/* show poreview message media */}
-
         {(!message || typeof message !== "string") && chat?.actions && menu && (
           <>
             {menu["send_button"]?.header && (
@@ -617,7 +618,8 @@ const Message = ({
             ...style,
           }}
           className={className ?? ""}
-          dangerouslySetInnerHTML={{ __html: wrapUrl(wrap(message)) }}
+          dangerouslySetInnerHTML={{ __html: wrap(message) }}
+          // dangerouslySetInnerHTML={{__html: wrapUrl(wrap(message))}}
         />
       )}
     </>

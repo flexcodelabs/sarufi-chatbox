@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { CSSProperties, useEffect, useState } from "react";
 import { Close, TextComponent } from "../assets/icons";
-import styles from "./chat.module.css";
+import "./chat.css";
 import Chatbox from "./chatbox";
 
 interface ThemeType {
@@ -114,11 +114,9 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
 
   return (
     <div
-      className={`${styles["sarufi-chat-container"]} ${
-        theme?.placement === "left"
-          ? styles["sarufi-left-align"]
-          : styles["sarufi-right-align"]
-      } ${open ? styles.open : ""}
+      className={`sarufi-chat-container ${
+        theme?.placement === "left" ? "sarufi-left-align" : "sarufi-right-align"
+      } ${open ? "open" : ""}
       ${open ? "sarufi-shadow-xl" : "sarufi-flex-center"}`}
       style={{
         position: "fixed",

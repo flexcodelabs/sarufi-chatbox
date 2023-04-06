@@ -1,7 +1,6 @@
 import React, { CSSProperties, useEffect, useState } from "react";
 import { FullSCreen, Pause, Play } from "../assets/icons";
 import ChatLoader from "./chat-loader";
-import styles from "./media.module.css";
 import Modal from "./modal";
 
 const VideoPreview = ({
@@ -176,7 +175,7 @@ const VideoPreview = ({
       <>
         {video?.duration && !video?.error?.code && !loading ? (
           <div
-            className={`${styles["sarufi-video-controls"]}`}
+            className={`sarufi-video-controls`}
             onClick={() => {
               if (!isFullScreen) {
                 togglePlay();
@@ -198,8 +197,8 @@ const VideoPreview = ({
           >
             {!showBottomControllers && (
               <div
-                className={`${styles["sarufi-center-controls"]} ${
-                  !isPlaying ? styles["sarufi-video-not-playing"] : ""
+                className={`sarufi-center-controls ${
+                  !isPlaying ? "sarufi-video-not-playing" : ""
                 }`}
               >
                 <>
@@ -223,8 +222,8 @@ const VideoPreview = ({
               </div>
             )}
             {showBottomControllers && (
-              <div className={`${styles["sarufi-video-more-controls"]}`}>
-                <div className={`${styles["sarufi-more-controls-container"]}`}>
+              <div className={`sarufi-video-more-controls`}>
+                <div className={`sarufi-more-controls-container`}>
                   <div
                     className="sarufi-flex-wide"
                     style={{
@@ -232,7 +231,7 @@ const VideoPreview = ({
                     }}
                   >
                     <div
-                      className={`${styles["sarufi-video-time-controls"]} sarufi-flex-start`}
+                      className={`sarufi-video-time-controls sarufi-flex-start`}
                     >
                       <button
                         title={isPlaying ? "Pause" : "Play"}
@@ -307,7 +306,7 @@ const VideoPreview = ({
                     </div>
 
                     <button
-                      className={`${styles["sarufi-video-full-screen-toggle"]}`}
+                      className={`sarufi-video-full-screen-toggle`}
                       onClick={fullScreenToggle}
                       style={{
                         cursor: "pointer",
@@ -321,7 +320,7 @@ const VideoPreview = ({
                   </div>
                   <div
                     style={{ ...style }}
-                    className={`${styles["sarufi-bar"]} ${styles["sarufi-duration__bar"]}`}
+                    className={`sarufi-bar sarufi-duration__bar`}
                   >
                     <input
                       type="range"
@@ -360,7 +359,7 @@ const VideoPreview = ({
         </div>
       ) : null}
       <div
-        className={`${styles["sarufi-video-player"]}`}
+        className={`sarufi-video-player`}
         style={{
           ...style,
         }}
@@ -402,7 +401,7 @@ const VideoPreview = ({
           closeWithBackdrop
         >
           <div
-            className={`${styles["sarufi-video-player"]}`}
+            className={`sarufi-video-player`}
             style={{
               maxWidth: "calc( 100vw - 30px )",
               maxHeight: "calc( 100vh - 180px )",

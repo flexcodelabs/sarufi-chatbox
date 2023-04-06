@@ -1,5 +1,4 @@
 import React, { FC, ChangeEvent, useState } from "react";
-import styles from "./chat.module.css";
 
 interface Props {
   disabled?: boolean;
@@ -42,13 +41,13 @@ const Input: FC<Props> = ({
 
   return (
     <div
-      className={`${styles["sarufi-field-group"]}`}
+      className={`sarufi-field-group`}
       style={{
         marginBottom: "1.5rem",
       }}
     >
       <div
-        className={`${styles["input-group"]}`}
+        className={`input-group`}
         style={{
           position: "relative",
         }}

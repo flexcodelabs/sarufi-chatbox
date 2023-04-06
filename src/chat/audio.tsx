@@ -1,7 +1,6 @@
 import React, { CSSProperties, useEffect, useState } from "react";
 import { Pause, Play } from "../assets/icons";
 import ChatLoader from "./chat-loader";
-import styles from "./media.module.css";
 
 const AudioPreview = ({
   url,
@@ -149,7 +148,7 @@ const AudioPreview = ({
           style={{
             ...style,
           }}
-          className={`${styles["sarufi-audio-player"]}`}
+          className={`sarufi-audio-player`}
         >
           <div
             style={{
@@ -187,9 +186,7 @@ const AudioPreview = ({
                 width: "calc( 100% - 50px )",
               }}
             >
-              <div
-                className={`${styles["sarufi-bar"]} ${styles["sarufi-duration__bar"]}`}
-              >
+              <div className={`sarufi-bar sarufi-duration__bar`}>
                 <input
                   type="range"
                   id="progress"
@@ -208,9 +205,7 @@ const AudioPreview = ({
                     fontSize: Number(fontSize) * 0.8,
                   }}
                 >
-                  <div
-                    className={`sarufi-flex-wide ${styles["sarufi-duration"]}`}
-                  >
+                  <div className={`sarufi-flex-wide sarufi-duration`}>
                     {isPlaying && (
                       <div>
                         <span>

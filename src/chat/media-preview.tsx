@@ -4,9 +4,9 @@ import AudioPreview from "./audio";
 import VideoPreview from "./video";
 import ImagePreview from "./image";
 import { DownloadIcon } from "../assets/icons";
-import { wrap } from "./chatbox";
-// import { wrapUrl } from "./chatbox";
+import { wrap, wrapUrl } from "./chatbox";
 import "../style.css";
+import "./media.css";
 
 export type Media =
   | "images"
@@ -284,8 +284,7 @@ const MediaPreview = ({
             fontFamily: "var(--sarufi-font-family)",
           }}
         >
-          {/* {wrap(wrapUrl(caption))} */}
-          {wrap(caption)}
+          {wrap(wrapUrl(caption))}
         </p>
       )}
     </div>

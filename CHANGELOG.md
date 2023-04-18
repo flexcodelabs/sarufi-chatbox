@@ -1,3 +1,7 @@
+# 0.3.8
+* add new version for the next deployment
+
+* release: fix overwriting input styles
 # 0.3.6
 
 - resolve css issue for next app and fix url issue (release)

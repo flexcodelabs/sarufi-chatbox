@@ -137,6 +137,7 @@
 
 .sarufi-field-group .input-group {
   position: relative;
+  display: block !important;
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;

@@ -1,3 +1,5 @@
+# 0.4.1
+* release: remove build error on plugin scripts
 # 0.4.0
 * release: release unpushed changes
 # 0.3.9

@@ -1,3 +1,5 @@
+# 0.4.0
+* release: release unpushed changes
 # 0.3.9
 * release: resolve padding issues on buttons
 # 0.3.8

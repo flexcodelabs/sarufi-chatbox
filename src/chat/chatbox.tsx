@@ -515,6 +515,7 @@ const Chat = ({
                     cursor: "pointer",
                     color: "var(--sarufi-received-box-color)",
                   }}
+                  className="sarufi-button"
                 >
                   <Close size={18} />
                 </button>
@@ -649,7 +650,7 @@ export const wrapUrl = (str: string) => {
       ]);
     });
 
-    strArr = [...strArr, newWordsArr.join("\n")]
+    strArr = [...strArr, newWordsArr.join("\n")];
   });
   return strArr.join(" ");
 };

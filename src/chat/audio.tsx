@@ -158,7 +158,7 @@ const AudioPreview = ({
             className={`sarufi-flex-start`}
           >
             <button
-              className="sarufi-flex-start"
+              className="sarufi-flex-start sarufi-button"
               onClick={togglePlay}
               style={{
                 background: "none",

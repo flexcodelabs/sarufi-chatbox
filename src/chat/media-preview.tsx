@@ -327,6 +327,7 @@ const DocumentPreview = ({ url }: { url: string }) => {
           cursor: "pointer",
           color: "var(--sent-box-text-color)",
         }}
+        className="sarufi-button"
         onClick={() => downloadFile(url)}
       >
         <DownloadIcon />

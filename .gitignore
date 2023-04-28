@@ -5,3 +5,4 @@ lib
 *.env
 dist
 *.vscode
+*.DS_Store

@@ -214,7 +214,7 @@ const VideoPreview = ({
                       cursor: "pointer",
                     }}
                     onClick={togglePlay}
-                    className="sarufi-flex-center"
+                    className="sarufi-flex-center sarufi-button"
                   >
                     {<Play size={20} />}
                   </button>
@@ -248,7 +248,7 @@ const VideoPreview = ({
                           },
                         }}
                         onClick={togglePlay}
-                        className="sarufi-flex-center"
+                        className="sarufi-flex-center sarufi-button"
                       >
                         {isBuffering ? (
                           <>
@@ -306,7 +306,7 @@ const VideoPreview = ({
                     </div>
 
                     <button
-                      className={`sarufi-video-full-screen-toggle`}
+                      className={`sarufi-video-full-screen-toggle sarufi-button`}
                       onClick={fullScreenToggle}
                       style={{
                         cursor: "pointer",

@@ -54,9 +54,9 @@ const Modal: FC<Props> = ({
           style={{
             position: "absolute",
             left: 0,
-            width: "100%",
+            width: "100vw",
             height: "50px",
-            padding: "1rem 2rem",
+            // padding: "1rem 2rem",
           }}
         >
           <button
@@ -72,6 +72,7 @@ const Modal: FC<Props> = ({
               border: "none",
               cursor: "pointer",
               color: "rgba(255,255,255,.8)",
+              padding: "1rem 2rem",
             }}
           >
             <Close />

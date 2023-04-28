@@ -62,7 +62,7 @@ const Input: FC<Props> = ({
             maxLength={maxLength}
             disabled={disabled}
             placeholder={placeholder}
-            className={`scroll-bar`}
+            className={`scroll-bar sarufi-textarea`}
             onChange={onChange}
             autoComplete={autoComplete}
             value={value}
@@ -72,6 +72,8 @@ const Input: FC<Props> = ({
               padding: ".7rem .7rem",
               paddingRight: 45,
               height: 60,
+              minHeight: 60,
+              maxHeight: 60,
               borderRadius: "0.3rem",
               fontFamily: "var(--sarufi-font-family)",
               ...(mode === "dark"

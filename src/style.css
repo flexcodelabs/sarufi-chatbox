@@ -167,6 +167,10 @@ body.sarufi-no-scrolling {
   transition: .45s all;
 }
 
+.sarufi-button {
+  padding: 0 !important;
+}
+
 .sarufi-message-body a {
   color: var(--sarufi-received-box-link-color);
   text-decoration: none;

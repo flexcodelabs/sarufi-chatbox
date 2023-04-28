@@ -139,7 +139,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
     >
       {!open && (
         <button
-          className="sarufi-shadow-xl"
+          className="sarufi-shadow-xl sarufi-button"
           style={{
             display: "inline-flex",
             justifyContent: "center",
@@ -199,7 +199,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
               {theme?.title}
             </p>
             <button
-              className="flex-center"
+              className="flex-center sarufi-button"
               onClick={() => {
                 setOpen(false);
                 setId(new Date().valueOf());

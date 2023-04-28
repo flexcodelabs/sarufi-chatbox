@@ -1,3 +1,5 @@
+# 0.3.9
+* release: resolve padding issues on buttons
 # 0.3.8
 * add new version for the next deployment
 

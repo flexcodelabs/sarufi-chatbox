@@ -1,3 +1,5 @@
+# 0.4.2
+* release: accomodate response from gpt type chatbot
 # 0.4.1
 * release: remove build error on plugin scripts
 # 0.4.0

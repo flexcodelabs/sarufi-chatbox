@@ -72,6 +72,14 @@ const Chatbox = ({
                     )?.send_message
                   : typeof data?.data?.message === "string"
                   ? data?.data?.message
+                  : data?.data?.response?.find(
+                      (item: any) => Object.keys(item)[0] === "send_message"
+                    )
+                  ? data?.data?.response
+                      ?.find(
+                        (item: any) => Object.keys(item)[0] === "send_message"
+                      )
+                      ?.send_message?.join("\n")
                   : data?.data?.message?.join("\n"),
               received: true,
               chat: data?.data,
@@ -328,7 +336,7 @@ const Chat = ({
             ? "var(--sarufi-sent-box-bg)"
             : "var(--sarufi-received-box-bg)",
           maxWidth: 280,
-          width: hasMedia ? "100%" : "auto",
+          width: hasMedia ? "100%" : "max-content",
           minWidth: "50px",
           padding: "6px 8px 8px 9px",
           marginTop: hasMedia ? "0" : "12px",

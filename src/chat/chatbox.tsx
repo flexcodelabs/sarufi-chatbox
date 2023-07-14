@@ -134,9 +134,12 @@ const Chatbox = ({
         id="sarufi-chat-container"
         style={{
           background: "var(--sarufi-chatbox-bg)",
-          height: "calc( 100% - 100px )",
+          height: "calc( 100% - 120px )",
           overflowY: "auto",
           position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between"
         }}
         className="sarufi-scroll-bar"
       >
@@ -198,6 +201,7 @@ const Chatbox = ({
       <form
         style={{
           position: "absolute",
+          bottom: 20,
           background:
             mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
@@ -226,6 +230,16 @@ const Chatbox = ({
           }
         />
       </form>
+      <p style={{
+        fontSize: ".7rem",
+        position: "absolute",
+        bottom: 5,
+        left: 0,
+        right: 0,
+        textAlign: "center"
+      }}>
+        Made by <a href="https://sarufi.io" target="_blank" style={{ textDecoration: "none", fontWeight: "700", color: "var(--sarufi-primary-color)" }}>Sarufi</a>
+      </p>
     </>
   );
 };

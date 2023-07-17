@@ -1,6 +1,5 @@
-import React from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { CSSProperties, useEffect, useRef, useState } from "react";
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
@@ -31,19 +30,21 @@ const Chatbox = ({
   const [chats, setChats] = useState<any[]>([]);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const [suggestions, setsuggestions] = useState<string[]>([])
   const ref = useRef<HTMLDivElement>(null);
+  const suggestionRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (message: string, type?: string, itemId?: string) => {
     if (!message) return;
     setChats((prev: any[]) => {
       return [...prev, { message, sent: true }];
     });
+    setsuggestions([])
     setValue("");
     setLoading(true);
     axios
       .post(
-        `${API_URL}${
-          token ? "/conversation/whatsapp" : "/plugin/conversation/" + botId
+        `${API_URL}${token ? "/conversation/whatsapp" : "/plugin/conversation/" + botId
         }`,
         {
           message: itemId ?? message,
@@ -58,35 +59,35 @@ const Chatbox = ({
           },
         }
       )
-      .then((data: any) => {
+      .then(async (data: any) => {
         setChats((prev: any[]) => {
           return [
             ...prev,
             {
               message:
                 typeof data?.data?.actions === "object" &&
-                data?.data?.actions?.find((action: any) => action?.send_message)
-                  ?.send_message
+                  data?.data?.actions?.find((action: any) => action?.send_message)
+                    ?.send_message
                   ? data?.data?.actions?.find(
-                      (action: any) => action?.send_message
-                    )?.send_message
+                    (action: any) => action?.send_message
+                  )?.send_message
                   : typeof data?.data?.message === "string"
-                  ? data?.data?.message
-                  : data?.data?.response?.find(
+                    ? data?.data?.message
+                    : data?.data?.response?.find(
                       (item: any) => Object.keys(item)[0] === "send_message"
                     )
-                  ? data?.data?.response
-                      ?.find(
-                        (item: any) => Object.keys(item)[0] === "send_message"
-                      )
-                      ?.send_message?.join("\n")
-                  : data?.data?.message?.join("\n"),
+                      ? data?.data?.response
+                        ?.find(
+                          (item: any) => Object.keys(item)[0] === "send_message"
+                        )
+                        ?.send_message?.join("\n")
+                      : data?.data?.message?.join("\n"),
               received: true,
               chat: data?.data,
               type: data?.data?.actions
                 ? data?.data?.actions?.find(
-                    (action: any) => action?.send_reply_button
-                  )?.send_reply_button?.type
+                  (action: any) => action?.send_reply_button
+                )?.send_reply_button?.type
                 : "",
               actions: data?.data?.actions,
               next_state: data?.data?.next_state,
@@ -94,6 +95,31 @@ const Chatbox = ({
           ];
         });
         setLoading(false);
+        if (typeof data?.data?.message === "string" || data?.data?.actions?.find((action: any) => action?.send_message)
+          ?.send_message) {
+          console.log("Fetching suggestions coming soon")
+          // mimicking an api call with promise
+          // new Promise((resolve, reject) => {
+          //   let available_questions = ["Hi", "nataka mchango", "michango gani inapatikana", "mchango ni nini", "kwaheri", "asante"];
+
+          //   setTimeout(() => {
+          //     const isError = false; // Set to true to mimic an error response
+
+          //     if (!isError) {
+          //       resolve(available_questions.sort(() => Math.random() - Math.random()).slice(0, 4)); // Resolve the promise with the response data
+          //     } else {
+          //       reject(new Error("API request failed")); // Reject the promise with an error
+          //     }
+          //   }, 3000);
+          // })
+          //   .then((res: string[]) => {
+          //     setsuggestions(res)
+
+          //   })
+          //   .catch((error) => {
+          //     console.error(error)
+          //   })
+        }
       })
       .catch((error) => {
         // show error as a chat / a pospup within an app
@@ -105,10 +131,10 @@ const Chatbox = ({
                 typeof error?.response?.data?.detail === "string"
                   ? error?.response?.data?.detail
                   : typeof error?.response?.data?.detail === "object"
-                  ? error?.response?.data?.detail[0]?.msg
-                  : typeof error?.response?.data?.message === "string"
-                  ? error?.response?.data?.message
-                  : error?.message,
+                    ? error?.response?.data?.detail[0]?.msg
+                    : typeof error?.response?.data?.message === "string"
+                      ? error?.response?.data?.message
+                      : error?.message,
             },
           ];
         });
@@ -121,6 +147,10 @@ const Chatbox = ({
       ref.current.scrollTop =
         ref.current?.scrollHeight - ref.current.clientHeight;
   }, [chats]);
+
+  useEffect(() => {
+    suggestionRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [suggestions]);
 
   useEffect(() => {
     setChats([]);
@@ -197,6 +227,15 @@ const Chatbox = ({
             )}
           </ul>
         </div>
+        {
+          suggestions.length > 0 && <ul style={{ display: "flex", flexDirection: "column", gap: "5px", marginLeft: "auto", padding: "5px", color: "var(--sarufi-received-box-color)" }}>
+            {
+              suggestions.map((message, index) =>
+                <li onClick={() => onSubmit(message)} style={{ cursor: "pointer", padding: ".5rem", marginLeft: "auto", border: "1px solid var(--sarufi-primary-color)", background: "var(--sarufi-received-box-bg)", borderRadius: 6 }} key={index}>{message}</li>
+              )}
+          </ul>
+        }
+        <div ref={suggestionRef} />
       </div>
       <form
         style={{
@@ -264,7 +303,7 @@ const Chat = ({
   let message =
     chat?.type === "button"
       ? chat?.actions?.find((action: any) => action?.send_reply_button)
-          ?.send_reply_button?.body?.text
+        ?.send_reply_button?.body?.text
       : chat?.message;
 
   let menu = chat?.actions?.find(
@@ -342,9 +381,8 @@ const Chat = ({
         </div>
       )}
       <div
-        className={`sarufi-message-body ${
-          hasMedia ? "" : "sarufi-message-body-w-arrow"
-        } ${chat?.sent ? "sent" : ""}`}
+        className={`sarufi-message-body ${hasMedia ? "" : "sarufi-message-body-w-arrow"
+          } ${chat?.sent ? "sent" : ""}`}
         style={{
           background: chat?.sent
             ? "var(--sarufi-sent-box-bg)"
@@ -358,7 +396,7 @@ const Chat = ({
           borderRadius:
             chat?.actions?.find((action: any) => action?.send_reply_button)
               ?.send_reply_button?.action?.buttons?.length > 0 ||
-            ((!message || typeof message !== "string") && chat?.actions && menu)
+              ((!message || typeof message !== "string") && chat?.actions && menu)
               ? "0rem"
               : ".3rem",
           ...(!hasMedia && !chat?.sent
@@ -416,17 +454,17 @@ const Chat = ({
                   background: "var(--sarufi-received-box-bg)",
                   borderBottomLeftRadius:
                     i ===
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length -
+                      chat?.actions?.find(
+                        (action: any) => action?.send_reply_button
+                      )?.send_reply_button?.action?.buttons?.length -
                       1
                       ? ".3rem"
                       : "0",
                   borderBottomRightRadius:
                     i ===
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length -
+                      chat?.actions?.find(
+                        (action: any) => action?.send_reply_button
+                      )?.send_reply_button?.action?.buttons?.length -
                       1
                       ? ".3rem"
                       : "0",

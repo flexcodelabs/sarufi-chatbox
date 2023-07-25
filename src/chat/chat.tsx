@@ -71,7 +71,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
         `${api_url}/plugin/${window?.botId ?? botId}/unauthenticated`
       );
       setThemeConfig(data?.theme_config);
-    } catch (error: any) { }
+    } catch (error: any) {}
   };
 
   useEffect(() => {
@@ -87,10 +87,10 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
       theme?.fontFamily === "InterRegular"
         ? "'Inter', sans-serif"
         : theme?.fontFamily === "PoppinsRegular"
-          ? "'Poppins', sans-serif"
-          : theme?.fontFamily === "inherit"
-            ? "inherit"
-            : "'Inter', sans-serif",
+        ? "'Poppins', sans-serif"
+        : theme?.fontFamily === "inherit"
+        ? "inherit"
+        : "'Inter', sans-serif",
     "--sarufi-border-color": theme?.borderColor ?? "lightgray",
     "--sarufi-sent-box-bg":
       theme?.mode === "dark" ? "#005C4B" : theme?.sentBoxBg ?? "#D8F9D4",
@@ -114,8 +114,9 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
 
   return (
     <div
-      className={`sarufi-chat-container ${theme?.placement === "left" ? "sarufi-left-align" : "sarufi-right-align"
-        } ${open ? "open" : ""}
+      className={`sarufi-chat-container ${
+        theme?.placement === "left" ? "sarufi-left-align" : "sarufi-right-align"
+      } ${open ? "open" : ""}
       ${open ? "sarufi-shadow-xl" : "sarufi-flex-center"}`}
       style={{
         position: "fixed",
@@ -123,15 +124,15 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
           theme?.fontFamily === "InterRegular"
             ? "'Inter', sans-serif"
             : theme?.fontFamily === "PoppinsRegular"
-              ? "'Poppins', sans-serif"
-              : theme?.fontFamily === "inherit"
-                ? "inherit"
-                : "'Inter', sans-serif",
+            ? "'Poppins', sans-serif"
+            : theme?.fontFamily === "inherit"
+            ? "inherit"
+            : "'Inter', sans-serif",
         ...(!open
           ? {
-            height: theme?.buttonSize === "lg" ? "70px" : "50px",
-            width: theme?.buttonSize === "lg" ? "70px" : "50px",
-          }
+              height: theme?.buttonSize === "lg" ? "70px" : "50px",
+              width: theme?.buttonSize === "lg" ? "70px" : "50px",
+            }
           : {}),
         ...style,
       }}
@@ -150,14 +151,14 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
               theme?.buttonSize === "lg"
                 ? "70px"
                 : theme?.buttonSize === "sm"
-                  ? "30px"
-                  : "50px",
+                ? "30px"
+                : "50px",
             width:
               theme?.buttonSize === "lg"
                 ? "70px"
                 : theme?.buttonSize === "sm"
-                  ? "30px"
-                  : "50px",
+                ? "30px"
+                : "50px",
             background: theme?.primaryColor ?? "#2776EA",
             color: "white",
             border: "none",

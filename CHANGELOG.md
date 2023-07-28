@@ -1,3 +1,15 @@
+# 0.4.3
+* :fire:  feat: added made by Sarufi watermark
+
+* :sunglasses:  feat: suggestive messages on chat
+
+* Revert ":sunglasses:  feat: suggestive messages on chat"
+
+This reverts commit 34a9392ce9adf34b168a598735a9b390877ad9c0.
+
+* :wrench:  fix: dark & light mode on watermark
+
+* feat: added scripts for cdn
 # 0.4.2
 * release: accomodate response from gpt type chatbot
 # 0.4.1

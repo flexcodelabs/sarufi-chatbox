@@ -136,7 +136,6 @@ const Chatbox = ({
           background: "var(--sarufi-chatbox-bg)",
           height: "calc( 100% - 120px )",
           overflowY: "auto",
-          position: "relative",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -200,8 +199,7 @@ const Chatbox = ({
       </div>
       <form
         style={{
-          position: "absolute",
-          bottom: 20,
+          position: "relative",
           background:
             mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
@@ -233,14 +231,11 @@ const Chatbox = ({
       <p
         style={{
           fontSize: ".7rem",
-          position: "absolute",
-          bottom: 5,
-          left: 0,
-          right: 0,
           textAlign: "center",
+          padding: "2px 0",
           color: mode === "dark" ? "white" : "",
           background:
-            mode === "light" ? "white" : "var(--sarufi-primary-color)",
+            mode === "light" ? "transparent" : "var(--sarufi-primary-color)",
         }}
       >
         Made by{" "}

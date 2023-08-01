@@ -1,3 +1,7 @@
+# 0.4.4
+* :wrench:  fix: improved styles on watermark
+
+- updated the script file
 # 0.4.3
 * :fire:  feat: added made by Sarufi watermark
 

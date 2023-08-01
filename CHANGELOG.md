@@ -1,3 +1,5 @@
+# 0.4.5
+* :expressionless:  fix: white backgorund on watermark
 # 0.4.4
 * :wrench:  fix: improved styles on watermark
 

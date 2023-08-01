@@ -235,7 +235,7 @@ const Chatbox = ({
           padding: "2px 0",
           color: mode === "dark" ? "white" : "",
           background:
-            mode === "light" ? "transparent" : "var(--sarufi-primary-color)",
+            mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
       >
         Made by{" "}

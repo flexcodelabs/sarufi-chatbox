@@ -1,3 +1,7 @@
+# 0.4.7
+* :fire:  feat: added a popup to encourage people to chat with bot
+
+* feat: updated the scripts for new popup changes
 # 0.4.6
 * 😓 updated cdn scripts
 # 0.4.5

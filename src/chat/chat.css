@@ -43,6 +43,11 @@
   right: 2rem;
 }
 
+.sarufi-chat-container .sarufi-floating {
+  animation: updown 1s ease-in-out infinite alternate;
+  -webkit-animation: updown 1s ease-in-out infinite alternate;
+}
+
 .sarufi-chat-container.open {
   height: var(--sarufi-chatbox-height);
   width: var(--sarufi-chatbox-width);
@@ -191,6 +196,28 @@
 .sarufi-chat-loader .sarufi-bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+}
+
+@-webkit-keyframes updown {
+  0% {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+  }
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+  }
 }
 
 @-webkit-keyframes bouncedelay {

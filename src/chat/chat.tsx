@@ -33,6 +33,8 @@ export type SarufiChatboxType = {
 const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [dontShowPopup, setDontShowPopup] = useState<boolean>(false);
   const [theme, setThemeConfig] = useState<ThemeType>({
     primaryColor: "#2776EA",
     borderColor: "lightgray",
@@ -77,6 +79,16 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
   useEffect(() => {
     fetchTheme();
   }, [defaultTheme]);
+
+  useEffect(() => {
+    if (dontShowPopup) return;
+    if (showPopup) return;
+
+    // Show popup after 5 seconds
+    setTimeout(() => {
+      setShowPopup(!showPopup);
+    }, 5000);
+  }, [showPopup]);
 
   // set up styles
   const style = {
@@ -131,7 +143,11 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
         ...(!open
           ? {
               height: theme?.buttonSize === "lg" ? "70px" : "50px",
-              width: theme?.buttonSize === "lg" ? "70px" : "50px",
+              width: showPopup
+                ? "fit-content"
+                : theme?.buttonSize === "lg"
+                ? "70px"
+                : "50px",
             }
           : {}),
         ...style,
@@ -139,33 +155,62 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
     >
       {!open && (
         <button
-          className="sarufi-shadow-xl sarufi-button"
+          className={`sarufi-shadow-xl ${showPopup && "sarufi-floating"}`}
           style={{
-            display: "inline-flex",
+            display: showPopup ? "flex" : "inline-flex",
             justifyContent: "center",
             alignItems: "center",
             position: "relative",
             cursor: "pointer",
-            borderRadius: "50%",
+            borderRadius: showPopup ? "50px" : "50%",
+            padding: showPopup ? ".5rem 1rem" : undefined,
             height:
               theme?.buttonSize === "lg"
                 ? "70px"
                 : theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
-            width:
-              theme?.buttonSize === "lg"
-                ? "70px"
-                : theme?.buttonSize === "sm"
-                ? "30px"
-                : "50px",
+            width: showPopup
+              ? "100%"
+              : theme?.buttonSize === "lg"
+              ? "70px"
+              : theme?.buttonSize === "sm"
+              ? "30px"
+              : "50px",
             background: theme?.primaryColor ?? "#2776EA",
             color: "white",
             border: "none",
           }}
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            setShowPopup(false);
+            setDontShowPopup(true);
+          }}
         >
-          <TextComponent size={theme?.buttonSize === "sm" ? 20 : 30} />
+          <TextComponent
+            size={
+              theme?.buttonSize === "lg"
+                ? 40
+                : theme?.buttonSize === "sm"
+                ? 20
+                : 30
+            }
+          />
+          <div
+            style={{
+              display: showPopup ? "block" : "none",
+              width: "fit-content",
+              opacity: showPopup ? 1 : 0,
+              marginLeft: "5px",
+              textAlign: "start",
+              fontSize: `${
+                theme?.buttonSize === "sm" ? "10px" : "var(--sarufi-font-size)"
+              }`,
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>Need Help?</p>
+            <p>Ask me</p>
+          </div>
         </button>
       )}
       {open && (

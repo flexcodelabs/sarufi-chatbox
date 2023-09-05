@@ -23,6 +23,9 @@
             right: 1rem
         .sarufi-options
             right: 2rem
+    &.sarufi-floating
+        animation: updown 1s ease-in-out infinite alternate
+        -webkit-animation: updown 1s ease-in-out infinite alternate
 
     &.open
         height: var(--sarufi-chatbox-height)
@@ -137,6 +140,15 @@
     .sarufi-bounce2
         -webkit-animation-delay: -0.16s
         animation-delay: -0.16s
+
+@keyframes updown
+    0%
+        transform: translateY(0)
+        -webkit-transform: translateY(0)
+
+    100%
+        transform: translateY(-10px)
+        -webkit-transform: translateY(-10px)
 
 @keyframes bouncedelay
     0%

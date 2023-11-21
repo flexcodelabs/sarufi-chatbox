@@ -1,3 +1,9 @@
+# 0.4.8
+* fix: solving the cut-off issue
+
+* 🛠️ feat: made the popup showing customizable on react package
+
+* 📦fix: updated script to reflex new changes
 # 0.4.7
 * :fire:  feat: added a popup to encourage people to chat with bot
 

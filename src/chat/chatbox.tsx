@@ -134,7 +134,7 @@ const Chatbox = ({
         id="sarufi-chat-container"
         style={{
           background: "var(--sarufi-chatbox-bg)",
-          height: "calc( 100% - 120px )",
+          height: "calc( 100% - 130px )",
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
@@ -232,7 +232,7 @@ const Chatbox = ({
         style={{
           fontSize: ".7rem",
           textAlign: "center",
-          padding: "2px 0",
+          padding: "5px 0",
           color: mode === "dark" ? "white" : "",
           background:
             mode === "light" ? "white" : "var(--sarufi-primary-color)",

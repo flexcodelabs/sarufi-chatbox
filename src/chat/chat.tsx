@@ -28,9 +28,15 @@ export type SarufiChatboxType = {
   botId: string | number;
   token?: string;
   theme?: ThemeType;
+  popUpShow?: boolean;
 };
 
-const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
+const Chat = ({
+  botId,
+  token,
+  theme: defaultTheme,
+  popUpShow = true,
+}: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -81,7 +87,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
   }, [defaultTheme]);
 
   useEffect(() => {
-    if (dontShowPopup) return;
+    if (dontShowPopup || !popUpShow) return;
     if (showPopup) return;
 
     // Show popup after 5 seconds

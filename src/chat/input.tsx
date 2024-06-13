@@ -40,19 +40,9 @@ const Input: FC<Props> = ({
   const [isFocused, setFocused] = useState(true);
 
   return (
-    <div
-      className={`sarufi-field-group`}
-      style={{
-        marginBottom: "1.5rem",
-      }}
-    >
-      <div
-        className={`input-group`}
-        style={{
-          position: "relative",
-        }}
-      >
-        <label className="sarufi-flex-start" style={{}}>
+    <div className={`sarufi-field-group`}>
+      <div className={`input-group`}>
+        <label className="sarufi-flex-start">
           <textarea
             key={name}
             onKeyDown={onEnterPress}
@@ -62,20 +52,24 @@ const Input: FC<Props> = ({
             maxLength={maxLength}
             disabled={disabled}
             placeholder={placeholder}
-            className={`scroll-bar sarufi-textarea`}
+            className={`sarufi-scroll-bar sarufi-textarea`}
             onChange={onChange}
             autoComplete={autoComplete}
             value={value}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
+            rows={1}
             style={{
+              width: "100%",
+              height: "100%",
+              resize: "none",
+              transition: "0.25s",
               padding: ".7rem .7rem",
               paddingRight: 45,
-              height: 60,
-              minHeight: 60,
-              maxHeight: 60,
+              border: "1px solid transparent",
               borderRadius: "0.3rem",
               fontFamily: "var(--sarufi-font-family)",
+              backgroundColor: "transparent",
               ...(mode === "dark"
                 ? {
                     color: "white",

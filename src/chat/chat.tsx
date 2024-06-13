@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { CSSProperties, useEffect, useState } from "react";
-import { Close, TextComponent } from "../assets/icons";
+import { Close, MinusIcon } from "../assets/icons";
 import "./chat.css";
 import Chatbox from "./chatbox";
+import { SarufiIcon } from "../assets/illustrations";
 
 interface ThemeType {
   buttonSize?: "sm" | "md" | "lg";
@@ -22,17 +23,26 @@ interface ThemeType {
   placement?: "left" | "right";
   height?: string | number;
   width?: string | number;
+  secondaryColor?: string;
 }
 
 export type SarufiChatboxType = {
   botId: string | number;
   token?: string;
   theme?: ThemeType;
+  popUpShow?: boolean;
 };
 
-const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
+const Chat = ({
+  botId,
+  token,
+  theme: defaultTheme,
+  popUpShow = true,
+}: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number | string>(new Date().valueOf());
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [dontShowPopup, setDontShowPopup] = useState<boolean>(false);
   const [theme, setThemeConfig] = useState<ThemeType>({
     primaryColor: "#2776EA",
     borderColor: "lightgray",
@@ -78,10 +88,22 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
     fetchTheme();
   }, [defaultTheme]);
 
+  useEffect(() => {
+    if (dontShowPopup || !popUpShow) return;
+    if (showPopup) return;
+
+    // Show popup after 5 seconds
+    setTimeout(() => {
+      setShowPopup(!showPopup);
+    }, 5000);
+  }, [showPopup]);
+
   // set up styles
   const style = {
     "--sarufi-primary-color":
       theme?.mode === "dark" ? "#202C33" : theme?.primaryColor ?? "#2776EA",
+    "--sarufi-secondary-color":
+      theme?.mode === "dark" ? "#202C33" : theme?.secondaryColor ?? "#EDECE1",
     "--sarufi-font-size": `${theme?.fontSize ?? 14}px`,
     "--sarufi-font-family":
       theme?.fontFamily === "InterRegular"
@@ -93,11 +115,10 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
         : "'Inter', sans-serif",
     "--sarufi-border-color": theme?.borderColor ?? "lightgray",
     "--sarufi-sent-box-bg":
-      theme?.mode === "dark" ? "#005C4B" : theme?.sentBoxBg ?? "#D8F9D4",
+      theme?.mode === "dark" ? "#005C4B" : theme?.primaryColor ?? "#2776EA",
     "--sarufi-received-box-bg":
-      theme?.mode === "dark" ? "#202C33" : theme?.receivedBoxBg ?? "white",
-    "--sarufi-sent-box-color":
-      theme?.mode === "dark" ? "white" : theme?.sentBoxColor ?? "black",
+      theme?.mode === "dark" ? "#202C33" : theme?.secondaryColor ?? "#EDECE1",
+    "--sarufi-sent-box-color": theme?.mode === "dark" ? "white" : "white",
     "--sarufi-received-box-color":
       theme?.mode === "dark" ? "white" : theme?.receivedBoxColor ?? "black",
     "--sarufi-sent-box-link-color":
@@ -106,8 +127,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
       theme?.mode === "dark"
         ? "#53BDEB"
         : theme?.receivedBoxLinkColor ?? "black",
-    "--sarufi-chatbox-bg":
-      theme?.mode === "dark" ? "#0B141A" : theme?.chatboxBg ?? "#EDECE1",
+    "--sarufi-chatbox-bg": theme?.mode === "dark" ? "#0B141A" : "white",
     "--sarufi-chatbox-height": theme?.height ? theme?.height + "px" : "500px",
     "--sarufi-chatbox-width": theme?.width ? theme?.width + "px" : "400px",
   } as CSSProperties;
@@ -120,6 +140,7 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
       ${open ? "sarufi-shadow-xl" : "sarufi-flex-center"}`}
       style={{
         position: "fixed",
+        // border: "2px solid #000",
         fontFamily:
           theme?.fontFamily === "InterRegular"
             ? "'Inter', sans-serif"
@@ -131,7 +152,11 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
         ...(!open
           ? {
               height: theme?.buttonSize === "lg" ? "70px" : "50px",
-              width: theme?.buttonSize === "lg" ? "70px" : "50px",
+              width: showPopup
+                ? "fit-content"
+                : theme?.buttonSize === "lg"
+                ? "70px"
+                : "50px",
             }
           : {}),
         ...style,
@@ -139,65 +164,164 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
     >
       {!open && (
         <button
-          className="sarufi-shadow-xl sarufi-button"
+          className={`sarufi-shadow-xl ${showPopup && "sarufi-floating"}`}
           style={{
-            display: "inline-flex",
+            display: showPopup ? "flex" : "inline-flex",
             justifyContent: "center",
             alignItems: "center",
             position: "relative",
             cursor: "pointer",
-            borderRadius: "50%",
+            borderRadius: showPopup ? "50px" : "50%",
+            padding: showPopup ? ".5rem 1rem" : undefined,
             height:
               theme?.buttonSize === "lg"
                 ? "70px"
                 : theme?.buttonSize === "sm"
                 ? "30px"
                 : "50px",
-            width:
-              theme?.buttonSize === "lg"
-                ? "70px"
-                : theme?.buttonSize === "sm"
-                ? "30px"
-                : "50px",
+            width: showPopup
+              ? "100%"
+              : theme?.buttonSize === "lg"
+              ? "70px"
+              : theme?.buttonSize === "sm"
+              ? "30px"
+              : "50px",
             background: theme?.primaryColor ?? "#2776EA",
             color: "white",
             border: "none",
           }}
-          onClick={() => setOpen(true)}
-        >
-          <TextComponent size={theme?.buttonSize === "sm" ? 20 : 30} />
-        </button>
-      )}
-      {open && (
-        <div
-          style={{
-            height: "100%",
-            borderRadius: ".5rem",
-            overflow: "hidden",
+          onClick={() => {
+            setOpen(true);
+            setShowPopup(false);
+            setDontShowPopup(true);
           }}
         >
+          <SarufiIcon
+            size={
+              theme?.buttonSize === "lg"
+                ? 40
+                : theme?.buttonSize === "sm"
+                ? 20
+                : 30
+            }
+          />
           <div
-            className="sarufi-flex-wide text-neutral-0"
             style={{
-              height: "42px",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              background: "var(--sarufi-primary-color)",
-              color: "white",
+              display: showPopup ? "block" : "none",
+              width: "fit-content",
+              opacity: showPopup ? 1 : 0,
+              marginLeft: "5px",
+              textAlign: "start",
+              fontSize: `${
+                theme?.buttonSize === "sm" ? "10px" : "var(--sarufi-font-size)"
+              }`,
             }}
           >
-            <p
-              className="sarufi-ellipsed-text"
+            <p style={{ fontWeight: "bold" }}>Need Help?</p>
+            <p>Ask me</p>
+          </div>
+        </button>
+      )}
+      <div
+        style={{
+          height: "100%",
+          display: open ? "block" : "none",
+          // borderRadius: "18px",
+          // overflow: "hidden",
+        }}
+      >
+        <div
+          className="sarufi-flex-wide text-neutral-0"
+          style={{
+            // height: "42px",
+            borderTopLeftRadius: "18px",
+            borderTopRightRadius: "18px",
+            padding: "1rem",
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
+            background: "var(--sarufi-primary-color)",
+            color: "white",
+          }}
+        >
+          <div className="sarufi-flex sarufi-align-center">
+            <div
+              className="sarufi-flex-center"
               style={{
-                fontWeight: 600,
-                fontFamily: "var(--sarufi-font-family)",
-                fontSize: theme?.fontSize
-                  ? Number(theme?.fontSize) * 1.1
-                  : "1.1em",
+                background:
+                  theme?.mode === "dark"
+                    ? theme?.secondaryColor
+                    : "var(--sarufi-secondary-color)",
+                borderRadius: "50%",
+                padding: ".5rem",
+                marginRight: "10px",
+                position: "relative",
               }}
             >
-              {theme?.title}
-            </p>
+              <SarufiIcon
+                style={{
+                  color:
+                    theme?.mode === "dark"
+                      ? theme?.primaryColor
+                      : "var(--sarufi-primary-color)",
+                }}
+                size={
+                  theme?.buttonSize === "lg"
+                    ? 40
+                    : theme?.buttonSize === "sm"
+                    ? 20
+                    : 30
+                }
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  right: "1px",
+                  background: "#02B272",
+                  borderRadius: "50%",
+                  width: "10px",
+                  height: "10px",
+                }}
+              />
+            </div>
+            <div>
+              <p
+                className="sarufi-ellipsed-text"
+                style={{
+                  fontWeight: 600,
+                  marginBottom: "3px",
+                  fontFamily: "var(--sarufi-font-family)",
+                  fontSize: theme?.fontSize
+                    ? Number(theme?.fontSize) * 1.1
+                    : "1.1em",
+                }}
+              >
+                {theme?.title}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--sarufi-font-family)",
+                  fontSize: "12px",
+                }}
+              >
+                Online
+              </p>
+            </div>
+          </div>
+          <div className="flex-center">
+            <button
+              className="flex-center sarufi-button"
+              onClick={() => setOpen(false)}
+              style={{
+                border: "none",
+                background: "none",
+                color: "white",
+                cursor: "pointer",
+                marginRight: "20px",
+              }}
+            >
+              <MinusIcon size={16} className="text-neutral-0" />
+            </button>
             <button
               className="flex-center sarufi-button"
               onClick={() => {
@@ -214,20 +338,20 @@ const Chat = ({ botId, token, theme: defaultTheme }: SarufiChatboxType) => {
               <Close size={18} className="text-neutral-0" />
             </button>
           </div>
-          <Chatbox
-            open={open}
-            id={id}
-            mode={theme?.mode ?? "light"}
-            primaryColor={theme?.primaryColor ?? "#2776EA"}
-            fontFamily={theme.fontFamily ?? "inherit"}
-            fontSize={theme.fontSize ?? 16}
-            // @ts-ignore
-            botId={window?.botId ?? botId}
-            token={token}
-            API_URL={api_url}
-          />
         </div>
-      )}
+        <Chatbox
+          open={open}
+          id={id}
+          mode={theme?.mode ?? "light"}
+          primaryColor={theme?.primaryColor ?? "#2776EA"}
+          fontFamily={theme.fontFamily ?? "inherit"}
+          fontSize={theme.fontSize ?? 16}
+          // @ts-ignore
+          botId={window?.botId ?? botId}
+          token={token}
+          API_URL={api_url}
+        />
+      </div>
     </div>
   );
 };

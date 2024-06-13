@@ -21,16 +21,13 @@ const Button: FC<Props> = ({ label, mode, onClick, disabled }) => {
         cursor: disabled ? "default" : "pointer",
         opacity: disabled ? 0.4 : 1,
         fontSize: ".9rem",
-        padding: ".7rem 1rem",
-        position: "absolute",
         overflow: "hidden",
         transition: ".3s linear",
         zIndex: 100001,
-        right: "5px",
         border: "none",
+        backgroundColor: "transparent",
         ...(mode === "dark"
           ? {
-              backgroundColor: "transparent",
               color: "white",
             }
           : {}),

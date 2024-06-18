@@ -12,6 +12,7 @@ import {
   SendIcon,
 } from "../assets/icons";
 import { SarufiIcon } from "../assets/illustrations";
+import Media from "./media";
 
 type ChatType = {
   message: string;
@@ -168,7 +169,7 @@ const Chatbox = ({
           }}
         >
           <div
-            className="sarufi-message-body sarufi-message-body-w-arrow"
+            className="sarufi-message-body"
             style={{
               maxWidth: 280,
               background: "var(--sarufi-received-box-bg)",
@@ -201,7 +202,7 @@ const Chatbox = ({
             ))}
             {loading && (
               <div
-                className={`sarufi-message-body sarufi-message-body-w-arrow`}
+                className={`sarufi-message-body`}
                 style={{
                   background: "var(--sarufi-received-box-bg)",
                   padding: "6px 8px 8px 9px",
@@ -306,10 +307,10 @@ export default Chatbox;
 const Chat = ({
   chat,
   onSubmit,
-  // mode,
-  // fontFamily,
-  // fontSize,
-  // index,
+  mode,
+  fontFamily,
+  fontSize,
+  index,
   primaryColor,
 }: {
   chat: any;
@@ -401,6 +402,13 @@ const Chat = ({
         </div>
       )}
       <div>
+        <Media
+          chat={chat}
+          mode={mode}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          messageIndex={index}
+        />
         <div
           className={`sarufi-message-body  ${chat?.sent ? "sent" : ""}`}
           style={{

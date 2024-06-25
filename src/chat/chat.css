@@ -123,6 +123,12 @@
   margin-top: 1rem;
 }
 
+.sarufi-chat-container .message-actions button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .sarufi-field-group {
   width: 100%;
   -webkit-box-sizing: border-box;

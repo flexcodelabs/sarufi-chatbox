@@ -4,15 +4,11 @@ import { CSSProperties, useEffect, useRef, useState } from "react";
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
-import {
-  Attachment,
-  Calendar,
-  Close,
-  MicIcon,
-  SendIcon,
-} from "../assets/icons";
+import { Attachment, Close, MicIcon, SendIcon } from "../assets/icons";
 import { SarufiIcon } from "../assets/illustrations";
 import Media from "./media";
+import DatePicker from "./message-actions/date-picker";
+import RecordAudio from "./message-actions/audio-record";
 
 type ChatType = {
   message: string;
@@ -50,6 +46,7 @@ const Chatbox = ({
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [chatId, setChatId] = useState<string | number>(id);
+  const [isRecording, setIsRecording] = useState(false);
 
   const onSubmit = (message: string, type?: string, itemId?: string) => {
     if (!message) return;
@@ -223,56 +220,68 @@ const Chatbox = ({
         style={{
           background: "var(--sarufi-secondary-color)",
           // background: "rgb(0, 0, 0, 0.2)",
-          padding: ".5rem 1rem",
+          padding: ".5rem",
         }}
       >
-        <form
-          style={{
-            position: "relative",
-            marginRight: ".5rem",
-            width: "100%",
-            background:
-              mode === "light" ? "white" : "var(--sarufi-primary-color)",
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            onSubmit(value);
-          }}
-        >
-          <Input
-            value={value}
-            mode={mode}
-            primaryColor={primaryColor}
-            autoFocus
-            placeholder="Compose a message"
-            save={() => onSubmit(value)}
-            onChange={(e) => {
-              setValue(e.target.value);
+        {!isRecording && (
+          <form
+            style={{
+              position: "relative",
+              marginRight: ".5rem",
+              width: "100%",
+              background:
+                mode === "light" ? "white" : "var(--sarufi-primary-color)",
             }}
-          />
-          <Button
-            mode={mode}
-            label={
-              <span className="sarufi-flex-center">
-                <SendIcon size={24} />
-              </span>
-            }
-          />
-        </form>
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(value);
+            }}
+          >
+            <Input
+              value={value}
+              mode={mode}
+              primaryColor={primaryColor}
+              autoFocus
+              placeholder="Compose a message"
+              save={() => onSubmit(value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            />
+            <Button
+              mode={mode}
+              label={
+                <span className="sarufi-flex-center">
+                  <SendIcon size={24} />
+                </span>
+              }
+            />
+          </form>
+        )}
         <div
-          className="sarufi-flex-center"
+          className="sarufi-flex-center message-actions"
           style={{
             color: mode === "light" ? "#525252" : "white",
+            width: isRecording ? "100%" : "auto",
           }}
         >
-          <Attachment size={18} />
-          <Calendar
-            size={18}
-            style={{
-              margin: "0 .5rem",
-            }}
+          {!isRecording && (
+            <>
+              <button>
+                <Attachment size={18} />
+              </button>
+              <DatePicker
+                onSelect={(d) => setValue(d.toISOString().split("T")[0])}
+                styles={{
+                  margin: "0 .3rem",
+                }}
+              />
+            </>
+          )}
+          <RecordAudio
+            readFile={(file) => console.log(file.size)}
+            saveIsRecording={(record) => setIsRecording(record)}
           />
-          <MicIcon size={18} />
         </div>
       </div>
       <p
@@ -285,7 +294,7 @@ const Chatbox = ({
             mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
       >
-        Made by{" "}
+        Powered by{" "}
         <a
           href="https://sarufi.io"
           target="_blank"

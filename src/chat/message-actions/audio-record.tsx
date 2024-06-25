@@ -6,7 +6,7 @@ import {
   MicIcon,
   Pause,
   Play,
-  RecordingAudioIcon,
+  // RecordingAudioIcon,
   SendIcon,
 } from "../../assets/icons";
 
@@ -204,7 +204,14 @@ const RecordAudio = ({
         <button
           onClick={() => {
             if (recordedAudio.blob) {
-              // URL.revokeObjectURL(recordedAudio.blob);
+              setRecordedAudio({
+                file: null,
+                blob: "",
+                error: "",
+                fileBuffer: null,
+              });
+              setRecordingDuration(0);
+              saveIsRecording(false);
             } else handleStopRecording();
           }}
           disabled={!isRecording || disabled}
@@ -232,7 +239,7 @@ const RecordAudio = ({
             gap: "0.5rem",
           }}
         >
-          <RecordingAudioIcon size={18} />
+          {/* <RecordingAudioIcon size={18} /> */}
           <span>{formatDuration(recordingDuration)}</span>
         </div>
       )}

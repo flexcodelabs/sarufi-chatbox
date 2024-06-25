@@ -4,7 +4,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react";
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
-import { Attachment, Close, MicIcon, SendIcon } from "../assets/icons";
+import { Attachment, Close, SendIcon } from "../assets/icons";
 import { SarufiIcon } from "../assets/illustrations";
 import Media from "./media";
 import DatePicker from "./message-actions/date-picker";
@@ -267,7 +267,9 @@ const Chatbox = ({
         >
           {!isRecording && (
             <>
-              <button>
+              <button
+                onClick={() => alert("We don't support this feature yet.")}
+              >
                 <Attachment size={18} />
               </button>
               <DatePicker
@@ -279,7 +281,7 @@ const Chatbox = ({
             </>
           )}
           <RecordAudio
-            readFile={(file) => console.log(file.size)}
+            readFile={() => alert("We don't support this feature yet.")}
             saveIsRecording={(record) => setIsRecording(record)}
           />
         </div>

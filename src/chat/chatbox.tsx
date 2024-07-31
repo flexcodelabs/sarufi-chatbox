@@ -1,14 +1,16 @@
 import React from "react";
 import axios from "axios";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+
+// Local imports
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
-import { Attachment, Close, SendIcon } from "../assets/icons";
+import { Close, SendIcon } from "../assets/icons";
 import { SarufiIcon } from "../assets/illustrations";
 import Media from "./media";
 import DatePicker from "./message-actions/date-picker";
-import RecordAudio from "./message-actions/audio-record";
+// import RecordAudio from "./message-actions/audio-record";
 
 type ChatType = {
   message: string;
@@ -46,7 +48,7 @@ const Chatbox = ({
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [chatId, setChatId] = useState<string | number>(id);
-  const [isRecording, setIsRecording] = useState(false);
+  const [isRecording] = useState(false);
 
   const onSubmit = (message: string, type?: string, itemId?: string) => {
     if (!message) return;
@@ -267,23 +269,27 @@ const Chatbox = ({
         >
           {!isRecording && (
             <>
-              <button
+              {/* <button
                 onClick={() => alert("We don't support this feature yet.")}
               >
                 <Attachment size={18} />
-              </button>
+              </button> */}
               <DatePicker
-                onSelect={(d) => setValue(d.toISOString().split("T")[0])}
+                onSelect={(d) =>
+                  setValue(
+                    `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+                  )
+                }
                 styles={{
                   margin: "0 .3rem",
                 }}
               />
             </>
           )}
-          <RecordAudio
+          {/* <RecordAudio
             readFile={() => alert("We don't support this feature yet.")}
             saveIsRecording={(record) => setIsRecording(record)}
-          />
+          /> */}
         </div>
       </div>
       <p

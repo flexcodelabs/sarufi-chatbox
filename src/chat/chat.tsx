@@ -1,30 +1,19 @@
 import axios from "axios";
 import React, { CSSProperties, useEffect, useState } from "react";
-import { Close, MinusIcon } from "../assets/icons";
+
+// Local imports
 import "./chat.css";
 import Chatbox from "./chatbox";
+import { Close, MinusIcon } from "../assets/icons";
 import { SarufiIcon } from "../assets/illustrations";
+import { getChatId } from "./services/chat-id-handler";
 
-interface ThemeType {
-  buttonSize?: "sm" | "md" | "lg";
-  primaryColor?: string;
-  fontSize?: string | number;
-  fontFamily?: "PoppinsRegular" | "InterRegular" | "inherit";
-  borderColor?: string;
-  sentBoxBg?: string;
-  receivedBoxBg?: string;
-  sentBoxColor?: string;
-  receivedBoxColor?: string;
-  chatboxBg?: string;
-  receivedBoxLinkColor?: string;
-  sentBoxLinkColor?: string;
-  mode?: "light" | "dark";
-  title?: string;
-  placement?: "left" | "right";
-  height?: string | number;
-  width?: string | number;
-  secondaryColor?: string;
-}
+export type PluginDBData = {
+  id: string | number;
+  bot_id: string;
+  theme_config: ThemeType;
+  approved_domain: string;
+};
 
 export type SarufiChatboxType = {
   botId: string | number;
@@ -40,7 +29,7 @@ const Chat = ({
   popUpShow = true,
 }: SarufiChatboxType) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [id, setId] = useState<number | string>(new Date().valueOf());
+  const [id, setId] = useState<number | string>(getChatId());
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [dontShowPopup, setDontShowPopup] = useState<boolean>(false);
   const [theme, setThemeConfig] = useState<ThemeType>({
@@ -76,10 +65,11 @@ const Chat = ({
       return setThemeConfig(defaultTheme);
     }
     try {
-      const { data } = await axios.get(
+      const { data }: { data: PluginDBData } = await axios.get(
         // @ts-ignore
         `${api_url}/plugin/${window?.botId ?? botId}/unauthenticated`
       );
+      if (Object.keys(data.theme_config).length === 0) return;
       setThemeConfig(data?.theme_config);
     } catch (error: any) {}
   };
@@ -328,7 +318,7 @@ const Chat = ({
               className="flex-center sarufi-button"
               onClick={() => {
                 setOpen(false);
-                setId(new Date().valueOf());
+                setId(getChatId(true));
               }}
               style={{
                 border: "none",

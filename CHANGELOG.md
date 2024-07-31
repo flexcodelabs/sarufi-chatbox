@@ -1,3 +1,26 @@
+# 0.4.9
+* ✨ feat: initial new design implementation
+
+* 🔧 fix: fixed removed media messages
+
+* 🪄 feat: initial audio recording implementation
+
+* 🔧 fix: minor fixes
+
+* ♻️ revert: commented out new features
+
+- audio recording
+- uploading media to chat
+
+* 🪄 feat: displaying chat bubble information
+
+* ✨ feat: storing chatid even after closing browser
+
+re-creates new chat id when closing the chat bubble
+
+* release: 🏗️ build: created build scripts and styles for deployment
+
+refactor: updated types location
 # 0.4.8
 * fix: solving the cut-off issue
 

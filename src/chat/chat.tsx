@@ -217,8 +217,10 @@ const Chat = ({
               }`,
             }}
           >
-            <p style={{ fontWeight: "bold" }}>Need Help?</p>
-            <p>Ask me</p>
+            <p style={{ fontWeight: "bold" }}>
+              {theme?.bubbleTitle ?? "Need Help?"}
+            </p>
+            <p>{theme?.bubbleSubTitle ?? "Ask me"}</p>
           </div>
         </button>
       )}

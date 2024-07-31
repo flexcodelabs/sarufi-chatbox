@@ -2,10 +2,10 @@
   height: 50px;
   width: 50px;
   z-index: 100000;
-  -webkit-transition: height .25s;
-  transition: height .25s;
+  -webkit-transition: height 0.25s;
+  transition: height 0.25s;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   font-family: var(--sarufi-font-family);
   font-size: var(--sarufi-font-size);
   bottom: 1rem;
@@ -53,7 +53,9 @@
   width: var(--sarufi-chatbox-width);
   max-width: 100%;
   max-height: 100%;
-  border-radius: 0;
+  border-radius: 18px;
+  /* overflow: hidden; */
+  /* border: 1px solid blue; */
   bottom: 1rem;
   right: 1rem;
   background: var(--clr-neutral-0);
@@ -77,94 +79,94 @@
 
 .sarufi-chat-container ul {
   -webkit-margin-before: 0;
-          margin-block-start: 0;
+  margin-block-start: 0;
   -webkit-margin-after: 0;
-          margin-block-end: 0;
+  margin-block-end: 0;
   list-style: none;
   -webkit-padding-start: 0;
-          padding-inline-start: 0;
-}
-
-.sarufi-chat-container form {
-  width: 100%;
-  bottom: 0;
-  height: 60px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  padding-inline-start: 0;
 }
 
 .sarufi-chat-container form button {
   position: absolute;
-  height: 50px;
-  width: 50px;
-  max-width: 50px !important;
-  bottom: 5px;
+  /* height: 50px; */
+  /* width: 50px; */
+  /* max-width: 50px !important; */
+  /* bottom: 5px; */
+  top: 7px;
   right: 5px;
-  padding: 1rem;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  /* padding: 1rem; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
   color: var(--sarufi-primary-color);
 }
 
 .sarufi-chat-container .choices {
-  height: calc( var(--sarufi-chatbox-height) - 82px - .5rem);
-  max-height: calc( 100% - 92px - .5rem);
+  height: calc(var(--sarufi-chatbox-height) - 82px - 0.5rem);
+  max-height: calc(100% - 92px - 0.5rem);
   width: var(--sarufi-chatbox-width);
   max-width: 100%;
-  bottom: calc( 40px + .2.2rem);
+  bottom: calc(40px + 0.2.2rem);
 }
 
 .sarufi-chat-container .sarufi-backdrop {
-  height: calc( var(--sarufi-chatbox-height) - 95px - .5rem);
-  max-height: calc( 100% - 105px - .5rem);
+  height: calc(var(--sarufi-chatbox-height) - 95px - 0.5rem);
+  max-height: calc(100% - 105px - 0.5rem);
   width: var(--sarufi-chatbox-width);
   max-width: 100%;
-  bottom: calc( 69px + .5rem);
+  bottom: calc(69px + 0.5rem);
 }
 
 .sarufi-chat-container .sarufi-options {
-  height: calc( var(--sarufi-chatbox-height) - 115px - .5rem);
-  max-height: calc( 100% - 94px - .5rem);
-  width: calc( var(--sarufi-chatbox-width) - 32px);
+  height: calc(var(--sarufi-chatbox-height) - 115px - 0.5rem);
+  max-height: calc(100% - 94px - 0.5rem);
+  width: calc(var(--sarufi-chatbox-width) - 32px);
   max-width: 100%;
   overflow-y: auto;
   position: fixed;
-  bottom: calc( 80px + .5rem);
+  bottom: calc(80px + 0.5rem);
   margin-top: 1rem;
+}
+
+.sarufi-chat-container .message-actions button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .sarufi-field-group {
   width: 100%;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   height: 100%;
 }
 
 .sarufi-field-group .input-group {
-  position: relative;
+  /* position: relative; */
   display: block !important;
   width: 100%;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.sarufi-field-group .input-group textarea {
+/* .sarufi-field-group .input-group textarea {
   resize: none;
   background-color: transparent;
   width: 100%;
   height: 100%;
   border: 1px solid transparent;
-  -webkit-transition: .25s;
-  transition: .25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
   font-family: inherit;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   font-size: inherit;
-}
+} */
 
-.sarufi-field-group .input-group textarea:focus, .sarufi-field-group .input-group textarea:hover {
-  border-color: var(--sarufi-primary-color);
-  border-width: 1px;
+.sarufi-field-group .input-group textarea:focus,
+.sarufi-field-group .input-group textarea:hover {
+  /* border-color: var(--sarufi-primary-color); */
+  /* border-width: 1px; */
   outline: transparent !important;
 }
 
@@ -185,7 +187,7 @@
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .sarufi-chat-loader .sarufi-bounce1 {
@@ -281,12 +283,12 @@
   }
   .sarufi-chat-container .sarufi-backdrop {
     width: 100%;
-    bottom: calc( 53.5px + .5rem);
+    bottom: calc(53.5px + 0.5rem);
   }
   .sarufi-chat-container .sarufi-options {
     width: 100%;
     max-width: 100%;
-    bottom: calc( 65px + .5rem);
+    bottom: calc(65px + 0.5rem);
   }
 }
 
@@ -306,7 +308,7 @@
   .sarufi-chat-container.open {
     bottom: 0;
     right: 0;
-    height: calc( 100% - 50px);
+    height: calc(100% - 50px);
     max-height: 100%;
   }
   .sarufi-chat-container.open.sarufi-right-align {
@@ -316,18 +318,18 @@
     left: 1rem;
   }
   .sarufi-chat-container .sarufi-backdrop {
-    height: calc( 100%px - 144px - .5rem);
-    max-height: calc( 100% - 144px - .5rem);
+    height: calc(100%px - 144px - 0.5rem);
+    max-height: calc(100% - 144px - 0.5rem);
     width: var(--sarufi-chatbox-width);
     max-width: 100%;
-    bottom: calc( 52px + .5rem);
+    bottom: calc(52px + 0.5rem);
   }
   .sarufi-chat-container .sarufi-options {
-    height: calc( 100% - 155px - .5rem);
-    max-height: calc( 100% - 140px - .5rem);
-    width: calc( var(--sarufi-chatbox-width) - 32px);
+    height: calc(100% - 155px - 0.5rem);
+    max-height: calc(100% - 140px - 0.5rem);
+    width: calc(var(--sarufi-chatbox-width) - 32px);
     max-width: 100%;
-    bottom: calc( 60px + .5rem);
+    bottom: calc(60px + 0.5rem);
   }
 }
 
@@ -345,7 +347,7 @@
     right: 0rem !important;
   }
   .sarufi-chat-container.open {
-    height: calc( 100% - 50px);
+    height: calc(100% - 50px);
   }
   .sarufi-chat-container.open.sarufi-right-align {
     right: 0rem;
@@ -354,17 +356,17 @@
     left: 0rem;
   }
   .sarufi-chat-container .sarufi-backdrop {
-    height: calc( 100%px - 144px - .5rem);
-    max-height: calc( 100% - 144px - .5rem);
+    height: calc(100%px - 144px - 0.5rem);
+    max-height: calc(100% - 144px - 0.5rem);
     width: var(--sarufi-chatbox-width);
     max-width: 100%;
   }
   .sarufi-chat-container .sarufi-options {
-    height: calc( 100% - 155px - .5rem);
-    max-height: calc( 100% - 140px - .5rem);
-    width: calc( var(--sarufi-chatbox-width) - 32px);
+    height: calc(100% - 155px - 0.5rem);
+    max-height: calc(100% - 140px - 0.5rem);
+    width: calc(var(--sarufi-chatbox-width) - 32px);
     max-width: 100%;
-    bottom: calc( 60px + .5rem);
+    bottom: calc(60px + 0.5rem);
     margin-top: 1rem;
   }
 }

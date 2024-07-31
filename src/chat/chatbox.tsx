@@ -1,11 +1,26 @@
 import React from "react";
 import axios from "axios";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+
+// Local imports
 import Button from "./button";
 import Input from "./input";
 import ChatLoader from "./chat-loader";
-import Media from "./media";
 import { Close, SendIcon } from "../assets/icons";
+import { SarufiIcon } from "../assets/illustrations";
+import Media from "./media";
+import DatePicker from "./message-actions/date-picker";
+// import RecordAudio from "./message-actions/audio-record";
+
+type ChatType = {
+  message: string;
+  sent?: boolean;
+  received?: boolean;
+  chat: any;
+  type: string;
+  actions: any;
+  next_state: string;
+};
 
 const Chatbox = ({
   id,
@@ -28,10 +43,12 @@ const Chatbox = ({
   fontFamily: string;
   fontSize: string | number;
 }) => {
-  const [chats, setChats] = useState<any[]>([]);
+  const [chats, setChats] = useState<ChatType[]>([]);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [chatId, setChatId] = useState<string | number>(id);
+  const [isRecording] = useState(false);
 
   const onSubmit = (message: string, type?: string, itemId?: string) => {
     if (!message) return;
@@ -47,7 +64,7 @@ const Chatbox = ({
         }`,
         {
           message: itemId ?? message,
-          chat_id: id,
+          chat_id: chatId,
           bot_id: botId,
           message_type: type ?? "text",
         },
@@ -123,8 +140,11 @@ const Chatbox = ({
   }, [chats]);
 
   useEffect(() => {
-    setChats([]);
-    setValue("");
+    if (chatId !== id) {
+      setChatId(id);
+      setChats([]);
+      setValue("");
+    }
   }, [open]);
 
   return (
@@ -134,7 +154,8 @@ const Chatbox = ({
         id="sarufi-chat-container"
         style={{
           background: "var(--sarufi-chatbox-bg)",
-          height: "calc( 100% - 130px )",
+          height: "calc( 100% - 160px )",
+          // height: "100%",
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
@@ -149,7 +170,7 @@ const Chatbox = ({
           }}
         >
           <div
-            className="sarufi-message-body sarufi-message-body-w-arrow"
+            className="sarufi-message-body"
             style={{
               maxWidth: 280,
               background: "var(--sarufi-received-box-bg)",
@@ -173,6 +194,7 @@ const Chatbox = ({
                 chat={chat}
                 key={index}
                 onSubmit={onSubmit}
+                primaryColor={primaryColor}
                 mode={mode}
                 fontFamily={fontFamily}
                 fontSize={fontSize}
@@ -181,7 +203,7 @@ const Chatbox = ({
             ))}
             {loading && (
               <div
-                className={`sarufi-message-body sarufi-message-body-w-arrow`}
+                className={`sarufi-message-body`}
                 style={{
                   background: "var(--sarufi-received-box-bg)",
                   padding: "6px 8px 8px 9px",
@@ -197,37 +219,81 @@ const Chatbox = ({
           </ul>
         </div>
       </div>
-      <form
+      <div
+        className="sarufi-flex-wide"
         style={{
-          position: "relative",
-          background:
-            mode === "light" ? "white" : "var(--sarufi-primary-color)",
-        }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit(value);
+          background: "var(--sarufi-secondary-color)",
+          // background: "rgb(0, 0, 0, 0.2)",
+          padding: ".5rem",
         }}
       >
-        <Input
-          value={value}
-          mode={mode}
-          primaryColor={primaryColor}
-          autoFocus
-          placeholder="Compose a message"
-          save={() => onSubmit(value)}
-          onChange={(e) => {
-            setValue(e.target.value);
+        {!isRecording && (
+          <form
+            style={{
+              position: "relative",
+              marginRight: ".5rem",
+              width: "100%",
+              background:
+                mode === "light" ? "white" : "var(--sarufi-primary-color)",
+            }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(value);
+            }}
+          >
+            <Input
+              value={value}
+              mode={mode}
+              primaryColor={primaryColor}
+              autoFocus
+              placeholder="Compose a message"
+              save={() => onSubmit(value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+            />
+            <Button
+              mode={mode}
+              label={
+                <span className="sarufi-flex-center">
+                  <SendIcon size={24} />
+                </span>
+              }
+            />
+          </form>
+        )}
+        <div
+          className="sarufi-flex-center message-actions"
+          style={{
+            color: mode === "light" ? "#525252" : "white",
+            width: isRecording ? "100%" : "auto",
           }}
-        />
-        <Button
-          mode={mode}
-          label={
-            <span className="sarufi-flex-center">
-              <SendIcon size={30} />
-            </span>
-          }
-        />
-      </form>
+        >
+          {!isRecording && (
+            <>
+              {/* <button
+                onClick={() => alert("We don't support this feature yet.")}
+              >
+                <Attachment size={18} />
+              </button> */}
+              <DatePicker
+                onSelect={(d) =>
+                  setValue(
+                    `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+                  )
+                }
+                styles={{
+                  margin: "0 .3rem",
+                }}
+              />
+            </>
+          )}
+          {/* <RecordAudio
+            readFile={() => alert("We don't support this feature yet.")}
+            saveIsRecording={(record) => setIsRecording(record)}
+          /> */}
+        </div>
+      </div>
       <p
         style={{
           fontSize: ".7rem",
@@ -238,7 +304,7 @@ const Chatbox = ({
             mode === "light" ? "white" : "var(--sarufi-primary-color)",
         }}
       >
-        Made by{" "}
+        Powered by{" "}
         <a
           href="https://sarufi.io"
           target="_blank"
@@ -264,6 +330,7 @@ const Chat = ({
   fontFamily,
   fontSize,
   index,
+  primaryColor,
 }: {
   chat: any;
   onSubmit: (value: string, type?: string, id?: string) => void;
@@ -271,6 +338,7 @@ const Chat = ({
   fontFamily: string;
   fontSize: string | number;
   index: number;
+  primaryColor?: string;
 }) => {
   let message =
     chat?.type === "button"
@@ -334,300 +402,314 @@ const Chat = ({
       className={`${chat?.sent ? "sarufi-flex-end" : ""}`}
       style={{
         position: "relative",
+        display: "flex",
+        alignItems: "flex-end",
       }}
     >
       {!chat?.sent && (
         <div
           style={{
-            maxWidth: 280,
-            width: "80%",
+            marginRight: "5px",
           }}
         >
-          <Media
-            chat={chat}
-            mode={mode}
-            fontFamily={fontFamily}
-            fontSize={fontSize}
-            messageIndex={index}
+          <SarufiIcon
+            size={20}
+            style={{
+              color: primaryColor,
+            }}
           />
         </div>
       )}
-      <div
-        className={`sarufi-message-body ${
-          hasMedia ? "" : "sarufi-message-body-w-arrow"
-        } ${chat?.sent ? "sent" : ""}`}
-        style={{
-          background: chat?.sent
-            ? "var(--sarufi-sent-box-bg)"
-            : "var(--sarufi-received-box-bg)",
-          maxWidth: 280,
-          width: hasMedia ? "100%" : "max-content",
-          minWidth: "50px",
-          padding: "6px 8px 8px 9px",
-          marginTop: hasMedia ? "0" : "12px",
-          position: "relative",
-          borderRadius:
-            chat?.actions?.find((action: any) => action?.send_reply_button)
-              ?.send_reply_button?.action?.buttons?.length > 0 ||
-            ((!message || typeof message !== "string") && chat?.actions && menu)
-              ? "0rem"
-              : ".3rem",
-          ...(!hasMedia && !chat?.sent
-            ? { borderTopRightRadius: ".3rem" }
-            : {}),
-        }}
-      >
-        {(!message || typeof message !== "string") && chat?.actions && menu && (
-          <>
-            {menu["send_button"]?.header && (
-              <Message
-                message={menu["send_button"]?.header}
-                style={{
-                  marginBottom: "1rem",
-                }}
-              />
-            )}
-            {menu["send_button"]?.body && (
-              <Message message={menu["send_button"]?.body} />
-            )}
-            {menu["send_button"]?.footer && (
-              <Message
-                message={menu["send_button"]?.footer}
-                style={{
-                  marginTop: "1rem",
-                  fontSize: ".9em",
-                  opacity: 0.7,
-                }}
-              />
-            )}
-          </>
-        )}
-        {(chat?.type || message) && !menu && (
-          <Message
-            message={
-              typeof message === "string" ? message : message?.join("\n")
-            }
-          />
-        )}
-      </div>
-      {chat?.type === "button" && (
-        <ul
-          className="sarufi-flex-wide sarufi-flex-wrap"
-          style={{
-            maxWidth: 280,
-          }}
-        >
-          {chat?.actions
-            ?.find((action: any) => action?.send_reply_button)
-            ?.send_reply_button?.action?.buttons?.map((el: any, i: number) => (
-              <li
-                style={{
-                  width: "100%",
-                  marginTop: "2px",
-                  background: "var(--sarufi-received-box-bg)",
-                  borderBottomLeftRadius:
-                    i ===
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length -
-                      1
-                      ? ".3rem"
-                      : "0",
-                  borderBottomRightRadius:
-                    i ===
-                    chat?.actions?.find(
-                      (action: any) => action?.send_reply_button
-                    )?.send_reply_button?.action?.buttons?.length -
-                      1
-                      ? ".3rem"
-                      : "0",
-                }}
-                key={i}
-              >
-                <button
-                  onClick={() =>
-                    onSubmit(
-                      el?.reply?.title,
-                      chat?.type !== "text" ? "interactive" : "text",
-                      el?.reply?.id
-                    )
-                  }
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    background: "none",
-                    border: "none",
-                    color: "var(--sarufi-received-box-link-color)",
-                    cursor: "pointer",
-                    fontSize: "inherit",
-                    padding: "10px",
-                    fontFamily: "var(--sarufi-font-family)",
-                  }}
-                  className="sarufi-flex-center sarufi-flex-wrap"
-                >
-                  {el?.reply?.title}
-                </button>
-              </li>
-            ))}
-        </ul>
-      )}
-      {(!message || typeof message !== "string") && chat?.actions && menu && (
+      <div>
+        <Media
+          chat={chat}
+          mode={mode}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          messageIndex={index}
+        />
         <div
-          className="bg-neutral-0 sarufi-flex-center"
+          className={`sarufi-message-body  ${chat?.sent ? "sent" : ""}`}
           style={{
+            background: chat?.sent
+              ? "var(--sarufi-sent-box-bg)"
+              : "var(--sarufi-received-box-bg)",
             maxWidth: 280,
-            marginTop: "2px",
-            background: "var(--sarufi-received-box-bg)",
-            borderBottomLeftRadius: ".3rem",
-            borderBottomRightRadius: ".3rem",
+            width: hasMedia ? "100%" : "max-content",
+            minWidth: "50px",
+            padding: "6px 8px 8px 9px",
+            marginTop: hasMedia ? "0" : "12px",
+            position: "relative",
+            borderRadius:
+              chat?.actions?.find((action: any) => action?.send_reply_button)
+                ?.send_reply_button?.action?.buttons?.length > 0 ||
+              ((!message || typeof message !== "string") &&
+                chat?.actions &&
+                menu)
+                ? "0rem"
+                : ".3rem",
+            ...(!hasMedia && !chat?.sent
+              ? { borderTopRightRadius: ".3rem" }
+              : {}),
           }}
         >
-          <button
-            onClick={() => setOpenChoices(true)}
-            className="link text-small-100 sarufi-flex-center cursor-pointer"
-            style={{
-              width: "100%",
-              height: "100%",
-              background: "none",
-              border: "none",
-              color: "var(--sarufi-received-box-link-color)",
-              cursor: "pointer",
-              fontSize: "inherit",
-              padding: "10px",
-              fontFamily: "var(--sarufi-font-family)",
-            }}
-          >
-            {menu["send_button"]?.button ?? menu["send_button"]?.action?.button}
-          </button>
+          {(!message || typeof message !== "string") &&
+            chat?.actions &&
+            menu && (
+              <>
+                {menu["send_button"]?.header && (
+                  <Message
+                    message={menu["send_button"]?.header}
+                    style={{
+                      marginBottom: "1rem",
+                    }}
+                  />
+                )}
+                {menu["send_button"]?.body && (
+                  <Message message={menu["send_button"]?.body} />
+                )}
+                {menu["send_button"]?.footer && (
+                  <Message
+                    message={menu["send_button"]?.footer}
+                    style={{
+                      marginTop: "1rem",
+                      fontSize: ".9em",
+                      opacity: 0.7,
+                    }}
+                  />
+                )}
+              </>
+            )}
+          {(chat?.type || message) && !menu && (
+            <Message
+              message={
+                typeof message === "string" ? message : message?.join("\n")
+              }
+            />
+          )}
         </div>
-      )}
-      {(!message || typeof message !== "string") &&
-        chat?.actions &&
-        menu &&
-        openChoices && (
-          <div
-            className={`choices`}
+        {chat?.type === "button" && (
+          <ul
+            className="sarufi-flex-wide sarufi-flex-wrap"
             style={{
-              position: "fixed",
-              zIndex: 100004,
-              transition: "0.35s linear",
+              maxWidth: 280,
             }}
           >
+            {chat?.actions
+              ?.find((action: any) => action?.send_reply_button)
+              ?.send_reply_button?.action?.buttons?.map(
+                (el: any, i: number) => (
+                  <li
+                    style={{
+                      width: "100%",
+                      marginTop: "2px",
+                      background: "var(--sarufi-received-box-bg)",
+                      borderBottomLeftRadius:
+                        i ===
+                        chat?.actions?.find(
+                          (action: any) => action?.send_reply_button
+                        )?.send_reply_button?.action?.buttons?.length -
+                          1
+                          ? ".3rem"
+                          : "0",
+                      borderBottomRightRadius:
+                        i ===
+                        chat?.actions?.find(
+                          (action: any) => action?.send_reply_button
+                        )?.send_reply_button?.action?.buttons?.length -
+                          1
+                          ? ".3rem"
+                          : "0",
+                    }}
+                    key={i}
+                  >
+                    <button
+                      onClick={() =>
+                        onSubmit(
+                          el?.reply?.title,
+                          chat?.type !== "text" ? "interactive" : "text",
+                          el?.reply?.id
+                        )
+                      }
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        background: "none",
+                        border: "none",
+                        color: "var(--sarufi-received-box-link-color)",
+                        cursor: "pointer",
+                        fontSize: "inherit",
+                        padding: "10px",
+                        fontFamily: "var(--sarufi-font-family)",
+                      }}
+                      className="sarufi-flex-center sarufi-flex-wrap"
+                    >
+                      {el?.reply?.title}
+                    </button>
+                  </li>
+                )
+              )}
+          </ul>
+        )}
+        {(!message || typeof message !== "string") && chat?.actions && menu && (
+          <div
+            className="bg-neutral-0 sarufi-flex-center"
+            style={{
+              maxWidth: 280,
+              marginTop: "2px",
+              background: "var(--sarufi-received-box-bg)",
+              borderBottomLeftRadius: ".3rem",
+              borderBottomRightRadius: ".3rem",
+            }}
+          >
+            <button
+              onClick={() => setOpenChoices(true)}
+              className="link text-small-100 sarufi-flex-center cursor-pointer"
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "none",
+                border: "none",
+                color: "var(--sarufi-received-box-link-color)",
+                cursor: "pointer",
+                fontSize: "inherit",
+                padding: "10px",
+                fontFamily: "var(--sarufi-font-family)",
+              }}
+            >
+              {menu["send_button"]?.button ??
+                menu["send_button"]?.action?.button}
+            </button>
+          </div>
+        )}
+        {(!message || typeof message !== "string") &&
+          chat?.actions &&
+          menu &&
+          openChoices && (
             <div
-              className={"sarufi-backdrop"}
+              className={`choices`}
               style={{
                 position: "fixed",
-                background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 100004,
                 transition: "0.35s linear",
               }}
-              onClick={() => setOpenChoices(false)}
-            />
-            <div
-              className={`sarufi-options sarufi-scroll-bar`}
-              style={{
-                zIndex: 100005,
-                background: "var(--sarufi-received-box-bg)",
-                color: "var(--sarufi-received-box-color)",
-                borderRadius: ".3rem",
-              }}
             >
               <div
-                className="sarufi-flex-start"
+                className={"sarufi-backdrop"}
                 style={{
-                  padding: "1rem",
-                  paddingBottom: ".5rem",
-                  marginBottom: "1rem",
+                  position: "fixed",
+                  background: "rgba(0, 0, 0, 0.6)",
+                  zIndex: 100004,
+                  transition: "0.35s linear",
+                }}
+                onClick={() => setOpenChoices(false)}
+              />
+              <div
+                className={`sarufi-options sarufi-scroll-bar`}
+                style={{
+                  zIndex: 100005,
+                  background: "var(--sarufi-received-box-bg)",
+                  color: "var(--sarufi-received-box-color)",
+                  borderRadius: ".3rem",
                 }}
               >
-                <button
-                  onClick={() => setOpenChoices(false)}
+                <div
+                  className="sarufi-flex-start"
                   style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "var(--sarufi-received-box-color)",
+                    padding: "1rem",
+                    paddingBottom: ".5rem",
+                    marginBottom: "1rem",
                   }}
-                  className="sarufi-button"
                 >
-                  <Close size={18} />
-                </button>
-                {menu["send_button"]?.action?.sections[0]?.title && (
-                  <p
+                  <button
+                    onClick={() => setOpenChoices(false)}
                     style={{
-                      width: "100%",
-                      marginLeft: "1rem",
-                      paddingRight: "2rem",
-                      textAlign: "center",
-                      fontFamily: "var(--sarufi-font-family)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      color: "var(--sarufi-received-box-color)",
                     }}
+                    className="sarufi-button"
                   >
-                    {menu["send_button"]?.action?.sections[0]?.title}
-                  </p>
-                )}
+                    <Close size={18} />
+                  </button>
+                  {menu["send_button"]?.action?.sections[0]?.title && (
+                    <p
+                      style={{
+                        width: "100%",
+                        marginLeft: "1rem",
+                        paddingRight: "2rem",
+                        textAlign: "center",
+                        fontFamily: "var(--sarufi-font-family)",
+                      }}
+                    >
+                      {menu["send_button"]?.action?.sections[0]?.title}
+                    </p>
+                  )}
+                </div>
+                <ul
+                  style={{
+                    padding: "1rem",
+                    paddingTop: "0",
+                  }}
+                >
+                  {menu["send_button"]?.action?.sections[0]?.rows?.filter(
+                    (el: any) => el?.title
+                  )?.length > 0 &&
+                    menu["send_button"]?.action?.sections[0]?.rows
+                      ?.filter((el: any) => el?.title)
+                      ?.map((row: any) => (
+                        <li
+                          className="sarufi-flex-wide "
+                          style={{
+                            marginBottom: "1.5rem",
+                            cursor: "pointer",
+                          }}
+                          key={row?.title}
+                          onClick={() => {
+                            onSubmit(row?.title, "interactive", row?.id);
+                            setOpenChoices(false);
+                          }}
+                        >
+                          <div>
+                            <p
+                              className="text-small-200"
+                              style={{
+                                fontFamily: "var(--sarufi-font-family)",
+                              }}
+                            >
+                              {row?.title}
+                            </p>
+                            <p
+                              style={{
+                                opacity: ".7",
+                                fontSize: ".9em",
+                                fontFamily: "var(--sarufi-font-family)",
+                              }}
+                            >
+                              {row?.description}
+                            </p>
+                          </div>
+                          <div>
+                            <span
+                              className="sarufi-flex-center"
+                              style={{
+                                height: 15,
+                                width: 15,
+                                borderRadius: "50%",
+                                border:
+                                  "1px solid var(--sarufi-received-box-color)",
+                                marginLeft: "1rem",
+                              }}
+                            />
+                          </div>
+                        </li>
+                      ))}
+                </ul>
               </div>
-              <ul
-                style={{
-                  padding: "1rem",
-                  paddingTop: "0",
-                }}
-              >
-                {menu["send_button"]?.action?.sections[0]?.rows?.filter(
-                  (el: any) => el?.title
-                )?.length > 0 &&
-                  menu["send_button"]?.action?.sections[0]?.rows
-                    ?.filter((el: any) => el?.title)
-                    ?.map((row: any) => (
-                      <li
-                        className="sarufi-flex-wide "
-                        style={{
-                          marginBottom: "1.5rem",
-                          cursor: "pointer",
-                        }}
-                        key={row?.title}
-                        onClick={() => {
-                          onSubmit(row?.title, "interactive", row?.id);
-                          setOpenChoices(false);
-                        }}
-                      >
-                        <div>
-                          <p
-                            className="text-small-200"
-                            style={{
-                              fontFamily: "var(--sarufi-font-family)",
-                            }}
-                          >
-                            {row?.title}
-                          </p>
-                          <p
-                            style={{
-                              opacity: ".7",
-                              fontSize: ".9em",
-                              fontFamily: "var(--sarufi-font-family)",
-                            }}
-                          >
-                            {row?.description}
-                          </p>
-                        </div>
-                        <div>
-                          <span
-                            className="sarufi-flex-center"
-                            style={{
-                              height: 15,
-                              width: 15,
-                              borderRadius: "50%",
-                              border:
-                                "1px solid var(--sarufi-received-box-color)",
-                              marginLeft: "1rem",
-                            }}
-                          />
-                        </div>
-                      </li>
-                    ))}
-              </ul>
             </div>
-          </div>
-        )}
+          )}
+      </div>
     </li>
   );
 };

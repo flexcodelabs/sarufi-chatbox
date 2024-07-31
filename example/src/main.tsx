@@ -8,6 +8,7 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
     {/* @ts-ignore */}
-    <SarufiChatbox botId={window?.botId ?? 16} />
+    <SarufiChatbox botId={window?.botId ?? 4107} />
+    {/* 1258 */}
   </React.StrictMode>
 );

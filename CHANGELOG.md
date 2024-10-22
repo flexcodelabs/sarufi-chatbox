@@ -1,3 +1,7 @@
+# 0.5.1
+* 🛠️ fix: embedded datepicker styles on chat css
+
+* 🏗️ built script and styles for vanilla js & styles
 # 0.5.0
 * 📦 chore(deps): updated react-sarufi-chatbox package
 

@@ -1,3 +1,7 @@
+# 0.5.0
+* 📦 chore(deps): updated react-sarufi-chatbox package
+
+* 🔧 fix: missing datepicker file
 # 0.4.9
 * ✨ feat: initial new design implementation
 

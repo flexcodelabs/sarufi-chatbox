@@ -1,6 +1,5 @@
 import React, { CSSProperties, useState } from "react";
 import { Calendar } from "../../assets/icons";
-import "./datepicker.css";
 
 interface DatePickerProps {
   selectedDate?: Date;
